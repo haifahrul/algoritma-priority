@@ -1,0 +1,8 @@
+api key mailchimp : 3928b0a990d3c4e12a6a056ef561dc62-us13
+
+alur 
+- buat list subriber / orng berlangganan ad otomatis bisa
+- buat compain info  
+- buat template konten / tema konten
+- buat desain tempalte isi konten 
+- - menu confirm kalau ok fix 
