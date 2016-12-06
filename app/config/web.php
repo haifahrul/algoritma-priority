@@ -5,7 +5,7 @@ $params = require(__DIR__ . '/params.php');
 
 $config = [
     'id' => 'app',
-    'homeUrl' => '/site/index',
+    'homeUrl' => '/',
     'name' => 'Topik',
     'basePath' => dirname(__DIR__),
     'vendorPath' => dirname(dirname(__DIR__)) . '/vendor',
@@ -16,34 +16,25 @@ $config = [
         'app\components\PathUrl',
     ],
     'modules' => [
-        'admin' => [
-            'class' => 'app\modules\admin\Module',
-        ],
         'webmaster' => [
             'class' => 'app\modules\webmaster\Module',
         ],
     ],
-//    'as access' => [
-//        'class' => 'app\modules\webmaster\components\AccessControl',
-//        'allowActions' => [
-//            // add wildcard allowed action here!
-//            'site/*',
-//            // Menu User
-//            'dosen/index',
-//            'mata-kuliah/index',
-//            'jadwal-kuliah/index',
-//            'ruangan/index',
-//            // Menu Admin
-//            'admin/login/index',
-//            'admin/site/logout',
-//            // Menu Webmaster
+    'as access' => [
+        'class' => 'app\modules\webmaster\components\AccessControl',
+        'allowActions' => [
+            // add wildcard allowed action here!
+//            'site/login',
+            'site/index',
+//            'SmsGatewayMe/sendSMS'
+            // Menu Webmaster
 //            'webmaster/login/index',
 //            'webmaster/site/logout',
 //            'debug/*',
 //            'gii/*',
-//            //'*',
-//        ],
-//    ],
+//            '*',
+        ],
+    ],
     // komponen aplikasi
     'components' => [
         //class setting themes
@@ -69,7 +60,7 @@ $config = [
                 'baseUrl' => '@app/themes/',
                 'pathMap' => [
                     '@app/views' => '@app/themes/adminlte',
-//                    '@app/views' => '@app/themes/basic',
+//                    '@app/views' => '@app/themes/material',
                 ],
             ],
         ],
@@ -85,9 +76,9 @@ $config = [
                 ],
             ]
         ],
-//        'authManager' => [
-//            'class' => 'yii\rbac\DbManager',
-//        ],
+        'authManager' => [
+            'class' => 'yii\rbac\DbManager',
+        ],
         'request' => [
             'cookieValidationKey' => 'TOXQ9RZ_GiSwVOOCQ4ZgEsGYxbF1tDWIzaaz',
         ],
@@ -98,6 +89,7 @@ $config = [
             'enableStrictParsing' => FALSE, // membatasi akses hanya pada aturan yang dikonfigurasi
             'rules' => [
                 '/' => 'site/index',
+                '/dashboard' => 'site/dashboard',
                 '<controller>/' => '<controller>/index',
                 '<controller:\w+>/<action:\w+>/<id:\d+>' => '<controller>/view',
                 '<controller:\w+>/<action:\w+>' => '<controller>/<action>',
@@ -129,7 +121,8 @@ $config = [
 //            'class' => 'yii\caching\FileCache',
 //        ],
         'errorHandler' => [
-            'errorAction' => 'site/error',
+//            'errorAction' => 'site/error',
+            'errorAction' => 'webmaster/site/error'
         ],
 //        'log' => [
 //            'traceLevel' => YII_DEBUG ? 3 : 0,

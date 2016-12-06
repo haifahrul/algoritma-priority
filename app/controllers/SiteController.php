@@ -65,82 +65,83 @@ class SiteController extends Controller
                 'class' => 'yii\captcha\CaptchaAction',
             ],
             // auth sosial media
-            'auth'=>[
-                'class'=>'yii\authclient\AuthAction',
-                'successCallback' =>[
+            'auth' => [
+                'class' => 'yii\authclient\AuthAction',
+                'successCallback' => [
                     $this, 'successCallback'
                 ]
             ]
         ];
     }
 
-    public function successCallback($client){
+    public function successCallback($client)
+    {
         $attributes = $this->safeAttributes($client);
         // cari data di database
         $user_social_media = SocialMedia::find()
             ->where([
-                'social_media'=>$attributes['social_media'], 
-                'id' =>(string)$attributes['id'],
-                'username'=>$attributes['username']
+                'social_media' => $attributes['social_media'],
+                'id' => (string)$attributes['id'],
+                'username' => $attributes['username']
             ])->one();
-                // var_dump($attributes['id']);
-                // die($user_social_media);
+        // var_dump($attributes['id']);
+        // die($user_social_media);
         // if found
-        if($user_social_media){
+        if ($user_social_media) {
             //get relasi
             $user = $user_social_media->user;
             // cek user is aktif
-            if($user->status == User::STATUS_ACTIVE){
+            if ($user->status == User::STATUS_ACTIVE) {
                 // otomatis login
                 Yii::$app->user->login($user);
-            }else{
+            } else {
                 Yii::$app->session->setFlash('error', 'Gagal Login status user tidak aktif');
             }
-        }else{
+        } else {
             // jika user sosial media tidak ada cek email di db
             $user = User::find()
                 ->where([
-                    'email'=>$attributes['email']
+                    'email' => $attributes['email']
                 ])->one();
             // jika user ada
-            if($user){
-                if($user->status == User::STATUS_ACTIVE){
+            if ($user) {
+                if ($user->status == User::STATUS_ACTIVE) {
                     // tambah ke tbl sosial media
                     $user_social_media = new SocialMedia([
-                        'social_media'=>$attributes['social_media'],
-                        'id'=>(string)$attributes['id'],
-                        'username'=>$attributes['username'],
-                        'user_id'=> $user->id
+                        'social_media' => $attributes['social_media'],
+                        'id' => (string)$attributes['id'],
+                        'username' => $attributes['username'],
+                        'user_id' => $user->id
                     ]);
 
                     //simpan aktif record
                     $user_social_media->save();
                     Yii::$app->user->login($user);
-                }else{
+                } else {
                     Yii::$app->session->setFlash('error', 'Gagal Login status user tidak aktif');
-                    
+
                 }
-            }else{
+            } else {
                 // jika blum terdaftar
-                if($attributes['social_media'] != 'twitter'){
+                if ($attributes['social_media'] != 'twitter') {
                     // automatic signup
                     $password = Yii::$app->security->generateRandomString(6);
                     // new user
                     $user = new User([
-                        'username'=>$attributes['username'],
-                        'email'=>$attributes['email'],
-                        'password'=>$password,
+                        'username' => $attributes['username'],
+                        'email' => $attributes['email'],
+                        'password' => $password,
                     ]);
 
                     $user->generateAuthKey();
                     $user->generatePasswordResetToken();
                     $user->generatePasswordResetToken();
-                    if($user->save()){
+                    if ($user->save()) {
                         $user_social_media = new SocialMedia([
-                            'social_media'=>$attributes['social_media'],
-                            'id'=>(string)$attributes['id'],
-                            'username'=>$attributes['username'],
-                            'user_id'=>$user->id,
+                            'social_media' => $attributes['social_media'],
+                            'id' => (string)$attributes['id'],
+                            'username' => $attributes['username'],
+                            'user_id' => $user->id,
                         ]);
 
                         // simpan 
@@ -148,43 +149,42 @@ class SiteController extends Controller
                         //otomatis login 
                         Yii::$app->user->login($user);
 
-                    }else{
+                    } else {
                         Yii::$app->session->setFlash('error', 'Gagal saat registrasi');
                     }
 
-                }else{
+                } else {
                     // simpan attribut disession 
                     $session = Yii::$app->session;
-                    $session['attributes']= $attributes;
+                    $session['attributes'] = $attributes;
                     // redirect signup
-                    $this->action->successUrl = Url::to(['signup']); 
+                    $this->action->successUrl = Url::to(['signup']);
                 }
             }
         }
-
-        
     }
 
-    public function safeAttributes($client){
+    public function safeAttributes($client)
+    {
         // user signup ata login disin funsinya get attrubute
         $attributes = $client->getUserAttributes();
         // set default  attribut
-        $safe_attributes =[
-            'social_media'=>'',
-            'id'=>'',
-            'username'=>'',
-            'name'=>'',
-            'email'=>''
+        $safe_attributes = [
+            'social_media' => '',
+            'id' => '',
+            'username' => '',
+            'name' => '',
+            'email' => ''
         ];
 
         // tangkap nilai attribut base on sosial media
-        if($client instanceof \yii\authclient\clients\Facebook){
+        if ($client instanceof \yii\authclient\clients\Facebook) {
             $safe_attributes = [
-                'social_media'=>'facebook',
-                'id'=>$attributes['id'],
-                'username'=>$attributes['email'],
-                'name'=>$attributes['name'],
-                'email'=>$attributes['email'],
+                'social_media' => 'facebook',
+                'id' => $attributes['id'],
+                'username' => $attributes['email'],
+                'name' => $attributes['name'],
+                'email' => $attributes['email'],
             ];
         }
 
@@ -199,35 +199,38 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
-        return $this->render('index');
-    }
+        $this->layout = '@app/themes/materialize/layouts/login';
 
-    //ganti bahasa
-    public function actionChangeLanguage(){
-        if(isset($_POST['lang'])){
-            Yii::$app->language = $_POST['lang'];
-            $cookie = new yii\web\Cookie([
-                'name'=>'lang',
-                'value'=>$_POST['lang']
-            ]);
-        }
-        yii::$app->getResponse()->getCookies()->add($cookie);
-    }
-
-    public function actionLogin()
-    {
-        if (!Yii::$app->user->isGuest) {
-            return $this->goHome();
+        if(!Yii::$app->user->isGuest) {
+            return $this->redirect(['dashboard']);
         }
 
         $model = new LoginForm();
         if ($model->load(Yii::$app->request->post()) && $model->login()) {
-            return $this->goBack();
+            return $this->redirect(['dashboard']);
         } else {
             return $this->render('login', [
                 'model' => $model,
             ]);
         }
+    }
+
+    public function actionDashboard()
+    {
+        return $this->render('dashboard');
+    }
+
+    //ganti bahasa
+    public function actionChangeLanguage()
+    {
+        if (isset($_POST['lang'])) {
+            Yii::$app->language = $_POST['lang'];
+            $cookie = new yii\web\Cookie([
+                'name' => 'lang',
+                'value' => $_POST['lang']
+            ]);
+        }
+        yii::$app->getResponse()->getCookies()->add($cookie);
     }
 
     /**
@@ -290,13 +293,13 @@ class SiteController extends Controller
         if ($model->load(Yii::$app->request->post())) {
             if ($user = $model->signup()) {
                 // cek session attribute
-                if($session->has('attributes')){
+                if ($session->has('attributes')) {
                     // tambah user sosmed
                     $user_social_media = new SocialMedia([
-                        'social_media'=>$attributes['social_media'],
-                        'id'=>(string)$attributes['id'],
-                        'username'=>$attributes['username'],
-                        'user_id'=>$user->id,
+                        'social_media' => $attributes['social_media'],
+                        'id' => (string)$attributes['id'],
+                        'username' => $attributes['username'],
+                        'user_id' => $user->id,
                     ]);
 
                     //simpan
@@ -309,9 +312,9 @@ class SiteController extends Controller
         }
 
         //fill username dan password
-        if($session->has('attributes')){
-            $model->username=$attributes['username'];
-            $model->email=$attributes['email'];
+        if ($session->has('attributes')) {
+            $model->username = $attributes['username'];
+            $model->email = $attributes['email'];
         }
 
         return $this->render('signup', [

@@ -2,6 +2,7 @@
 use dzas\admin\components\Admins;
 use themes\adminlte\components\Nav;
 use yii\web\View;
+use app\modules\webmaster\components\Mimin;
 
 //use yii\helpers\Html;
 if (Yii::$app->user->isGuest) {
@@ -25,6 +26,8 @@ if (isset($callback) && is_callable($callback)) {
 } else {
     $items = Yii::$app->menus->getMenuAdmin();
 }
+
+$menuItems = Mimin::filterRouteMenu($items);
 ?>
 <aside class="main-sidebar">
     <section class="sidebar">
@@ -40,16 +43,17 @@ if (isset($callback) && is_callable($callback)) {
             </div>
         </div>
         <!-- search form -->
-<!--        <form action="--><?php //echo \yii\helpers\Url::to(['/site/search']); ?><!--" method="get" class="sidebar-form">-->
-<!--            <div class="input-group">-->
-<!--                <input type="text" name="keyword" class="form-control" id="search-txt" autocomplete="off"-->
-<!--                       placeholder="Search...">-->
-<!--              <span class="input-group-btn">-->
-<!--                <button type="submit" name="search" id="search-btn" class="btn btn-flat"><i-->
-<!--                        class="fa fa-search"></i></button>-->
-<!--              </span>-->
-<!--            </div>-->
-<!--        </form>-->
+        <!--        <form action="-->
+        <?php //echo \yii\helpers\Url::to(['/site/search']); ?><!--" method="get" class="sidebar-form">-->
+        <!--            <div class="input-group">-->
+        <!--                <input type="text" name="keyword" class="form-control" id="search-txt" autocomplete="off"-->
+        <!--                       placeholder="Search...">-->
+        <!--              <span class="input-group-btn">-->
+        <!--                <button type="submit" name="search" id="search-btn" class="btn btn-flat"><i-->
+        <!--                        class="fa fa-search"></i></button>-->
+        <!--              </span>-->
+        <!--            </div>-->
+        <!--        </form>-->
         <!-- /.search form -->
 
         <?php
@@ -59,7 +63,7 @@ if (isset($callback) && is_callable($callback)) {
                 'class' => 'sidebar-menu',
             ],
             'encodeLabels' => false,
-            'items' => $items
+            'items' => $menuItems
         ]);
         ?>
     </section>

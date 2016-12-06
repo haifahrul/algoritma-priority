@@ -2,6 +2,9 @@
 use yii\helpers\Html;
 use yii\web\View;
 use yii\helpers\Url;
+use app\modules\webmaster\components\Mimin;
+//use app\widgets\adminlte\Nav;
+use themes\adminlte\components\Nav;
 
 // $notifikasi =  Yii::$app->mycomponent->countExp(); 
 //$listExp = Yii::$app->mycomponent->listExpLimit(5);
@@ -10,10 +13,14 @@ if (!Yii::$app->user->isGuest)
 else
     $username = "User Guest";
 /* @var $this View */
+
+$items = Yii::$app->menus->getMenuWebmaster();
+$menuItems = Mimin::filterRouteMenu($items);
 ?>
+
 <header class="main-header">
     <a href="<?= Yii::$app->homeUrl; ?>" class="logo">
-        <span class="logo-mini"><b><i>i</i></b>-See</span>
+        <span class="logo-mini"><b>T</b></span>
         <span class="logo-lg"><?= Yii::$app->name ?></span>
     </a>
     <nav class="navbar navbar-static-top" role="navigation">
@@ -25,33 +32,48 @@ else
         <!-- Navbar Menu sebelah kanan -->
         <div class="navbar-custom-menu">
             <ul class="nav navbar-nav">
-                <!-- menu message  -->
-                <!-- Notifications: dropdown bell  -->
-                <li class="dropdown notifications-menu">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"
-                       title="agenda">
-                        <i class="fa fa-bell-o"></i>
-                        <span class="label label-warning">jml agenda</span>
-                    </a>
-                    <ul class="dropdown-menu">
-                        <li class="header"> agenda</li>
-                        <li>
-                            <!-- inner menu: contains the actual data -->
-                            <ul class="menu">
-                                <li>
-                                    <a href="#">
-                                        <i class="fa fa-fa-square text-aqua"></i> judul<span
-                                            class="label-success label">&nbsp;tanggal </span>
-                                    </a>
-                                </li>
+                <!-- Notifications: dropdown bell -->
+                <!--                <li class="dropdown notifications-menu">-->
+                <!--                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"-->
+                <!--                       title="agenda">-->
+                <!--                        <i class="fa fa-bell-o"></i>-->
+                <!--                        <span class="label label-warning">jml agenda</span>-->
+                <!--                    </a>-->
+                <!--                    <ul class="dropdown-menu">-->
+                <!--                        <li class="header"> agenda</li>-->
+                <!--                        <li>-->
+                <!--                            <ul class="menu">-->
+                <!--                                <li>-->
+                <!--                                    <a href="#">-->
+                <!--                                        <i class="fa fa-fa-square text-aqua"></i> judul<span-->
+                <!--                                            class="label-success label">&nbsp;tanggal </span>-->
+                <!--                                    </a>-->
+                <!--                                </li>-->
+                <!---->
+                <!--                            </ul>-->
+                <!--                        </li>-->
+                <!--                        <li class="footer"><a href="-->
+                <?php //echo Url::to(["/event/index"]) ?><!--">View all</a>-->
+                <!--                        </li>-->
+                <!--                    </ul>-->
+                <!---->
+                <!--                </li>-->
 
-                            </ul>
-                        </li>
-                        <li class="footer"><a href="<?php echo Url::to(["/event/index"]) ?>">View all</a>
-                        </li>
-                    </ul>
-
-                </li>
+                <!-- Settings -->
+                <?php if (Yii::$app->user->can('webmaster')) { ?>
+                    <li class="dropdown notifications-menu">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" title="Settings"><i
+                                class="fa fa-gears"></i>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <?php
+                            echo Nav::widget([
+                                'items' => $menuItems,
+                            ]);
+                            ?>
+                        </ul>
+                    </li>
+                <?php } ?>
 
                 <!-- User Account: -->
                 <li class="dropdown user user-menu">
@@ -100,14 +122,7 @@ else
                         </li>
                     </ul>
                 </li>
-
-<!--                <!-- Control Sidebar Toggle Button -->-->
-<!--                <li>-->
-<!--                    <a href="--><?php //echo Url::to(['/admin/user']) ?><!--" data-toggle="control-sidebarz"><i-->
-<!--                            class="fa fa-gears"></i></a>-->
-<!--                </li>-->
             </ul>
         </div>
-
     </nav>
 </header>

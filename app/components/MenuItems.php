@@ -40,35 +40,35 @@ class MenuItems
             ],
             [
                 'label' => Yii::t('app', 'Customer'),
-                'url' => ['customer/index'],
+                'url' => ['/customer/index'],
                 'active' => FALSE,
                 'visible' => TRUE,
                 'icon' => 'user',
             ],
             [
                 'label' => Yii::t('app', 'Kendaraan'),
-                'url' => ['kendaraan/index'],
+                'url' => ['/kendaraan/index'],
                 'active' => FALSE,
                 'visible' => TRUE,
                 'icon' => 'home',
             ],
             [
                 'label' => Yii::t('app', 'Sparepart'),
-                'url' => ['sparepart/index'],
+                'url' => ['/sparepart/index'],
                 'active' => FALSE,
                 'visible' => TRUE,
                 'icon' => 'home',
             ],
             [
                 'label' => Yii::t('app', 'Service'),
-                'url' => ['service/index'],
+                'url' => ['/service/index'],
                 'active' => FALSE,
                 'visible' => TRUE,
                 'icon' => 'home',
             ],
             [
                 'label' => Yii::t('app', 'Transaksi'),
-                'url' => ['transaksi/index'],
+                'url' => ['/transaksi/index'],
                 'active' => FALSE,
                 'visible' => TRUE,
                 'icon' => 'home',
@@ -106,13 +106,6 @@ class MenuItems
     {
         $items = [
             [
-                'label' => Yii::t('app', 'Dashboard'),
-                'url' => Yii::$app->homeUrl,
-                'active' => FALSE,
-                'visible' => TRUE,
-                'icon' => 'fa fa-dashboard',
-            ],
-            [
                 'label' => Yii::t('app', 'Attribute'),
                 'url' => ['/webmaster/attribute/'],
                 'active' => FALSE,
@@ -120,19 +113,72 @@ class MenuItems
                 'icon' => 'fa fa-cog',
             ],
             [
-                'label' => Yii::t('app', 'User Permissions'),
-                'url' => '#',
-                'active' => FALSE,
+                'label' => Yii::t('app', 'Users Management'),
+                'url' => ['/webmaster/user'],
                 'visible' => TRUE,
-                'icon' => 'user',
-                'items' => [
-                    ['label' => Yii::t('app', 'User Management'), 'url' => ['/webmaster/user/'], 'icon' => 'fa fa-circle-o text-yellow'],
-                    ['label' => Yii::t('app', 'Route'), 'url' => ['/webmaster/route/', 'id' => Yii::$app->user->id], 'icon' => 'fa fa-circle-o text-yellow'],
-                    ['label' => Yii::t('app', 'Role'), 'url' => ['/webmaster/role/'], 'icon' => 'fa fa-circle-o text-yellow'],
-                ]
+                'icon' => 'users',
             ],
         ];
 
         return $items;
+    }
+
+    public function getMenus()
+    {
+        return $item = [
+            [
+                'label' => Yii::t('app', 'Dashboard'),
+                'url' => Yii::$app->homeUrl,
+                'visible' => TRUE,
+                'icon' => 'home',
+            ],
+            [
+                'label' => Yii::t('app', 'Customer'),
+                'url' => ['/customer/index'],
+                'visible' => TRUE,
+                'icon' => 'user',
+            ],
+            [
+                'label' => Yii::t('app', 'Kendaraan'),
+                'url' => ['/kendaraan/index'],
+                'visible' => TRUE,
+                'icon' => 'home',
+            ],
+            [
+                'label' => Yii::t('app', 'Sparepart'),
+                'url' => ['/sparepart/index'],
+                'visible' => TRUE,
+                'icon' => 'home',
+            ],
+            [
+                'label' => Yii::t('app', 'Service'),
+                'url' => ['/service/index'],
+                'visible' => TRUE,
+                'icon' => 'home',
+            ],
+            [
+                'label' => Yii::t('app', 'Transaksi'),
+                'url' => ['/transaksi/index'],
+                'visible' => TRUE,
+                'icon' => 'home',
+            ],
+//            [
+//                'label' => 'Options',
+//                'options' => ['class' => 'user-panel'],
+//                'active' => FALSE,
+//            ],
+//            [
+//                'label' => Yii::t('app', 'Attribute'),
+//                'url' => ['/webmaster/attribute'],
+//                'visible' => TRUE,
+//                'icon' => 'fa fa-cog',
+//            ],
+//            [
+//                'label' => Yii::t('app', 'Users Management'),
+//                'url' => ['/webmaster/user'],
+//                'visible' => TRUE,
+//                'icon' => 'users',
+//            ],
+        ];
     }
 }

@@ -23,12 +23,14 @@ class AdminlteAsset extends AssetBundle
     //     //'js/bootstrap.js',
     // ];
     public $baseUrl = '@web';
-    public function init() {
+
+    public function init()
+    {
         $path = 'app/themes/adminlte/files/';
-  
-        $this->js[] = $path.'js/app.min.js';
-        $this->css[] = $path.'css/AdminLTE.min.css';
-        $this->css[] = $path.'css/skins/_all-skins.min.css';
+
+        $this->js[] = $path . 'js/app.min.js';
+        $this->css[] = $path . 'css/AdminLTE.min.css';
+        $this->css[] = $path . 'css/skins/_all-skins.min.css';
     }
 
     public $depends = [
