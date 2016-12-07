@@ -73,20 +73,19 @@ class MenuItems
                 'visible' => TRUE,
                 'icon' => 'home',
             ],
-//            [
-//                'label' => Yii::t('app', 'Transaksi'),
-//                'url' => '#',
-//                'active' => FALSE,
-//                'visible' => TRUE,
-//                'icon' => 'users',
-//                'items' => [
-//                    ['label' => Yii::t('app', 'Daftar Dosen'), 'url' => ['/admin/dosen/']],
+            [
+                'label' => Yii::t('app', 'SMS Gateway'),
+                'url' => '#',
+                'visible' => TRUE,
+                'icon' => 'commenting',
+                'items' => [
+                    ['label' => Yii::t('app', 'List Messages'), 'url' => ['/smsgatewayme/list-messages']],
 //                    ['label' => Yii::t('app', 'Dosen Semester Ganjil'), 'url' => ['/admin/dosen-ganjil/']],
 //                    ['label' => Yii::t('app', 'Dosen Semester Genap'), 'url' => ['/admin/dosen-genap/']],
-//                ],
-//            ],
+                ],
+            ],
 //            [
-//                'label' => Yii::t('app', 'Dosen'),
+//                'label' => Yii::t('app', 'Transaksi'),
 //                'url' => '#',
 //                'active' => FALSE,
 //                'visible' => TRUE,
@@ -118,67 +117,84 @@ class MenuItems
                 'visible' => TRUE,
                 'icon' => 'users',
             ],
+            [
+                'label' => Yii::t('app', 'SMS Gateway Config'),
+                'url' => ['/smsgatewayme/config'],
+                'visible' => TRUE,
+                'icon' => 'commenting',
+            ],
         ];
 
         return $items;
     }
 
-    public function getMenus()
-    {
-        return $item = [
-            [
-                'label' => Yii::t('app', 'Dashboard'),
-                'url' => Yii::$app->homeUrl,
-                'visible' => TRUE,
-                'icon' => 'home',
-            ],
-            [
-                'label' => Yii::t('app', 'Customer'),
-                'url' => ['/customer/index'],
-                'visible' => TRUE,
-                'icon' => 'user',
-            ],
-            [
-                'label' => Yii::t('app', 'Kendaraan'),
-                'url' => ['/kendaraan/index'],
-                'visible' => TRUE,
-                'icon' => 'home',
-            ],
-            [
-                'label' => Yii::t('app', 'Sparepart'),
-                'url' => ['/sparepart/index'],
-                'visible' => TRUE,
-                'icon' => 'home',
-            ],
-            [
-                'label' => Yii::t('app', 'Service'),
-                'url' => ['/service/index'],
-                'visible' => TRUE,
-                'icon' => 'home',
-            ],
-            [
-                'label' => Yii::t('app', 'Transaksi'),
-                'url' => ['/transaksi/index'],
-                'visible' => TRUE,
-                'icon' => 'home',
-            ],
+//    public function getMenus()
+//    {
+//        return $item = [
 //            [
-//                'label' => 'Options',
-//                'options' => ['class' => 'user-panel'],
-//                'active' => FALSE,
-//            ],
-//            [
-//                'label' => Yii::t('app', 'Attribute'),
-//                'url' => ['/webmaster/attribute'],
+//                'label' => Yii::t('app', 'Dashboard'),
+//                'url' => Yii::$app->homeUrl,
 //                'visible' => TRUE,
-//                'icon' => 'fa fa-cog',
+//                'icon' => 'home',
 //            ],
 //            [
-//                'label' => Yii::t('app', 'Users Management'),
-//                'url' => ['/webmaster/user'],
+//                'label' => Yii::t('app', 'Customer'),
+//                'url' => ['/customer/index'],
 //                'visible' => TRUE,
-//                'icon' => 'users',
+//                'icon' => 'user',
 //            ],
-        ];
-    }
+//            [
+//                'label' => Yii::t('app', 'Kendaraan'),
+//                'url' => ['/kendaraan/index'],
+//                'visible' => TRUE,
+//                'icon' => 'home',
+//            ],
+//            [
+//                'label' => Yii::t('app', 'Sparepart'),
+//                'url' => ['/sparepart/index'],
+//                'visible' => TRUE,
+//                'icon' => 'home',
+//            ],
+//            [
+//                'label' => Yii::t('app', 'Service'),
+//                'url' => ['/service/index'],
+//                'visible' => TRUE,
+//                'icon' => 'home',
+//            ],
+//            [
+//                'label' => Yii::t('app', 'Transaksi'),
+//                'url' => ['/transaksi/index'],
+//                'visible' => TRUE,
+//                'icon' => 'home',
+//            ],
+//            [
+//                'label' => Yii::t('app', 'SMS Gateway'),
+//                'url' => '#',
+//                'visible' => TRUE,
+//                'icon' => 'commenting',
+//                'items' => [
+//                    ['label' => Yii::t('app', 'List Messages'), 'url' => ['/smsgatewayme/list-messages']],
+////                    ['label' => Yii::t('app', 'Dosen Semester Ganjil'), 'url' => ['/admin/dosen-ganjil/']],
+////                    ['label' => Yii::t('app', 'Dosen Semester Genap'), 'url' => ['/admin/dosen-genap/']],
+//                ],
+//            ],
+////            [
+////                'label' => 'Options',
+////                'options' => ['class' => 'user-panel'],
+////                'active' => FALSE,
+////            ],
+////            [
+////                'label' => Yii::t('app', 'Attribute'),
+////                'url' => ['/webmaster/attribute'],
+////                'visible' => TRUE,
+////                'icon' => 'fa fa-cog',
+////            ],
+////            [
+////                'label' => Yii::t('app', 'Users Management'),
+////                'url' => ['/webmaster/user'],
+////                'visible' => TRUE,
+////                'icon' => 'users',
+////            ],
+//        ];
+//    }
 }

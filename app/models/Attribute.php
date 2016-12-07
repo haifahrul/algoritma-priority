@@ -35,7 +35,8 @@ class Attribute extends \yii\db\ActiveRecord {
         return [
             [['name', 'code', 'type', 'position'], 'required'],
             [['parent', 'code', 'position'], 'integer'],
-            [['name', 'type'], 'string', 'max' => 128]
+            [['name', 'type'], 'string', 'max' => 128],
+//            [['content'], 'default', 'value' => NULL],
         ];
     }
 

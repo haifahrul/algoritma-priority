@@ -19,6 +19,9 @@ $config = [
         'webmaster' => [
             'class' => 'app\modules\webmaster\Module',
         ],
+        'smsgatewayme' => [
+            'class' => 'app\modules\SmsGatewayMe\Module',
+        ],
     ],
     'as access' => [
         'class' => 'app\modules\webmaster\components\AccessControl',
@@ -32,7 +35,7 @@ $config = [
 //            'webmaster/site/logout',
 //            'debug/*',
 //            'gii/*',
-//            '*',
+            '*',
         ],
     ],
     // komponen aplikasi
