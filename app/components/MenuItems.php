@@ -80,7 +80,7 @@ class MenuItems
                 'icon' => 'commenting',
                 'items' => [
                     ['label' => Yii::t('app', 'List Messages'), 'url' => ['/smsgatewayme/list-messages']],
-//                    ['label' => Yii::t('app', 'Dosen Semester Ganjil'), 'url' => ['/admin/dosen-ganjil/']],
+                    ['label' => Yii::t('app', 'Test Send SMS'), 'url' => ['/smsgatewayme/test-send-sms/']],
 //                    ['label' => Yii::t('app', 'Dosen Semester Genap'), 'url' => ['/admin/dosen-genap/']],
                 ],
             ],

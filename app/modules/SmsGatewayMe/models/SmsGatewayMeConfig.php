@@ -89,4 +89,30 @@ class SmsGatewayMeConfig extends \yii\db\ActiveRecord
         return $page;
     }
 
+    public static function getSendAt()
+    {
+        $data = Yii::$app->db->createCommand('SELECT * FROM sms_gateway_me_config WHERE `code`="CONFIG"')->queryAll();
+
+        foreach ($data AS $item) {
+            if ($item['key'] == 'send_at') {
+                $data = $item['value'];
+            }
+        }
+
+        return $data;
+    }
+
+    public static function getExpiresAt()
+    {
+        $data = Yii::$app->db->createCommand('SELECT * FROM sms_gateway_me_config WHERE `code`="CONFIG"')->queryAll();
+
+        foreach ($data AS $item) {
+            if ($item['key'] == 'expires_at') {
+                $data = $item['value'];
+            }
+        }
+
+        return $data;
+    }
+
 }

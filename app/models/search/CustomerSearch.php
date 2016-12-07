@@ -45,7 +45,7 @@ class CustomerSearch extends Customer
             $dataProvider->pagination->pageSize=$this->page; 
         }
         //$query->joinWith('idCostumer');
-  
+
 
         $query->andFilterWhere([
             'id' => $this->id,

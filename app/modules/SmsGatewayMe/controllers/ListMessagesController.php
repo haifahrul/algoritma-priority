@@ -21,6 +21,22 @@ class ListMessagesController extends Controller
 
         $result = $smsGateway->getMessages($page);
 
-        return $this->render('index', ['result' => $result]);
+        $array = [];
+        foreach ($result['response'] AS $i => $item) {
+            $array = $item;
+        }
+
+        $dataProvider = new \yii\data\ArrayDataProvider([
+            'allModels' => $array,
+            'sort' => [
+                'attributes' => ['id'],
+            ],
+        ]);
+
+        if (isset($this->page)) {
+            $dataProvider->pagination->pageSize = $this->page;
+        }
+
+        return $this->render('index', ['dataProvider' => $dataProvider]);
     }
 }
