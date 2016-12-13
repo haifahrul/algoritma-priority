@@ -2,6 +2,8 @@
 
 namespace app\controllers;
 
+use app\models\Kendaraan;
+use app\models\Service;
 use Yii;
 use app\models\Customer;
 use app\models\search\CustomerSearch;
@@ -57,12 +59,14 @@ class CustomerController extends Controller
     public function actionCreate()
     {
         $model = new Customer();
+        $model2 = new Kendaraan();
+        $model3 = new Service();
+
         $is_ajax = Yii::$app->request->isAjax;
         $postdata = Yii::$app->request->post();
         if ($model->load($postdata) && $model->validate()) {
             $transaction = Yii::$app->db->beginTransaction();
             try {
-
                 if ($model->save()) {
                     $transaction->commit();
                     Yii::$app->session->setFlash('success', ' Data telah disimpan!');
@@ -73,23 +77,23 @@ class CustomerController extends Controller
                 $transaction->rollback();
                 throw $e;
             }
-
         }
 
         if ($is_ajax) {
             //render view
             return $this->renderAjax('create', [
                 'model' => $model,
+                'model2' => $model2,
+                'model3' => $model3,
             ]);
         } else {
             return $this->render('create', [
                 'model' => $model,
+                'model2' => $model2,
+                'model3' => $model3,
             ]);
-
         }
-
     }
-
 
     public function actionUpdate($id)
     {
@@ -107,7 +111,6 @@ class CustomerController extends Controller
                 return $this->render('update', [
                     'model' => $model,
                 ]);
-
             }
         }
     }

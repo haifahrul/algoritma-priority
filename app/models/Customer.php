@@ -32,7 +32,7 @@ class Customer extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['nama', 'alamat', 'no_telp', 'email'], 'required'],
+            [['nama', 'alamat', 'no_telp'], 'required'],
             [['nama', 'alamat', 'no_telp', 'email'], 'string', 'max' => 50],
             ['email', 'email'],
             ['no_telp', 'unique', 'targetClass' => '\app\models\Customer', 'message' => Yii::t('app', 'No. Telp. sudah ada.')],

@@ -11,11 +11,13 @@ $this->params['breadcrumbs'][] = $this->title;
 $this->params['title'] = $this->title;
 ?>
 <div class="sparepart-create">
+    <div class="box">
+        <div class="box-body">
+            <h1><?php Html::encode($this->title) ?></h1>
 
-    <h1><?php Html::encode($this->title) ?></h1>
-
-    <?= $this->render('_form', [
-        'model' => $model,
-    ]) ?>
-
+            <?= $this->render('_form', [
+                'model' => $model,
+            ]) ?>
+        </div>
+    </div>
 </div>

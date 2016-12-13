@@ -24,15 +24,10 @@ use yii\bootstrap\ActiveForm;
     ]); ?>
 
     <?= $form->field($model, 'customer_id')->textInput() ?>
-
     <?= $form->field($model, 'merek')->textInput(['maxlength' => true]) ?>
-
     <?= $form->field($model, 'tipe')->textInput(['maxlength' => true]) ?>
-
     <?= $form->field($model, 'tahun')->textInput(['maxlength' => true]) ?>
-
     <?= $form->field($model, 'jenis')->textInput(['maxlength' => true]) ?>
-
     <?= $form->field($model, 'no_plat')->textInput(['maxlength' => true]) ?>
 
     <div class="col-md-2"></div>    

@@ -24,11 +24,8 @@ use yii\bootstrap\ActiveForm;
     ]); ?>
 
     <?= $form->field($model, 'customer_id')->textInput() ?>
-
     <?= $form->field($model, 'kendaraan_id')->textInput() ?>
-
     <?= $form->field($model, 'keluhan')->textarea(['rows' => 6]) ?>
-
     <?= $form->field($model, 'created_at')->textInput() ?>
 
     <div class="col-md-2"></div>    

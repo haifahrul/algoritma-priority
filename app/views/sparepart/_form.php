@@ -15,7 +15,7 @@ use yii\bootstrap\ActiveForm;
         'class' => 'form-horizontal'],
         'layout' => 'horizontal',
         'fieldConfig' => [
-            'template' => "<div class=\"col-md-2\">{label}</div>\n<div class=\"col-md-7\">{input}{error}</div><div class=\"col-md-3\"></div>\n",
+            'template' => "<div class=\"col-md-1\">{label}</div>\n<div class=\"col-md-5\">{input}{error}</div><div class=\"col-md-3\"></div>\n",
             'labelOptions' => ['class' => 'text-left1'],
         ],
             //'enableAjaxValidation' => true,
@@ -29,7 +29,7 @@ use yii\bootstrap\ActiveForm;
 
     <?= $form->field($model, 'stok')->textInput(['maxlength' => true]) ?>
 
-    <div class="col-md-2"></div>    
+    <div class="col-md-2"></div>
     <div class="form-group">
         <?= Html::submitButton( '<i class="glyphicon glyphicon-floppy-disk glyphicon-sm"> </i>'.Yii::t('app', ' Simpan') , ['class' => 'btn btn-primary' ]) ?>
         <?= Html::a('<i class="glyphicon glyphicon-remove glyphicon-sm"></i> Cancel ', Yii::$app->request->referrer, ['class' => 'btn btn-danger  ']) ?>

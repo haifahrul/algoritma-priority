@@ -6,7 +6,7 @@ $params = require(__DIR__ . '/params.php');
 $config = [
     'id' => 'app',
     'homeUrl' => '/',
-    'name' => 'Topik',
+    'name' => 'topik',
     'basePath' => dirname(__DIR__),
     'vendorPath' => dirname(dirname(__DIR__)) . '/vendor',
     'timeZone' => 'Asia/Jakarta',
@@ -63,6 +63,7 @@ $config = [
                 'baseUrl' => '@app/themes/',
                 'pathMap' => [
                     '@app/views' => '@app/themes/adminlte',
+//                    '@app/views' => '@app/themes/adminflatlab',
 //                    '@app/views' => '@app/themes/material',
                 ],
             ],
@@ -99,6 +100,8 @@ $config = [
                 '<controller:\w+>/<action:\w+>/<id:\d+>' => '<controller>/<action>',
                 '<module:\w+>/<controller:\w+>/' => '<module>/<controller>/index',
                 '<module:\w+>/<controller:\w+>/<action:\w+>/<id:\d+>' => '<module>/<controller>/<action>',
+                '<module:\w+>/<action:\w+>/<id:(.*?)>' => '<module>/default/<action>/<id>',
+                '<module:\w+>/<action:\w+>' => '<module>/default/<action>',
             ],
         ],
         'mailer' => [

@@ -57,12 +57,12 @@ $menuItems = Mimin::filterRouteMenu($items);
         <!-- /.search form -->
 
         <?php
-        //$items = Admins::filterRouteMenu($items);
         echo Nav::widget([
             'options' => [
                 'class' => 'sidebar-menu',
             ],
             'encodeLabels' => false,
+            'activateParents' => true,
             'items' => $menuItems
         ]);
         ?>
