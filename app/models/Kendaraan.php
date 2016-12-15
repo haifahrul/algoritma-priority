@@ -38,7 +38,16 @@ class Kendaraan extends \yii\db\ActiveRecord
             [['customer_id'], 'integer'],
             [['merek', 'tipe', 'tahun', 'jenis', 'no_plat'], 'string', 'max' => 50],
             [['customer_id'], 'exist', 'skipOnError' => true, 'targetClass' => Customer::className(), 'targetAttribute' => ['customer_id' => 'id']],
+            [['merek', 'tipe', 'tahun', 'jenis', 'no_plat'], 'required', 'on' => 'createFromCustomer'],
+            ['no_plat', 'unique', 'targetClass' => '\app\models\Kendaraan', 'message' => Yii::t('app', 'Kendaraan ini sudah pernah di daftarkan!')],
         ];
+    }
+
+    public function scenarios()
+    {
+        $scenarios = parent::scenarios();
+        $scenarios['createFromCustomer'] = ['merek', 'tipe', 'tahun', 'jenis', 'no_plat'];
+        return $scenarios;
     }
 
     /**
@@ -48,7 +57,7 @@ class Kendaraan extends \yii\db\ActiveRecord
     {
         return [
             'id' => Yii::t('app', 'ID'),
-            'customer_id' => Yii::t('app', 'Customer ID'),
+            'customer_id' => Yii::t('app', 'Customer'),
             'merek' => Yii::t('app', 'Merek'),
             'tipe' => Yii::t('app', 'Tipe'),
             'tahun' => Yii::t('app', 'Tahun'),

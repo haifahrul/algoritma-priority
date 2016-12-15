@@ -5,7 +5,7 @@ use yii\bootstrap\ActiveForm;
 
 /* @var $model app\modules\SmsGatewayMe\models\SmsGatewayMeConfig */
 /* @var $form yii\widgets\ActiveForm
-author zaza z.h
+author A. Fakhrurozi S.
  */
 
 ?>

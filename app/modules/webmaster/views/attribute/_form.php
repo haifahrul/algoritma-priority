@@ -1,14 +1,15 @@
 <?php
 use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
-use app\models\Attribute;
+use app\modules\webmaster\models\Attribute;
 
-/* @var $model app\models\Attribute */
+/* @var $model app\modules\webmaster\models\Attribute */
 /* @var $form yii\widgets\ActiveForm
-author zaza z.h
+author A. Fakhrurozi S.
  */
 ?>
-    <div class="attribute-form form">
+<div class="box">
+    <div class="attribute-form box-body">
         <?php $form = ActiveForm::begin([
             'options' => [
                 'class' => 'form-horizontal'
@@ -38,6 +39,7 @@ author zaza z.h
         <?php ActiveForm::end(); ?>
 
     </div>
+</div>
 
 <?php $script = <<<JS
 $('body').on('beforeSubmit', 'form#{$model->formName()}', function () {
@@ -62,3 +64,6 @@ $('body').on('beforeSubmit', 'form#{$model->formName()}', function () {
 JS;
 //$this->registerJs($script);
 ?>
+<script>
+    $("#box-widget").activateBox();
+</script>

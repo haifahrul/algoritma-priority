@@ -1,19 +1,18 @@
 <?php
 
-namespace app\modules\webmaster\controllers;
+namespace app\controllers;
 
 use Yii;
-use app\modules\webmaster\models\Attribute;
-use app\modules\webmaster\models\search\AttributeSearch;
+use app\models\JasaService;
+use app\models\search\JasaServiceSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\helpers\Json;
-
 /**
  * created zaza zayinul hikayat
  */
-class AttributeController extends Controller
+class JasaServiceController extends Controller
 {
     public function behaviors()
     {
@@ -30,7 +29,7 @@ class AttributeController extends Controller
 
     public function actionIndex()
     {
-        $searchModel = new AttributeSearch();
+        $searchModel = new JasaServiceSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
@@ -42,12 +41,12 @@ class AttributeController extends Controller
 
     public function actionView($id)
     {
-        if (Yii::$app->request->isAjax) {
+        if(Yii::$app->request->isAjax){
             return $this->renderAjax('view', [
                 'model' => $this->findModel($id),
             ]);
-        } else {
-            return $this->render('view', [
+        }else{
+             return $this->render('view', [
                 'model' => $this->findModel($id),
             ]);
         }
@@ -56,60 +55,69 @@ class AttributeController extends Controller
 
     public function actionCreate()
     {
-        $model = new Attribute();
+        $model = new JasaService();
+        $is_ajax= Yii::$app->request->isAjax;
+        $postdata= Yii::$app->request->post(); 
+        if ($model->load($postdata)&& $model->validate()) {
+            $transaction = Yii::$app->db->beginTransaction();
+            try{ 
 
-        if ($model->load(Yii::$app->request->post())) {
-            if (empty($model->parent)) {
-                $model->parent = 0;
+                if($model->save()){
+                    $transaction->commit();
+                    Yii::$app->session->setFlash('success', ' Data telah disimpan!');
+                    return $this->redirect(['index']);
+                }
+                //end if (save) 
+            }catch(Exception $e){
+                $transaction->rollback();
+                throw $e;
             }
-            if ($model->validate()) {
-                $model->save();
 
-                Yii::$app->session->setFlash('success', ' Data has been saved!');
-            }
-            return $this->redirect(['index']);
-        } else {
+        } 
+
+        if($is_ajax){
+            //render view
+            return $this->renderAjax('create', [
+                'model' => $model,
+            ]);            
+        }else{    
             return $this->render('create', [
                 'model' => $model,
             ]);
+                
         }
+        
     }
 
 
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
-        if ($model->load(Yii::$app->request->post())) {
-            if (empty($model->parent)) {
-                $model->parent = 0;
-            }
 
-            if ($model->validate()) {
-                $model->save();
-                Yii::$app->session->setFlash('success', ' Data has been saved!');
-            }
-
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            Yii::$app->session->setFlash('success', ' Data has been saved!');
             return $this->redirect(['index']);
         } else {
-            if (Yii::$app->request->isAjax) {
+            if(Yii::$app->request->isAjax){
                 return $this->renderAjax('update', [
                     'model' => $model,
-                ]);
-            } else {
+                ]);            
+            }else{
                 return $this->render('update', [
                     'model' => $model,
                 ]);
-
+                
             }
         }
     }
 
     public function actionDelete($id)
     {
-        $transaction = Yii::$app->db->beginTransaction();
-        try {
-            //query
-            if ($this->findModel($id)->delete()):
+          $transaction = Yii::$app->db->beginTransaction();
+          try{
+            
+             //query
+            if($this->findModel($id)->delete()):
                 $transaction->commit();
                 Yii::$app->session->setFlash('success', 'Data has been removed!');
                 return $this->redirect(['index']);
@@ -117,43 +125,43 @@ class AttributeController extends Controller
                 $transaction->rollback();
                 Yii::$app->session->setFlash('warning', 'Data failed removed!');
             endif;
-
-        } catch (Exception $e) {
+         
+         }catch(Exception $e){
             $transaction->rollback();
             Yii::$app->session->setFlash('danger', 'Failure, Data failed removed');
-        }
-        return $this->redirect(['index']);
+         }
+            return $this->redirect(['index']);
     }
 
     // hapus menggunakan ajax
     public function actionDeleteItems()
     {
-        $status = 0;
-        if (isset($_POST['keys'])) {
+    $status = 0 ;
+       if(isset($_POST['keys'])){
             $keys = $_POST['keys'];
-            foreach ($keys as $key):
+            foreach ($keys as $key ):
 
-                $model = Attribute::findOne($key);
-                if ($model->delete())
-                    $status = 1;
+                $model = JasaService::findOne($key);
+                if($model->delete())
+                    $status=1;
                 else
-                    $status = 2;
+                    $status=2;
             endforeach;
-
-            //$model = Attribute::findOne($keys);
+            
+            //$model = JasaService::findOne($keys);
             //$model->delete();
             //$status=3;
         }
         // retrun nya json
         echo Json::encode([
-            'status' => $status,
-        ]);
+            'status' => $status  ,
+        ]);          
     }
 
 
     protected function findModel($id)
     {
-        if (($model = Attribute::findOne($id)) !== null) {
+        if (($model = JasaService::findOne($id)) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');

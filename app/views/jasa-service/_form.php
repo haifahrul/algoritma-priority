@@ -2,15 +2,14 @@
 
 use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
-use kartik\select2\Select2;
 
-/* @var $model app\models\Service */
+/* @var $model app\models\JasaService */
 /* @var $form yii\widgets\ActiveForm 
 	author A. Fakhrurozi S.
 */
 
 ?>
-<div class="service-form form box">
+<div class="jasa-service-form form box">
     <?php $form = ActiveForm::begin([
         'options' => [
         'class' => 'form-horizontal'],
@@ -21,26 +20,12 @@ use kartik\select2\Select2;
         ],
             //'enableAjaxValidation' => true,
             //'validateOnBlur' => true
-		
     ]); ?>
-    <div class="box-body">
-    <?= $form->field($model, 'customer_id')->widget(Select2::className(), [
-        'data' => $dataCustomer,
-        'options' => ['placeholder' => '--- Select customer ---'],
-        'pluginOptions' => [
-            'allowClear' => true
-        ],
-    ]) ?>
-    <?= $form->field($model, 'kendaraan_id')->widget(Select2::className(), [
-        'data' => $dataKendaraan,
-        'options' => ['placeholder' => '--- Select kendaraan ---'],
-        'pluginOptions' => [
-            'allowClear' => true
-        ],
-    ]) ?>
-    <?= $form->field($model, 'keluhan')->textarea(['rows' => 6]) ?>
-    </div>
 
+    <div class="box-body">
+        <?= $form->field($model, 'nama')->textInput(['maxlength' => true]) ?>
+        <?= $form->field($model, 'biaya')->textInput(['maxlength' => true]) ?>
+    </div>
     <div class="box-footer">
         <?= Html::submitButton( '<i class="glyphicon glyphicon-floppy-disk glyphicon-sm"> </i>'.Yii::t('app', ' Simpan') , ['class' => 'btn btn-primary btn-sm']) ?>
         <?= Html::a('<i class="glyphicon glyphicon-remove glyphicon-sm"></i> Cancel ', Yii::$app->request->referrer, ['class' => 'btn btn-danger btn-sm']) ?>

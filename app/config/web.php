@@ -48,7 +48,7 @@ $config = [
             'class' => 'yii\i18n\Formatter',
             'nullDisplay' => '-',
             'dateFormat' => 'php:d-M-Y',
-            'datetimeFormat' => 'php:d-M-Y H.i.s',
+            'datetimeFormat' => 'php:d-M-Y H:i:s',
             'timeFormat' => 'php:H.i',
             'thousandSeparator' => '.',
             'decimalSeparator' => ',',
@@ -100,8 +100,6 @@ $config = [
                 '<controller:\w+>/<action:\w+>/<id:\d+>' => '<controller>/<action>',
                 '<module:\w+>/<controller:\w+>/' => '<module>/<controller>/index',
                 '<module:\w+>/<controller:\w+>/<action:\w+>/<id:\d+>' => '<module>/<controller>/<action>',
-                '<module:\w+>/<action:\w+>/<id:(.*?)>' => '<module>/default/<action>/<id>',
-                '<module:\w+>/<action:\w+>' => '<module>/default/<action>',
             ],
         ],
         'mailer' => [

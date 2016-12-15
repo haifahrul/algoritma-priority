@@ -56,21 +56,37 @@ class CustomerController extends Controller
     }
 
 
-    public function actionCreate()
+    public function actionCreateNewCustomer()
     {
         $model = new Customer();
         $model2 = new Kendaraan();
         $model3 = new Service();
+        $model2->scenario = 'createFromCustomer';
+        $model3->scenario = 'createFromCustomer';
 
         $is_ajax = Yii::$app->request->isAjax;
-        $postdata = Yii::$app->request->post();
-        if ($model->load($postdata) && $model->validate()) {
-            $transaction = Yii::$app->db->beginTransaction();
+        $post = Yii::$app->request->post();
+        $transaction = Yii::$app->db->beginTransaction();
+        if ($model->load($post) && $model2->load($post) && $model3->load($post) && $model->validate() && $model2->validate() && $model3->validate()) {
             try {
                 if ($model->save()) {
+
+                    $model2->customer_id = $model->id;
+                    $model2->save();
+
+                    $model3->customer_id = $model->id;
+                    $model3->kendaraan_id = $model2->id;
+                    $model3->save();
+
                     $transaction->commit();
+
                     Yii::$app->session->setFlash('success', ' Data telah disimpan!');
                     return $this->redirect(['index']);
+                } else {
+                    Yii::$app->session->setFlash('danger', ' Data gagal disimpan!');
+                    $transaction->rollback();
+
+                    return $this->redirect(Yii::$app->request->referrer);
                 }
                 //end if (save) 
             } catch (Exception $e) {
@@ -81,13 +97,13 @@ class CustomerController extends Controller
 
         if ($is_ajax) {
             //render view
-            return $this->renderAjax('create', [
+            return $this->renderAjax('create-new-customer', [
                 'model' => $model,
                 'model2' => $model2,
                 'model3' => $model3,
             ]);
         } else {
-            return $this->render('create', [
+            return $this->render('create-new-customer', [
                 'model' => $model,
                 'model2' => $model2,
                 'model3' => $model3,
@@ -95,23 +111,94 @@ class CustomerController extends Controller
         }
     }
 
+public function actionCreate()
+{
+    $model = new Customer();
+
+    $is_ajax = Yii::$app->request->isAjax;
+    $post = Yii::$app->request->post();
+    $transaction = Yii::$app->db->beginTransaction();
+    if ($model->load($post) && $model->validate()) {
+        try {
+            if ($model->save()) {
+                $transaction->commit();
+
+                Yii::$app->session->setFlash('success', ' Data telah disimpan!');
+                return $this->redirect(['index']);
+            } else {
+                Yii::$app->session->setFlash('danger', ' Data gagal disimpan!');
+                $transaction->rollback();
+
+                return $this->redirect(Yii::$app->request->referrer);
+            }
+            //end if (save)
+        } catch (Exception $e) {
+            $transaction->rollback();
+            throw $e;
+        }
+    }
+
+    if ($is_ajax) {
+        return $this->renderAjax('create', [
+            'model' => $model,
+        ]);
+    } else {
+        return $this->render('create', [
+            'model' => $model,
+        ]);
+    }
+}
+
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
+//        $model2 = Kendaraan::find()->where(['customer_id' => $model->id])->one();
+//        $model3 = Service::find()->where(['customer_id' => $model->id])->andWhere(['kendaraan_id' => $model2->id])->one();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            Yii::$app->session->setFlash('success', ' Data has been saved!');
-            return $this->redirect(['index']);
-        } else {
-            if (Yii::$app->request->isAjax) {
-                return $this->renderAjax('update', [
-                    'model' => $model,
-                ]);
-            } else {
-                return $this->render('update', [
-                    'model' => $model,
-                ]);
+        $is_ajax = Yii::$app->request->isAjax;
+        $post = Yii::$app->request->post();
+        $transaction = Yii::$app->db->beginTransaction();
+//        if ($model->load($post) && $model2->load($post) && $model3->load($post) && $model->validate() && $model2->validate() && $model3->validate()) {
+        if ($model->load($post) && $model->validate()) {
+            try {
+                if ($model->save()) {
+
+//                    $model2->customer_id = $model->id;
+//                    $model2->save();
+//
+//                    $model3->customer_id = $model->id;
+//                    $model3->kendaraan_id = $model2->id;
+//                    $model3->save();
+
+                    $transaction->commit();
+
+                    Yii::$app->session->setFlash('success', ' Data telah disimpan!');
+                    return $this->redirect(['index']);
+                } else {
+                    Yii::$app->session->setFlash('danger', ' Data gagal disimpan!');
+                    $transaction->rollback();
+
+                    return $this->redirect(Yii::$app->request->referrer);
+                }
+            } catch (Exception $e) {
+                $transaction->rollback();
+                throw $e;
             }
+        }
+
+        if ($is_ajax) {
+            //render view
+            return $this->renderAjax('update', [
+                'model' => $model,
+//                'model2' => $model2,
+//                'model3' => $model3,
+            ]);
+        } else {
+            return $this->render('update', [
+                'model' => $model,
+//                'model2' => $model2,
+//                'model3' => $model3,
+            ]);
         }
     }
 

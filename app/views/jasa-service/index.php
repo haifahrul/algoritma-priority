@@ -6,14 +6,14 @@ use yii\bootstrap\Modal;
 use yii\grid\GridView;
 
 /* @var $this yii\web\View */
-/* @var $searchModel app\models\search\TransaksiSearch */
+/* @var $searchModel app\models\search\JasaServiceSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
-$this->title = Yii::t('app', 'Transaksis');
+$this->title = Yii::t('app', 'Jasa Services');
 $this->params['breadcrumbs'][] = $this->title;
 $this->params['title'] = 'List' . $this->title;
 ?>
 <div class="box">
-    <div class="transaksi-index">
+    <div class="jasa-service-index">
         <div class="box-header with-border">
             <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
             <p>
@@ -52,11 +52,15 @@ $this->params['title'] = 'List' . $this->title;
                             'header' => 'No',
                             'contentOptions' => ['class' => 'text-center'],
                         ],
-                        'id',
-                        'service_id',
-                        'sparepart_id',
-                        'nota',
-                        'total_pembayaran',
+//                    'id',
+                        'nama',
+                        [
+                            'attribute' => 'biaya',
+                            'value' => function($data) {
+                                $formatter = Yii::$app->formatter;
+                                return $formatter->currencyCode . ' ' . $formatter->asDecimal($data['biaya']);
+                            }
+                        ],
                         [
                             'class' => 'yii\grid\ActionColumn',
                             //'header'=>'Pilihan',
@@ -64,6 +68,37 @@ $this->params['title'] = 'List' . $this->title;
                             'template' => '{view} {update} {delete}',
                             'header' => 'Options',
                             'buttons' => [
+                                'view' => function ($url, $model) {
+                                    $icon = '<i class = "glyphicon glyphicon-zoom-in"></i>';
+
+                                    return Html::a($icon, $url, [
+                                        'data-pjax' => 0,
+                                        'class' => 'btn btn-default btn-xs btn-view',
+                                        'title' => Yii::t('app', 'View')
+                                    ]);
+                                },
+                                'update' => function ($url, $model) {
+                                    $icon = '<i class = "fa fa-pencil"></i>';
+
+                                    return Html::a($icon, $url, [
+                                        'id' => 'btn-update-row',
+                                        'data-pjax' => 0,
+                                        'class' => 'btn btn-default btn-xs',
+                                        'title' => Yii::t('app', 'Update')
+                                    ]);
+                                },
+                                'delete' => function ($url, $model) {
+                                    $icon = '<i class = "fa fa-trash-o"></i>';
+
+                                    return Html::a($icon, $url, [
+                                        'id' => 'btn-delete-row',
+                                        'data-pjax' => 0,
+                                        'data-method' => 'post',
+                                        'class' => 'btn btn-danger btn-xs',
+                                        'title' => Yii::t('app', 'Delete'),
+                                        'data-confirm' => Yii::t('yii', 'Are you sure to delete this item?'),
+                                    ]);
+                                }
                             ],
                         ],
                     ],

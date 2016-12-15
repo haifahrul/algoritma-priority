@@ -1,6 +1,6 @@
 <?php
 
-namespace app\models;
+namespace app\modules\webmaster\models;
 
 use Yii;
 use yii\helpers\ArrayHelper;
@@ -17,21 +17,24 @@ use yii\helpers\ArrayHelper;
  * @property integer $position
  * @property integer $status
  */
-class Attribute extends \yii\db\ActiveRecord {
+class Attribute extends \yii\db\ActiveRecord
+{
     const NOT_ACTIVE = 0;
     const ACTIVE = 1;
 
     /**
      * @inheritdoc
      */
-    public static function tableName() {
+    public static function tableName()
+    {
         return 'attribute';
     }
 
     /**
      * @inheritdoc
      */
-    public function rules() {
+    public function rules()
+    {
         return [
             [['name', 'code', 'type', 'position'], 'required'],
             [['parent', 'code', 'position'], 'integer'],
@@ -43,7 +46,8 @@ class Attribute extends \yii\db\ActiveRecord {
     /**
      * @inheritdoc
      */
-    public function attributeLabels() {
+    public function attributeLabels()
+    {
         return [
             'id' => Yii::t('app', 'ID'),
             'parent' => Yii::t('app', 'Parent'),
@@ -54,11 +58,13 @@ class Attribute extends \yii\db\ActiveRecord {
         ];
     }
 
-    public function getParents() {
+    public function getParents()
+    {
         return $this->hasMany(Attribute::className(), ['parent' => 'id']);
     }
 
-    static function dropDownAttribute() {
+    static function dropDownAttribute()
+    {
         $options = $options_sub = [];
         $parents = Attribute::find()->where('parent=0')->orderBy('parent asc')->all();
         foreach ($parents as $id => $p) {
@@ -70,21 +76,24 @@ class Attribute extends \yii\db\ActiveRecord {
             }
             $options_sub[$p->name] = $child_options;
         }
-        return $options+=$options_sub;
+        return $options += $options_sub;
     }
 
-    public static function one_row_attribute($type) {
+    public static function one_row_attribute($type)
+    {
         $options = array();
         $parents = Attribute::find()->where("type='$type' and parent!=0")->orderBy('code asc')->all();
         return ArrayHelper::map($parents, 'code', 'name');
     }
 
-    public static function oneAttribute($type, $code) {
-        $model= self::find()->where("type='$type' and code=$code")->one();
+    public static function oneAttribute($type, $code)
+    {
+        $model = self::find()->where("type='$type' and code=$code")->one();
         return $model->name;
     }
 
-    public static function attribute_view($type, $code) {
+    public static function attribute_view($type, $code)
+    {
         empty($code) ? $code = 0 : $code;
         $query = Attribute::find()
             ->select('code, name')
@@ -94,7 +103,8 @@ class Attribute extends \yii\db\ActiveRecord {
         return ArrayHelper::getValue($data, $code);
     }
 
-    public function two_row_attribute($condition) {
+    public function two_row_attribute($condition)
+    {
         $options = $options_sub = [];
         $parents = Attribute::find()->where($condition)->orderBy('parent asc')->all();
         foreach ($parents as $id => $p) {
@@ -109,7 +119,8 @@ class Attribute extends \yii\db\ActiveRecord {
         return $options_sub;
     }
 
-    public static function getStatus($status = NULL) {
+    public static function getStatus($status = NULL)
+    {
         $statusLOV = [
             self::ACTIVE => Yii::t('app', 'Active'),
             self::NOT_ACTIVE => Yii::t('app', 'Not Active')

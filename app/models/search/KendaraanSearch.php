@@ -14,10 +14,12 @@ class KendaraanSearch extends Kendaraan
 {
 
     public $page;
+
     public function rules()
     {
         return [
-            [['id', 'customer_id'], 'integer'],
+            [['id'], 'integer'],
+            [['customer_id'], 'string'],
             [['merek', 'tipe', 'tahun', 'jenis', 'no_plat'], 'safe'],
             ['page', 'safe']
         ];
@@ -33,26 +35,24 @@ class KendaraanSearch extends Kendaraan
     public function search($params)
     {
         $query = Kendaraan::find()->asArray();
-        //$query = Kendaraan::find();
+        $query->joinWith('customer');
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
-
+            'sort' => ['defaultOrder' => ['id' => SORT_DESC]]
         ]);
 
         $this->load($params);
-        if(isset($this->page)){
-            $dataProvider->pagination->pageSize=$this->page; 
+        if (isset($this->page)) {
+            $dataProvider->pagination->pageSize = $this->page;
         }
-        //$query->joinWith('idCostumer');
-  
 
         $query->andFilterWhere([
             'id' => $this->id,
-            'customer_id' => $this->customer_id,
         ]);
 
-        $query->andFilterWhere(['like', 'merek', $this->merek])
+        $query->andFilterWhere(['like', 'customer.nama', $this->customer_id])
+            ->andFilterWhere(['like', 'merek', $this->merek])
             ->andFilterWhere(['like', 'tipe', $this->tipe])
             ->andFilterWhere(['like', 'tahun', $this->tahun])
             ->andFilterWhere(['like', 'jenis', $this->jenis])

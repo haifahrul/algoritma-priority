@@ -38,6 +38,48 @@ author A. Fakhrurozi S.
                 <?= $form->field($model, 'no_telp')->textInput(['maxlength' => true]) ?>
                 <?= $form->field($model, 'email')->textInput(['maxlength' => true]) ?>
             </div>
+            <div class="col-sm-6">
+                <!-- Data Kendaraan -->
+                <!--                --><?php //echo $form->field($model2, 'customer_id')->textInput() ?>
+                <?= $form->field($model2, 'no_plat')->textInput(['maxlength' => true]) ?>
+                <?= $form->field($model2, 'merek')->widget(Select2::className(), [
+                    'data' => Attribute::one_row_attribute('merek'),
+                    'options' => ['placeholder' => '--- Select Merek ---'],
+                    'pluginOptions' => [
+                        'allowClear' => true
+                    ],
+                ]) ?>
+                <?= $form->field($model2, 'tipe')->widget(Select2::className(), [
+                    'data' => Attribute::one_row_attribute('tipe'),
+                    'options' => ['placeholder' => '--- Select Tipe ---'],
+                    'pluginOptions' => [
+                        'allowClear' => true
+                    ],
+                ]) ?><?= $form->field($model2, 'jenis')->widget(Select2::className(), [
+                    'data' => Attribute::one_row_attribute('jenis'),
+                    'options' => ['placeholder' => '--- Select Jenis ---'],
+                    'pluginOptions' => [
+                        'allowClear' => true
+                    ],
+                ]) ?>
+                <?= $form->field($model2, 'tahun')->widget(DatePicker::classname(), [
+                    'type' => DatePicker::TYPE_INPUT,
+                    'pluginOptions' => [
+                        'autoclose' => true,
+                        //'endDate' => 'today',
+                        'format' => 'yyyy',
+                        'viewMode' => 'years',
+                        'minViewMode' => 'years',
+                        'removeButton' => true,
+                    ]
+                ]);
+                ?>
+            </div>
+
+            <!-- Data Service -->
+            <!--                --><?php //echo $form->field($model3, 'customer_id')->textInput() ?>
+            <!--                --><?php //echo $form->field($model3, 'kendaraan_id')->textInput() ?>
+            <?= $form->field($model3, 'keluhan')->textarea(['rows' => 6]) ?>
         </div>
         <div class="box-footer">
             <?= Html::submitButton('<i class="glyphicon glyphicon-floppy-disk glyphicon-sm"> </i>' . Yii::t('app', ' Simpan'), ['class' => 'btn btn-primary btn-sm']) ?>

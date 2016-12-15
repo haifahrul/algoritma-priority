@@ -4,40 +4,38 @@ use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
 
 /* @var $model app\models\Sparepart */
-/* @var $form yii\widgets\ActiveForm 
-	author zaza z.h
-*/
+/* @var $form yii\widgets\ActiveForm
+author A. Fakhrurozi S.
+ */
 
 ?>
-<div class="sparepart-form form">
-    <?php $form = ActiveForm::begin([
-        'options' => [
-        'class' => 'form-horizontal'],
-        'layout' => 'horizontal',
-        'fieldConfig' => [
-            'template' => "<div class=\"col-md-1\">{label}</div>\n<div class=\"col-md-5\">{input}{error}</div><div class=\"col-md-3\"></div>\n",
-            'labelOptions' => ['class' => 'text-left1'],
-        ],
+    <div class="sparepart-form form box">
+        <?php $form = ActiveForm::begin([
+            'options' => [
+                'class' => 'form-horizontal'],
+            'layout' => 'horizontal',
+            'fieldConfig' => [
+                'template' => "<div class=\"col-md-1\">{label}</div>\n<div class=\"col-md-5\">{input}{error}</div><div class=\"col-md-3\"></div>\n",
+                'labelOptions' => ['class' => 'text-left1'],
+            ],
             //'enableAjaxValidation' => true,
             //'validateOnBlur' => true
-		
-    ]); ?>
 
-    <?= $form->field($model, 'nama')->textInput(['maxlength' => true]) ?>
+        ]); ?>
 
-    <?= $form->field($model, 'harga')->textInput(['maxlength' => true]) ?>
+        <div class="box-body">
+            <?= $form->field($model, 'nama')->textInput(['maxlength' => true]) ?>
+            <?= $form->field($model, 'harga')->textInput(['maxlength' => true]) ?>
+            <?= $form->field($model, 'stok')->textInput(['maxlength' => true]) ?>
+        </div>
+        <div class="box-footer">
+            <?= Html::submitButton('<i class="glyphicon glyphicon-floppy-disk glyphicon-sm"> </i>' . Yii::t('app', ' Simpan'), ['class' => 'btn btn-primary btn-sm']) ?>
+            <?= Html::a('<i class="glyphicon glyphicon-remove glyphicon-sm"></i> Cancel ', Yii::$app->request->referrer, ['class' => 'btn btn-danger btn-sm']) ?>
+        </div>
 
-    <?= $form->field($model, 'stok')->textInput(['maxlength' => true]) ?>
+        <?php ActiveForm::end(); ?>
 
-    <div class="col-md-2"></div>
-    <div class="form-group">
-        <?= Html::submitButton( '<i class="glyphicon glyphicon-floppy-disk glyphicon-sm"> </i>'.Yii::t('app', ' Simpan') , ['class' => 'btn btn-primary' ]) ?>
-        <?= Html::a('<i class="glyphicon glyphicon-remove glyphicon-sm"></i> Cancel ', Yii::$app->request->referrer, ['class' => 'btn btn-danger  ']) ?>
     </div>
-
-    <?php ActiveForm::end(); ?>
-
-</div>
 
 <?php $script = <<<JS
 $('body').on('beforeSubmit', 'form#{$model->formName()}', function () {

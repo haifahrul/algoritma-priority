@@ -5,11 +5,11 @@ use yii\bootstrap\ActiveForm;
 
 /* @var $model app\models\Transaksi */
 /* @var $form yii\widgets\ActiveForm 
-	author zaza z.h
+	author A. Fakhrurozi S.
 */
 
 ?>
-<div class="transaksi-form form">
+<div class="transaksi-form form box">
     <?php $form = ActiveForm::begin([
         'options' => [
         'class' => 'form-horizontal'],
@@ -23,18 +23,15 @@ use yii\bootstrap\ActiveForm;
 		
     ]); ?>
 
-    <?= $form->field($model, 'service_id')->textInput() ?>
-
-    <?= $form->field($model, 'sparepart_id')->textInput() ?>
-
-    <?= $form->field($model, 'nota')->textInput(['maxlength' => true]) ?>
-
-    <?= $form->field($model, 'total_pembayaran')->textInput(['maxlength' => true]) ?>
-
-    <div class="col-md-2"></div>    
-    <div class="form-group">
-        <?= Html::submitButton( '<i class="glyphicon glyphicon-floppy-disk glyphicon-sm"> </i>'.Yii::t('app', ' Simpan') , ['class' => 'btn btn-primary' ]) ?>
-        <?= Html::a('<i class="glyphicon glyphicon-remove glyphicon-sm"></i> Cancel ', Yii::$app->request->referrer, ['class' => 'btn btn-danger  ']) ?>
+    <div class="box-body">
+        <?= $form->field($model, 'service_id')->textInput() ?>
+        <?= $form->field($model, 'sparepart_id')->textInput() ?>
+        <?= $form->field($model, 'nota')->textInput(['maxlength' => true]) ?>
+        <?= $form->field($model, 'total_pembayaran')->textInput(['maxlength' => true]) ?>
+    </div>
+    <div class="box-footer">
+        <?= Html::submitButton( '<i class="glyphicon glyphicon-floppy-disk glyphicon-sm"> </i>'.Yii::t('app', ' Simpan') , ['class' => 'btn btn-primary box-sm']) ?>
+        <?= Html::a('<i class="glyphicon glyphicon-remove glyphicon-sm"></i> Cancel ', Yii::$app->request->referrer, ['class' => 'btn btn-danger box-sm']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>

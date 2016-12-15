@@ -3,14 +3,14 @@
 use yii\helpers\Html;
 
 /* @var $this yii\web\View */
-/* @var $model app\modules\webmaster\models\Attribute */
+/* @var $model app\models\JasaService */
 
-$this->title = Yii::t('app', 'Tambah Attribute');
-$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Attribute'), 'url' => ['index']];
+$this->title = Yii::t('app', 'Tambah Jasa Service');
+$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Jasa Services'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 $this->params['title'] = $this->title;
 ?>
-<div class="attribute-create">
+<div class="jasa-service-create">
 
     <h1><?php Html::encode($this->title) ?></h1>
 

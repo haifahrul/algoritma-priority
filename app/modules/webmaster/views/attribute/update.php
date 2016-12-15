@@ -3,7 +3,7 @@
 use yii\helpers\Html;
 
 /* @var $this yii\web\View */
-/* @var $model app\models\Attribute */
+/* @var $model app\modules\webmaster\models\Attribute */
 
 $this->title = Yii::t('app', 'Update {modelClass}: ', [
     'modelClass' => 'Attribute',

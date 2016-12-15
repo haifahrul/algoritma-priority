@@ -24,8 +24,10 @@ $this->params['title'] = 'List' . $this->title;
                             'id' => 'select_page'
                         ]); ?>
                     </div>
-                    <?= Html::a('<i class="glyphicon glyphicon-plus glyphicon-sm"></i> Create ', ['create'],
+                    <?= Html::a('<i class="glyphicon glyphicon-plus glyphicon-sm"></i> Create Customer Baru ', ['create-new-customer'],
                         ['data-pjax' => 0, 'class' => 'btn btn-primary btn-sm btn-tambah1']) ?>
+                    <?= Html::a('<i class="glyphicon glyphicon-plus glyphicon-sm"></i> Create Data Customer ', ['create'],
+                        ['data-pjax' => 0, 'class' => 'btn btn-success btn-sm btn-tambah1']) ?>
                     <?= Html::button('<span class="glyphicon glyphicon-remove glyphicon-sm"></span> Delete',
                         ['data-pjax' => 0, 'class' => 'btn btn-danger btn-sm', 'title' => 'hapus', 'id' => 'btn-deletes']) ?>
             </p>
@@ -66,6 +68,37 @@ $this->params['title'] = 'List' . $this->title;
                         'template' => '{view} {update} {delete}',
                         'header' => 'Options',
                         'buttons' => [
+                            'view' => function ($url, $model) {
+                                $icon = '<i class = "glyphicon glyphicon-zoom-in"></i>';
+
+                                return Html::a($icon, $url, [
+                                    'data-pjax' => 0,
+                                    'class' => 'btn btn-default btn-xs btn-view',
+                                    'title' => Yii::t('app', 'View')
+                                ]);
+                            },
+                            'update' => function ($url, $model) {
+                                $icon = '<i class = "fa fa-pencil"></i>';
+
+                                return Html::a($icon, $url, [
+                                    'id' => 'btn-update-row',
+                                    'data-pjax' => 0,
+                                    'class' => 'btn btn-default btn-xs',
+                                    'title' => Yii::t('app', 'Update')
+                                ]);
+                            },
+                            'delete' => function ($url, $model) {
+                                $icon = '<i class = "fa fa-trash-o"></i>';
+
+                                return Html::a($icon, $url, [
+                                    'id' => 'btn-delete-row',
+                                    'data-pjax' => 0,
+                                    'data-method' => 'post',
+                                    'class' => 'btn btn-danger btn-xs',
+                                    'title' => Yii::t('app', 'Delete'),
+                                    'data-confirm' => Yii::t('yii', 'Are you sure to delete this item?'),
+                                ]);
+                            }
                         ],
                     ],
                 ],

@@ -12,17 +12,19 @@ use app\models\Service;
  */
 class ServiceSearch extends Service
 {
-
     public $page;
+    public $no_plat;
+    public $nama;
+
     public function rules()
     {
         return [
-            [['id', 'customer_id', 'kendaraan_id'], 'integer'],
+//            [['id', 'customer_id', 'kendaraan_id'], 'integer'],
+            [['no_plat', 'nama'], 'string'],
             [['keluhan', 'created_at'], 'safe'],
             ['page', 'safe']
         ];
     }
-
 
     public function scenarios()
     {
@@ -33,28 +35,28 @@ class ServiceSearch extends Service
     public function search($params)
     {
         $query = Service::find()->asArray();
-        //$query = Service::find();
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
-
         ]);
 
         $this->load($params);
-        if(isset($this->page)){
-            $dataProvider->pagination->pageSize=$this->page; 
+        if (isset($this->page)) {
+            $dataProvider->pagination->pageSize = $this->page;
         }
-        //$query->joinWith('idCostumer');
-  
+
+        $query->joinWith(['customer', 'kendaraan']);
 
         $query->andFilterWhere([
-            'id' => $this->id,
-            'customer_id' => $this->customer_id,
-            'kendaraan_id' => $this->kendaraan_id,
-            'created_at' => $this->created_at,
+//            'id' => $this->id,
+//            'customer_id' => $this->customer_id,
+//            'kendaraan_id' => $this->kendaraan_id,
+//            'created_at' => $this->created_at,
         ]);
 
-        $query->andFilterWhere(['like', 'keluhan', $this->keluhan]);
+        $query->andFilterWhere(['like', 'keluhan', $this->keluhan])
+            ->andFilterWhere(['like', 'kendaraan.no_plat', $this->no_plat])
+            ->andFilterWhere(['like', 'customer.nama', $this->nama]);
 
         return $dataProvider;
     }

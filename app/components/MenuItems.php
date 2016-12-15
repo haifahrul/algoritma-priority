@@ -41,9 +41,13 @@ class MenuItems
                 'icon' => 'money',
             ],
             [
-                'label' => Yii::t('app', 'Sparepart'),
-                'url' => ['/sparepart/index'],
-                'icon' => 'wrench',
+                'label' => Yii::t('app', 'Master Data'),
+                'url' => '#',
+                'icon' => 'database',
+                'items' => [
+                    ['label' => Yii::t('app', 'Jasa Service'), 'url' => ['/jasa-service/index/']],
+                    ['label' => Yii::t('app', 'Sparepart'), 'url' => ['/sparepart/index']],
+                ],
             ],
             [
                 'label' => Yii::t('app', 'SMS Gateway'),

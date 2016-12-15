@@ -4,22 +4,22 @@ use yii\helpers\Html;
 use yii\widgets\DetailView;
 
 /* @var $this yii\web\View */
-/* @var $model app\models\Customer */
+/* @var $model app\models\JasaService */
 
-$this->title = $model->nama;
-$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Customers'), 'url' => ['index']];
+$this->title = $model->id;
+$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Jasa Services'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 $this->params['title'] = $this->title;
-
-
+$formatter = Yii::$app->formatter;
 ?>
-<div class="customer-view box">
+
+<div class="jasa-service-view box">
     <div class="box-header with-border">
         <h1><?php Html::encode($this->title) ?></h1>
         <p>
-            <?= Html::a(Yii::t('app', 'Update'), ['update', 'id' => $model->id], ['class' => 'btn btn-primary btn-sm']) ?>
+            <?= Html::a(Yii::t('app', 'Update'), ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
             <?= Html::a(Yii::t('app', 'Delete'), ['delete', 'id' => $model->id], [
-                'class' => 'btn btn-danger btn-sm',
+                'class' => 'btn btn-danger',
                 'data' => [
                     'confirm' => Yii::t('app', 'Are you sure you want to delete this item?'),
                     'method' => 'post',
@@ -32,16 +32,11 @@ $this->params['title'] = $this->title;
             'model' => $model,
             'attributes' => [
                 'nama',
-                'alamat',
-                'no_telp',
-                'email:email',
+                [
+                    'attribute' => 'biaya',
+                    'value' => $formatter->currencyCode . ' ' . $formatter->asDecimal($model->biaya)
+                ]
             ],
         ]) ?>
-    </div>
-</div>
-
-<div class="box">
-    <div class="box-body">
-
     </div>
 </div>

@@ -39,7 +39,17 @@ class Service extends \yii\db\ActiveRecord
             [['created_at'], 'safe'],
             [['customer_id'], 'exist', 'skipOnError' => true, 'targetClass' => Customer::className(), 'targetAttribute' => ['customer_id' => 'id']],
             [['kendaraan_id'], 'exist', 'skipOnError' => true, 'targetClass' => Kendaraan::className(), 'targetAttribute' => ['kendaraan_id' => 'id']],
+            [['keluhan'], 'required', 'on' => 'createFromCustomer'],
+            [['keluhan'], 'required', 'on' => 'createFromKendaraan'],
         ];
+    }
+
+    public function scenarios()
+    {
+        $scenarios = parent::scenarios();
+        $scenarios['createFromCustomer'] = ['keluhan'];
+        $scenarios['createFromKendaraan'] = ['keluhan'];
+        return $scenarios;
     }
 
     /**
@@ -49,10 +59,10 @@ class Service extends \yii\db\ActiveRecord
     {
         return [
             'id' => Yii::t('app', 'ID'),
-            'customer_id' => Yii::t('app', 'Customer ID'),
-            'kendaraan_id' => Yii::t('app', 'Kendaraan ID'),
+            'customer_id' => Yii::t('app', 'Customer'),
+            'kendaraan_id' => Yii::t('app', 'Kendaraan'),
             'keluhan' => Yii::t('app', 'Keluhan'),
-            'created_at' => Yii::t('app', 'Created At'),
+            'created_at' => Yii::t('app', 'Tanggal Service'),
         ];
     }
 

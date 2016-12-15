@@ -2,16 +2,13 @@
 
 use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
-use app\modules\webmaster\models\Attribute;
-use kartik\date\DatePicker;
-use kartik\select2\Select2;
 
 /* @var $model app\models\Customer */
 /* @var $form yii\widgets\ActiveForm
-author A. Fakhrurozi S.
+author zaza z.h
  */
 ?>
-    <div class="col-sm-6 box">
+    <div class="box">
         <div class="box-header with-border">
             <div class="box-title">
                 Data Customer
@@ -68,5 +65,4 @@ $('body').on('beforeSubmit', 'form#{$model->formName()}', function () {
 });
 JS;
 //$this->registerJs($script);
-
 ?>

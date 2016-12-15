@@ -5,7 +5,7 @@ namespace app\modules\webmaster\models\search;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use app\models\Attribute;
+use app\modules\webmaster\models\Attribute;
 
 /**
  * AttributeSearch represents the model behind the search form about `app\models\Attribute`.

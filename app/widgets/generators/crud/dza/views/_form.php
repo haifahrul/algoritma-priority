@@ -22,7 +22,7 @@ use yii\bootstrap\ActiveForm;
 
 /* @var $model <?= ltrim($generator->modelClass, '\\') ?> */
 /* @var $form yii\widgets\ActiveForm 
-	author zaza z.h
+	author A. Fakhrurozi S.
 */
 
 ?>

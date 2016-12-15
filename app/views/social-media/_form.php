@@ -4,7 +4,7 @@ use yii\helpers\Html;
 
 /* @var $model app\models\SocialMedia */
 /* @var $form yii\widgets\ActiveForm
-author zaza z.h
+author A. Fakhrurozi S.
  */
 ?>
     <div class="social-media-form form">
