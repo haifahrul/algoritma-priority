@@ -32,6 +32,7 @@ $formater = Yii::$app->formatter;
             'model' => $model,
             'attributes' => [
 //                'id',
+                'kode_service',
                 'customer.nama',
                 'kendaraan.no_plat',
                 [

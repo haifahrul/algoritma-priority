@@ -66,10 +66,15 @@ class ServiceController extends Controller
         $is_ajax = Yii::$app->request->isAjax;
         $postdata = Yii::$app->request->post();
         if ($model->load($postdata) && $model->validate()) {
+
+            $model->kode_service = $model->generateServiceCode()[0];
+
             $transaction = Yii::$app->db->beginTransaction();
             try {
 
                 if ($model->save()) {
+                    $lastCode = $model->generateServiceCode()[1];
+                    Yii::$app->db->createCommand("UPDATE `attribute` SET `position`=" . $lastCode . " WHERE `name`='Count Code Service' OR `type`='Count Code Service'")->execute();
                     $transaction->commit();
                     Yii::$app->session->setFlash('success', ' Data telah disimpan!');
                     return $this->redirect(['index']);
@@ -96,9 +101,7 @@ class ServiceController extends Controller
             ]);
 
         }
-
     }
-
 
     public function actionUpdate($id)
     {
@@ -131,9 +134,7 @@ class ServiceController extends Controller
     {
         $transaction = Yii::$app->db->beginTransaction();
         try {
-
-            //query
-            if ($this->findModel($id)->delete()):
+            if ($this->findModel($id)->updateAttributes(['deleted' => 1])):
                 $transaction->commit();
                 Yii::$app->session->setFlash('success', 'Data has been removed!');
                 return $this->redirect(['index']);
@@ -156,17 +157,12 @@ class ServiceController extends Controller
         if (isset($_POST['keys'])) {
             $keys = $_POST['keys'];
             foreach ($keys as $key):
-
                 $model = Service::findOne($key);
-                if ($model->delete())
+                if ($model->updateAttributes(['deleted' => 1]))
                     $status = 1;
                 else
                     $status = 2;
             endforeach;
-
-            //$model = Service::findOne($keys);
-            //$model->delete();
-            //$status=3;
         }
         // retrun nya json
         echo Json::encode([

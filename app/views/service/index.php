@@ -55,6 +55,7 @@ $this->params['title'] = 'List' . $this->title;
                             'contentOptions' => ['class' => 'text-center'],
                         ],
 //                        'id',
+                        'kode_service',
                         [
                             'attribute' => 'nama',
                             'format' => 'raw',

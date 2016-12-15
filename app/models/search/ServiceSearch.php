@@ -20,7 +20,7 @@ class ServiceSearch extends Service
     {
         return [
 //            [['id', 'customer_id', 'kendaraan_id'], 'integer'],
-            [['no_plat', 'nama'], 'string'],
+            [['no_plat', 'nama', 'kode_service'], 'string'],
             [['keluhan', 'created_at'], 'safe'],
             ['page', 'safe']
         ];
@@ -35,6 +35,7 @@ class ServiceSearch extends Service
     public function search($params)
     {
         $query = Service::find()->asArray();
+        $query->where(['deleted' => 0]);
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
@@ -55,6 +56,7 @@ class ServiceSearch extends Service
         ]);
 
         $query->andFilterWhere(['like', 'keluhan', $this->keluhan])
+            ->andFilterWhere(['like', 'kode_service', $this->kode_service])
             ->andFilterWhere(['like', 'kendaraan.no_plat', $this->no_plat])
             ->andFilterWhere(['like', 'customer.nama', $this->nama]);
 
