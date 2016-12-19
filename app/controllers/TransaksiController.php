@@ -2,6 +2,8 @@
 
 namespace app\controllers;
 
+use app\models\Service;
+use app\models\Sparepart;
 use Yii;
 use app\models\Transaksi;
 use app\models\search\TransaksiSearch;
@@ -56,12 +58,14 @@ class TransaksiController extends Controller
     public function actionCreate()
     {
         $model = new Transaksi();
+        $dataService = Service::getKodeService();
+        $dataSparepart = Sparepart::getSparepartList();
+
         $is_ajax= Yii::$app->request->isAjax;
         $postdata= Yii::$app->request->post(); 
         if ($model->load($postdata)&& $model->validate()) {
             $transaction = Yii::$app->db->beginTransaction();
-            try{ 
-
+            try{
                 if($model->save()){
                     $transaction->commit();
                     Yii::$app->session->setFlash('success', ' Data telah disimpan!');
@@ -72,27 +76,29 @@ class TransaksiController extends Controller
                 $transaction->rollback();
                 throw $e;
             }
-
         } 
 
         if($is_ajax){
             //render view
             return $this->renderAjax('create', [
                 'model' => $model,
+                'dataService' => $dataService,
+                'dataSparepart' => $dataSparepart
             ]);            
         }else{    
             return $this->render('create', [
                 'model' => $model,
+                'dataService' => $dataService,
+                'dataSparepart' => $dataSparepart
             ]);
-                
         }
-        
     }
-
 
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
+        $dataService = Service::getKodeService();
+        $dataSparepart = Sparepart::getSparepartList();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             Yii::$app->session->setFlash('success', ' Data has been saved!');
@@ -101,10 +107,14 @@ class TransaksiController extends Controller
             if(Yii::$app->request->isAjax){
                 return $this->renderAjax('update', [
                     'model' => $model,
+                    'dataService' => $dataService,
+                    'dataSparepart' => $dataSparepart
                 ]);            
             }else{
                 return $this->render('update', [
                     'model' => $model,
+                    'dataService' => $dataService,
+                    'dataSparepart' => $dataSparepart
                 ]);
                 
             }

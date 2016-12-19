@@ -3,6 +3,7 @@
 namespace app\models;
 
 use Yii;
+use yii\helpers\ArrayHelper;
 
 /**
  * This is the model class for table "{{%kendaraan}}".
@@ -89,5 +90,20 @@ class Kendaraan extends \yii\db\ActiveRecord
     public static function find()
     {
         return new \app\models\query\KendaraanQuery(get_called_class());
+    }
+
+    public static function getListKendaraan($id)
+    {
+        $query = Yii::$app->db->createCommand('SELECT * FROM {{%kendaraan}} WHERE customer_id=:customer_id')
+            ->bindValue(':customer_id', $id)
+            ->queryAll();
+
+        foreach ($query as $result) {
+            $data[] = [
+                'id' => $result['id'],
+                'name' => $result['no_plat'],
+            ];
+        };
+        return $data;
     }
 }

@@ -52,7 +52,14 @@ $this->params['title'] = 'List' . $this->title;
                     ],
 //                    'id',
                     'nama',
-                    'harga',
+                    [
+                        'attribute' => 'harga',
+                        'format' => 'raw',
+                        'value' => function ($data) {
+                            $formatter = Yii::$app->formatter;
+                            return $formatter->currencyCode . $formatter->asDecimal($data['harga']);
+                        }
+                    ],
                     'stok',
                     [
                         'class' => 'yii\grid\ActionColumn',

@@ -92,6 +92,12 @@ class Attribute extends \yii\db\ActiveRecord
         return $model->name;
     }
 
+    public static function getAttributeCode($type, $code)
+    {
+        $model = self::find()->where("type='$type' and code=$code")->one();
+        return $model->code;
+    }
+
     public static function attribute_view($type, $code)
     {
         empty($code) ? $code = 0 : $code;

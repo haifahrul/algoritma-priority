@@ -20,6 +20,7 @@ class ServiceSearch extends Service
     {
         return [
 //            [['id', 'customer_id', 'kendaraan_id'], 'integer'],
+            [['status'], 'integer'],
             [['no_plat', 'nama', 'kode_service'], 'string'],
             [['keluhan', 'created_at'], 'safe'],
             ['page', 'safe']
@@ -36,6 +37,7 @@ class ServiceSearch extends Service
     {
         $query = Service::find()->asArray();
         $query->where(['deleted' => 0]);
+        $query->orderBy(['id' => SORT_ASC]);
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
@@ -53,6 +55,7 @@ class ServiceSearch extends Service
 //            'customer_id' => $this->customer_id,
 //            'kendaraan_id' => $this->kendaraan_id,
 //            'created_at' => $this->created_at,
+            'status' => $this->status
         ]);
 
         $query->andFilterWhere(['like', 'keluhan', $this->keluhan])

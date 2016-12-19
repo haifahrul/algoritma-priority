@@ -8,7 +8,7 @@ use yii\grid\GridView;
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\search\TransaksiSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
-$this->title = Yii::t('app', 'Transaksis');
+$this->title = Yii::t('app', 'Transaksi');
 $this->params['breadcrumbs'][] = $this->title;
 $this->params['title'] = 'List' . $this->title;
 ?>
@@ -52,11 +52,30 @@ $this->params['title'] = 'List' . $this->title;
                             'header' => 'No',
                             'contentOptions' => ['class' => 'text-center'],
                         ],
-                        'id',
-                        'service_id',
-                        'sparepart_id',
+//                        'id',
+                        [
+                            'attribute' => 'service_id',
+                            'format' => 'raw',
+                            'value' => function ($data) {
+                                return $data['service']['kode_service'];
+                            }
+                        ],
+                        [
+                            'attribute' => 'sparepart_id',
+                            'format' => 'raw',
+                            'value' => function ($data) {
+                                return $data['sparepart']['nama'];
+                            }
+                        ],
                         'nota',
-                        'total_pembayaran',
+                        [
+                            'attribute' => 'total_pembayaran',
+                            'format' => 'raw',
+                            'value' => function ($data) {
+                                $formatter = Yii::$app->formatter;
+                                return $formatter->currencyCode . $formatter->asDecimal($data['total_pembayaran']);
+                            }
+                        ],
                         [
                             'class' => 'yii\grid\ActionColumn',
                             //'header'=>'Pilihan',

@@ -52,7 +52,7 @@ $config = [
             'timeFormat' => 'php:H.i',
             'thousandSeparator' => '.',
             'decimalSeparator' => ',',
-            'currencyCode' => 'IDR',
+            'currencyCode' => 'Rp. ',
             'defaultTimeZone' => 'Asia/Jakarta',
             'locale' => 'id-ID'
         ],

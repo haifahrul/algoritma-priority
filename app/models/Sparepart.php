@@ -3,6 +3,7 @@
 namespace app\models;
 
 use Yii;
+use yii\helpers\ArrayHelper;
 
 /**
  * This is the model class for table "{{%sparepart}}".
@@ -63,5 +64,12 @@ class Sparepart extends \yii\db\ActiveRecord
     public static function find()
     {
         return new \app\models\query\SparepartQuery(get_called_class());
+    }
+
+    public static function getSparepartList()
+    {
+        $data = Yii::$app->db->createCommand('SELECT `id`, `nama` FROM {{%sparepart}}')->queryAll();
+
+        return ArrayHelper::map($data, 'id', 'nama');
     }
 }

@@ -4,6 +4,7 @@ namespace app\models;
 
 use Yii;
 use app\modules\webmaster\models\Attribute;
+use yii\helpers\ArrayHelper;
 
 /**
  * This is the model class for table "{{%service}}".
@@ -14,6 +15,7 @@ use app\modules\webmaster\models\Attribute;
  * @property integer $kendaraan_id
  * @property string $keluhan
  * @property string $created_at
+ * @property integer $status
  * @property integer $deleted
  *
  * @property Customer $customer
@@ -37,7 +39,7 @@ class Service extends \yii\db\ActiveRecord
     {
         return [
             [['customer_id', 'kendaraan_id', 'keluhan'], 'required'],
-            [['customer_id', 'kendaraan_id', 'deleted'], 'integer'],
+            [['customer_id', 'kendaraan_id', 'status', 'deleted'], 'integer'],
             [['keluhan'], 'string'],
             [['created_at', 'kode_service'], 'safe'],
             [['customer_id'], 'exist', 'skipOnError' => true, 'targetClass' => Customer::className(), 'targetAttribute' => ['customer_id' => 'id']],
@@ -67,6 +69,7 @@ class Service extends \yii\db\ActiveRecord
             'kendaraan_id' => Yii::t('app', 'Kendaraan'),
             'keluhan' => Yii::t('app', 'Keluhan'),
             'created_at' => Yii::t('app', 'Tanggal Service'),
+            'status' => Yii::t('app', 'Status')
         ];
     }
 
@@ -116,5 +119,23 @@ class Service extends \yii\db\ActiveRecord
         $kodeService[] = $lastCode;
 
         return $kodeService;
+    }
+
+    public static function getStatus($id)
+    {
+        // 1 adalah belum / perlu di service
+        // 2 adalah Selesai di service
+        if ($id == Attribute::getAttributeCode('STATUS_SERVICE', 1)) {
+            return '<span class="label label-warning">' . Attribute::attribute_view('status_service', $id) . '</span>';
+        } else {
+            return '<span class="label label-success">' . Attribute::attribute_view('status_service', $id) . '</span>';
+        }
+    }
+
+    public static function getKodeService()
+    {
+        $data = Yii::$app->db->createCommand('SELECT `id`, `kode_service` FROM {{%service}}')->queryAll();
+
+        return ArrayHelper::map($data, 'id', 'kode_service');
     }
 }

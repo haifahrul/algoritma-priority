@@ -74,7 +74,7 @@ class KendaraanController extends Controller
                     Yii::$app->session->setFlash('success', ' Data telah disimpan!');
                     return $this->redirect(['index']);
                 }
-                //end if (save) 
+                //end if (save)
             } catch (Exception $e) {
                 $transaction->rollback();
                 throw $e;
@@ -108,7 +108,6 @@ class KendaraanController extends Controller
             if ($model->customer_id != $idCustomer) {
                 Yii::$app->db->createCommand('UPDATE service SET customer_id=' . $model->customer_id . ' WHERE kendaraan_id=' . $model->id)->execute();
             }
-
             $model->save();
 
             Yii::$app->session->setFlash('success', ' Data has been saved!');
@@ -178,17 +177,29 @@ class KendaraanController extends Controller
 
     public function actionService($id)
     {
-        $service = $this->findModel($id);
         $model = new Service();
+        $service = $this->findModel($id);
         $model->scenario = 'createFromKendaraan';
 
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
+            $model->kode_service = $model->generateServiceCode();
             $model->customer_id = $service->customer_id;
             $model->kendaraan_id = $service->id;
-            $model->save();
 
-            Yii::$app->session->setFlash('success', ' Data has been saved!');
-            return $this->redirect(['/service/index']);
+            $transaction = Yii::$app->db->beginTransaction();
+            try {
+
+                if ($model->save()) {
+                    $lastCode = $model->generateServiceCode()[1];
+                    Yii::$app->db->createCommand("UPDATE `attribute` SET `position`=" . $lastCode . " WHERE `name`='Count Code Service' OR `type`='Count Code Service'")->execute();
+                    $transaction->commit();
+                    Yii::$app->session->setFlash('success', ' Data has been saved!');
+                    return $this->redirect(['/service/index']);
+                }
+            } catch (Exception $e) {
+                $transaction->rollback();
+                throw $e;
+            }
         } else {
             if (Yii::$app->request->isAjax) {
                 return $this->renderAjax('form-service', [

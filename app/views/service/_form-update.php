@@ -4,13 +4,13 @@ use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
 use kartik\select2\Select2;
 
-/* @var $model app\models\Transaksi */
+/* @var $model app\models\Service */
 /* @var $form yii\widgets\ActiveForm
 author A. Fakhrurozi S.
  */
-
 ?>
-    <div class="transaksi-form form box">
+
+    <div class="service-form form box">
         <?php $form = ActiveForm::begin([
             'options' => [
                 'class' => 'form-horizontal'],
@@ -21,34 +21,29 @@ author A. Fakhrurozi S.
             ],
             //'enableAjaxValidation' => true,
             //'validateOnBlur' => true
-
         ]); ?>
-
         <div class="box-body">
-            <?= $form->field($model, 'service_id')->widget(Select2::className(), [
-                'data' => $dataService,
-                'options' => ['placeholder' => '--- Select kode service ---'],
+            <?= $form->field($model, 'customer_id')->widget(Select2::className(), [
+                'data' => $dataCustomer,
+                'options' => ['placeholder' => '--- Select customer ---'],
                 'pluginOptions' => [
                     'allowClear' => true
                 ],
             ]) ?>
-            <?= $form->field($model, 'sparepart_id')->widget(Select2::className(), [
-                'data' => $dataSparepart,
-                'options' => ['placeholder' => '--- Select sparepart ---'],
+            <?= $form->field($model, 'kendaraan_id')->widget(Select2::className(), [
+                'data' => $dataKendaraan,
+                'options' => ['placeholder' => '--- Select kendaraan ---'],
                 'pluginOptions' => [
                     'allowClear' => true
                 ],
             ]) ?>
-            <?= $form->field($model, 'nota')->textInput(['maxlength' => true]) ?>
-            <?= $form->field($model, 'total_pembayaran')->textInput(['maxlength' => true]) ?>
+            <?= $form->field($model, 'keluhan')->textarea(['rows' => 6]) ?>
         </div>
         <div class="box-footer">
-            <?= Html::submitButton('<i class="glyphicon glyphicon-floppy-disk glyphicon-sm"> </i>' . Yii::t('app', ' Simpan'), ['class' => 'btn btn-primary box-sm']) ?>
-            <?= Html::a('<i class="glyphicon glyphicon-remove glyphicon-sm"></i> Cancel ', Yii::$app->request->referrer, ['class' => 'btn btn-danger box-sm']) ?>
+            <?= Html::submitButton('<i class="glyphicon glyphicon-floppy-disk glyphicon-sm"> </i>' . Yii::t('app', ' Simpan'), ['class' => 'btn btn-primary btn-sm']) ?>
+            <?= Html::a('<i class="glyphicon glyphicon-remove glyphicon-sm"></i> Cancel ', Yii::$app->request->referrer, ['class' => 'btn btn-danger btn-sm']) ?>
         </div>
-
         <?php ActiveForm::end(); ?>
-
     </div>
 
 <?php $script = <<<JS

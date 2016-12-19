@@ -47,8 +47,8 @@ class Transaksi extends \yii\db\ActiveRecord
     {
         return [
             'id' => Yii::t('app', 'ID'),
-            'service_id' => Yii::t('app', 'Service ID'),
-            'sparepart_id' => Yii::t('app', 'Sparepart ID'),
+            'service_id' => Yii::t('app', 'Service'),
+            'sparepart_id' => Yii::t('app', 'Sparepart'),
             'nota' => Yii::t('app', 'Nota'),
             'total_pembayaran' => Yii::t('app', 'Total Pembayaran'),
         ];

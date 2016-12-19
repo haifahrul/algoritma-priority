@@ -65,13 +65,13 @@ class ServiceController extends Controller
 
         $is_ajax = Yii::$app->request->isAjax;
         $postdata = Yii::$app->request->post();
+
         if ($model->load($postdata) && $model->validate()) {
 
             $model->kode_service = $model->generateServiceCode()[0];
 
             $transaction = Yii::$app->db->beginTransaction();
             try {
-
                 if ($model->save()) {
                     $lastCode = $model->generateServiceCode()[1];
                     Yii::$app->db->createCommand("UPDATE `attribute` SET `position`=" . $lastCode . " WHERE `name`='Count Code Service' OR `type`='Count Code Service'")->execute();
@@ -178,5 +178,21 @@ class ServiceController extends Controller
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');
         }
+    }
+
+    public function actionListKendaraan()
+    {
+        $out = [];
+        if (isset($_POST['depdrop_parents'])) {
+            $parents = $_POST['depdrop_parents'];
+            if ($parents != null) {
+                $id = $parents[0];
+                $out = Kendaraan::getListKendaraan($id);
+
+                echo Json::encode(['output' => $out, 'selected' => '']);
+                return;
+            }
+        }
+        echo Json::encode(['output' => '', 'selected' => '']);
     }
 }

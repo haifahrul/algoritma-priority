@@ -10,9 +10,9 @@ $this->title = $model->id;
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Spareparts'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 $this->params['title'] = $this->title;
-
-
+$formatter = Yii::$app->formatter;
 ?>
+
 <div class="sparepart-view">
     <div class="box">
         <div class="box-body">
@@ -31,9 +31,13 @@ $this->params['title'] = $this->title;
             <?= DetailView::widget([
                 'model' => $model,
                 'attributes' => [
-                    'id',
+//                    'id',
                     'nama',
-                    'harga',
+                    [
+                        'attribute' => 'harga',
+                        'format' => 'raw',
+                        'value' => $formatter->currencyCode . $formatter->asDecimal($model['harga'])
+                    ],
                     'stok',
                 ],
             ]) ?>

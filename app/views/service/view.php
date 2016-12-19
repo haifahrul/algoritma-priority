@@ -3,6 +3,7 @@
 use yii\helpers\Html;
 use yii\widgets\DetailView;
 use app\modules\webmaster\models\Attribute;
+use app\models\Service;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Service */
@@ -56,6 +57,11 @@ $formater = Yii::$app->formatter;
                     'attribute' => 'created_at',
                     'format' =>'raw',
                     'value' => $formater->asDatetime($model['created_at'])
+                ],
+                [
+                    'attribute' => 'status',
+                    'format' => 'raw',
+                    'value' => Service::getStatus($model->status)
                 ]
             ],
         ]) ?>

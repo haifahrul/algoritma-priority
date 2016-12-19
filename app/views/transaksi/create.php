@@ -11,11 +11,10 @@ $this->params['breadcrumbs'][] = $this->title;
 $this->params['title'] = $this->title;
 ?>
 <div class="transaksi-create">
-
     <h1><?php Html::encode($this->title) ?></h1>
-
     <?= $this->render('_form', [
         'model' => $model,
+        'dataService' => $dataService,
+        'dataSparepart' => $dataSparepart
     ]) ?>
-
 </div>

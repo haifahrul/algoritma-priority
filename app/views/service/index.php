@@ -4,6 +4,8 @@ use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\bootstrap\Modal;
 use yii\grid\GridView;
+use app\modules\webmaster\models\Attribute;
+use app\models\Service;
 
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\search\ServiceSearch */
@@ -74,9 +76,17 @@ $this->params['title'] = 'List' . $this->title;
                         [
                             'attribute' => 'created_at',
                             'format' => 'raw',
-                            'value' => function($data) {
+                            'value' => function ($data) {
                                 $formater = Yii::$app->formatter;
                                 return $formater->asDatetime($data['created_at']);
+                            }
+                        ],
+                        [
+                            'filter' => Attribute::one_row_attribute('STATUS_SERVICE'),
+                            'attribute' => 'status',
+                            'format' => 'raw',
+                            'value' => function ($data) {
+                                return Service::getStatus($data['status']);
                             }
                         ],
                         [

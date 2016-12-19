@@ -33,19 +33,16 @@ class TransaksiSearch extends Transaksi
     public function search($params)
     {
         $query = Transaksi::find()->asArray();
-        //$query = Transaksi::find();
+        $query->joinWith(['sparepart', 'service']);
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
-
         ]);
 
         $this->load($params);
         if(isset($this->page)){
             $dataProvider->pagination->pageSize=$this->page; 
         }
-        //$query->joinWith('idCostumer');
-  
 
         $query->andFilterWhere([
             'id' => $this->id,
@@ -54,6 +51,8 @@ class TransaksiSearch extends Transaksi
         ]);
 
         $query->andFilterWhere(['like', 'nota', $this->nota])
+            ->andFilterWhere(['like', 'service.kode_service', $this->service_id])
+            ->andFilterWhere(['like', 'sparepart.nama', $this->sparepart_id])
             ->andFilterWhere(['like', 'total_pembayaran', $this->total_pembayaran]);
 
         return $dataProvider;
