@@ -3,6 +3,7 @@
 namespace app\models;
 
 use Yii;
+use yii\helpers\ArrayHelper;
 
 /**
  * This is the model class for table "{{%customer}}".
@@ -77,5 +78,12 @@ class Customer extends \yii\db\ActiveRecord
     public static function find()
     {
         return new \app\models\query\CustomerQuery(get_called_class());
+    }
+
+    public static function getPhoneCustomer()
+    {
+        $data = Yii::$app->db->createCommand('SELECT `no_telp` FROM {{%customer}}')->queryAll();
+
+        return $data;
     }
 }

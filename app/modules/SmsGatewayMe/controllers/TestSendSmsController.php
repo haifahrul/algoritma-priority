@@ -19,17 +19,8 @@ class TestSendSmsController extends Controller
      */
     public function actionIndex()
     {
-//        $model = DynamicModel::validateData(compact(['number', 'message']), [
-//            [['number'], 'integer', 'max' => 13],
-//            [['message'], 'string', 'max' => 128],
-//        ]);
-//        $model = DynamicModel::validateData(compact('message'), [
-//            [['number'], 'integer', 'max' => 13],
-//        ]);
-
         $model = new DynamicModel(['number', 'message']);
         $model->addRule(['number', 'message'], 'required');
-//        $model->addRule(['number'], 'integer', ['max' => 15]);
         $model->addRule(['message'], 'string', ['max' => 128]);
 
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {

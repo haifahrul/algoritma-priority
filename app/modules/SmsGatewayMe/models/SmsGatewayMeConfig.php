@@ -30,7 +30,7 @@ class SmsGatewayMeConfig extends \yii\db\ActiveRecord
     {
         return [
             [['code', 'key', 'value'], 'required'],
-            [['value'], 'string'],
+            [['value'], 'string', 'max' => 128],
             [['code', 'key'], 'string', 'max' => 64],
         ];
     }
@@ -113,6 +113,13 @@ class SmsGatewayMeConfig extends \yii\db\ActiveRecord
         }
 
         return $data;
+    }
+
+    public static function getMessages()
+    {
+        $data = Yii::$app->db->createCommand('SELECT * FROM sms_gateway_me_config WHERE `code`="CONFIG" AND `key`="messages"')->queryOne();
+
+        return $data['value'];
     }
 
 }
