@@ -12,8 +12,8 @@ use app\models\Transaksi;
  */
 class TransaksiSearch extends Transaksi
 {
-
     public $page;
+
     public function rules()
     {
         return [
@@ -22,7 +22,6 @@ class TransaksiSearch extends Transaksi
             ['page', 'safe']
         ];
     }
-
 
     public function scenarios()
     {
@@ -40,14 +39,14 @@ class TransaksiSearch extends Transaksi
         ]);
 
         $this->load($params);
-        if(isset($this->page)){
-            $dataProvider->pagination->pageSize=$this->page; 
+        if (isset($this->page)) {
+            $dataProvider->pagination->pageSize = $this->page;
         }
 
         $query->andFilterWhere([
             'id' => $this->id,
-            'service_id' => $this->service_id,
-            'sparepart_id' => $this->sparepart_id,
+//            'service_id' => $this->service_id,
+//            'sparepart_id' => $this->sparepart_id,
         ]);
 
         $query->andFilterWhere(['like', 'nota', $this->nota])

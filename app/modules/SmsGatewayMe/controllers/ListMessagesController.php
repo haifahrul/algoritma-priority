@@ -22,8 +22,10 @@ class ListMessagesController extends Controller
         $result = $smsGateway->getMessages($page);
 
         $array = [];
-        foreach ($result['response'] AS $i => $item) {
-            $array = $item;
+        foreach ($result['response']['result'] AS $item) {
+            if ($item['status'] == 'pending' OR $item['status'] == 'sent') {
+                $array[] = $item;
+            }
         }
 
         $dataProvider = new \yii\data\ArrayDataProvider([
