@@ -24,7 +24,7 @@ $this->params['title'] = 'List' . $this->title;
                     'id' => 'select_page'
                 ]); ?>
             </div>
-            <?= Html::a('<i class="glyphicon glyphicon-back glyphicon-sm"></i> Kembali ', ['index'],
+            <?= Html::a('<i class="fa fa-arrow-left"></i><b> Kembali</b> ', ['index'],
                 ['data-pjax' => 0, 'class' => 'btn btn-default btn-sm btn-tambah1']) ?>
             </p>
         </div>
