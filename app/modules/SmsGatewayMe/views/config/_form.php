@@ -23,10 +23,8 @@ author A. Fakhrurozi S.
 
         ]); ?>
 
-        <?= $form->field($model, 'code')->textInput(['maxlength' => true]) ?>
-
-        <?= $form->field($model, 'key')->textInput(['maxlength' => true]) ?>
-
+        <?= $form->field($model, 'code')->textInput(['maxlength' => true, 'disabled' => true]) ?>
+        <?= $form->field($model, 'key')->textInput(['maxlength' => true, 'disabled' => true]) ?>
         <?= $form->field($model, 'value')->textarea(['rows' => 6]) ?>
 
         <div class="col-md-2"></div>
