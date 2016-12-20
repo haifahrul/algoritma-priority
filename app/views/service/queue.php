@@ -10,7 +10,7 @@ use app\models\Service;
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\search\ServiceSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
-$this->title = Yii::t('app', 'Services');
+$this->title = Yii::t('app', 'Antrian Service');
 $this->params['breadcrumbs'][] = $this->title;
 $this->params['title'] = 'List' . $this->title;
 ?>
@@ -24,12 +24,8 @@ $this->params['title'] = 'List' . $this->title;
                     'id' => 'select_page'
                 ]); ?>
             </div>
-            <?= Html::a('<i class="glyphicon glyphicon-plus glyphicon-sm"></i> Create ', ['create'],
-                ['data-pjax' => 0, 'class' => 'btn btn-primary btn-sm btn-tambah1']) ?>
-            <?= Html::button('<span class="glyphicon glyphicon-remove glyphicon-sm"></span> Delete',
-                ['data-pjax' => 0, 'class' => 'btn btn-danger btn-sm', 'title' => 'hapus', 'id' => 'btn-deletes']) ?>
-            <?= Html::a('<i class=""></i> <b>Cek Antrian</b> ', ['queue'],
-                ['data-pjax' => 0, 'class' => 'btn btn-success btn-sm']) ?>
+            <?= Html::a('<i class="glyphicon glyphicon-back glyphicon-sm"></i> Kembali ', ['index'],
+                ['data-pjax' => 0, 'class' => 'btn btn-default btn-sm btn-tambah1']) ?>
             </p>
         </div>
         <div class="box-body">
@@ -84,12 +80,13 @@ $this->params['title'] = 'List' . $this->title;
                             }
                         ],
                         [
-                            'filter' => Attribute::one_row_attribute('STATUS_SERVICE'),
-                            'attribute' => 'status',
+//                            'attribute' => 'status',
+                            'label' => 'Status',
                             'format' => 'raw',
                             'value' => function ($data) {
                                 return Service::getStatus($data['status']);
-                            }
+                            },
+                            'contentOptions' => ['class' => 'text-center'],
                         ],
                         [
                             'class' => 'yii\grid\ActionColumn',

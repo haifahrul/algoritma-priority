@@ -30,7 +30,6 @@ class ServiceController extends Controller
         ];
     }
 
-
     public function actionIndex()
     {
         $searchModel = new ServiceSearch();
@@ -42,6 +41,16 @@ class ServiceController extends Controller
         ]);
     }
 
+    public function actionQueue()
+    {
+        $searchModel = new ServiceSearch();
+        $dataProvider = $searchModel->searchQueue(Yii::$app->request->queryParams);
+
+        return $this->render('queue', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+        ]);
+    }
 
     public function actionView($id)
     {
@@ -55,7 +64,6 @@ class ServiceController extends Controller
             ]);
         }
     }
-
 
     public function actionCreate()
     {
