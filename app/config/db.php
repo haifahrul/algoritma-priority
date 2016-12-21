@@ -3,7 +3,7 @@
 return [
     'class' => 'yii\db\Connection',
     'dsn' => 'mysql:host=localhost;dbname=topik',
-    'username' => 'root',
+    'username' => 'topik',
     'password' => '',
     'charset' => 'utf8',
 ];
