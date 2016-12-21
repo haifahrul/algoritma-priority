@@ -83,6 +83,7 @@ class Customer extends \yii\db\ActiveRecord
     public static function getPhoneCustomer()
     {
         $data = Yii::$app->db->createCommand('SELECT `no_telp` FROM {{%customer}}')->queryAll();
+        $data = ArrayHelper::getColumn($data, 'no_telp');
 
         return $data;
     }

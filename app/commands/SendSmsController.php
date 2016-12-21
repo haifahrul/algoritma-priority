@@ -40,10 +40,8 @@ class SendSmsController extends Controller
             'expires_at' => strtotime($expires_at) // Cancel the message in 1 hour if the message is not yet sent
         ];
 
-        foreach ($number as $item) {
-            //Please note options is no required and can be left out
-            $smsGateway->sendMessageToNumber($item['no_telp'], $message, $deviceID, $options);
-        }
+        //Please note options is no required and can be left out
+        $smsGateway->sendMessageToManyNumbers($number, $message, $deviceID, $options);
 
         echo "\n" . "Send SMS Success";
     }
