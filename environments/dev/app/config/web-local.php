@@ -5,8 +5,8 @@ return [
         	// setting your db local
             'class' => 'yii\db\Connection',
             'dsn' => 'mysql:host=localhost;dbname=topik',
-            'username' => 'root',
-            'password' => '',
+            'username' => 'topik',
+            'password' => 'topik',
             'charset' => 'utf8',
         ],
         'mailer' => [
