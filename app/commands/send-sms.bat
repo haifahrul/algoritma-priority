@@ -3,7 +3,7 @@
 @ECHO --- SEND SMS TO CUSTOMER FOR SERVICE MOTORCYCLE ---
 @ECHO --- EVERY 1 MONTH ---------------------------------
 @ECHO ---------------------------------------------------
-
+@ECHO OFF
 @ECHO Sending SMS, Please wait...
 @setlocal
 

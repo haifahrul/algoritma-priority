@@ -43,6 +43,6 @@ class SendSmsController extends Controller
         //Please note options is no required and can be left out
         $smsGateway->sendMessageToManyNumbers($number, $message, $deviceID, $options);
 
-        echo "\n" . "Send SMS Success";
+        echo "\n" . "Send SMS Success\n";
     }
 }
