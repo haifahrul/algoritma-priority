@@ -24,12 +24,12 @@ CREATE TABLE IF NOT EXISTS `attribute` (
   `content` text COLLATE utf8_unicode_ci,
   `code` smallint(6) NOT NULL,
   `type` varchar(128) COLLATE utf8_unicode_ci NOT NULL,
-  `position` smallint(6) NOT NULL,
+  `position` int(11) NOT NULL,
   `status` tinyint(4) NOT NULL DEFAULT '1',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=56 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=60 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
--- Membuang data untuk tabel topik.attribute: 9 rows
+-- Membuang data untuk tabel topik.attribute: 13 rows
 /*!40000 ALTER TABLE `attribute` DISABLE KEYS */;
 INSERT INTO `attribute` (`id`, `parent`, `name`, `content`, `code`, `type`, `position`, `status`) VALUES
 	(48, 46, 'Matic', NULL, 2, 'JENIS', 2, 1);
@@ -50,7 +50,13 @@ INSERT INTO `attribute` (`id`, `parent`, `name`, `content`, `code`, `type`, `pos
 INSERT INTO `attribute` (`id`, `parent`, `name`, `content`, `code`, `type`, `position`, `status`) VALUES
 	(54, 51, 'Vario eSP', NULL, 2, 'TIPE', 2, 1);
 INSERT INTO `attribute` (`id`, `parent`, `name`, `content`, `code`, `type`, `position`, `status`) VALUES
-	(55, 0, 'Count Kode Service', '(NULL)', 0, 'Count Code Service', 2, 1);
+	(55, 0, 'Count Kode Service', '(NULL)', 0, 'Count Code Service', 10, 1);
+INSERT INTO `attribute` (`id`, `parent`, `name`, `content`, `code`, `type`, `position`, `status`) VALUES
+	(56, 0, 'Status Service', NULL, 0, 'STATUS_SERVICE', 0, 1);
+INSERT INTO `attribute` (`id`, `parent`, `name`, `content`, `code`, `type`, `position`, `status`) VALUES
+	(57, 56, 'Belum', NULL, 1, 'STATUS_SERVICE', 1, 1);
+INSERT INTO `attribute` (`id`, `parent`, `name`, `content`, `code`, `type`, `position`, `status`) VALUES
+	(58, 56, 'Sudah', NULL, 2, 'STATUS_SERVICE', 2, 1);
 /*!40000 ALTER TABLE `attribute` ENABLE KEYS */;
 
 -- membuang struktur untuk table topik.auth_assignment
@@ -674,7 +680,7 @@ CREATE TABLE IF NOT EXISTS `customer` (
 -- Membuang data untuk tabel topik.customer: ~2 rows (lebih kurang)
 /*!40000 ALTER TABLE `customer` DISABLE KEYS */;
 INSERT INTO `customer` (`id`, `nama`, `alamat`, `no_telp`, `email`) VALUES
-	(9, 'Fahrul', 'Bogor', '085710568571', 'haifahrul@gmail.com');
+	(9, 'Fahrul', 'Bogor', '0857105685710', 'haifahrul@gmail.com');
 INSERT INTO `customer` (`id`, `nama`, `alamat`, `no_telp`, `email`) VALUES
 	(10, 'Topik', 'jakbar', '08', '');
 /*!40000 ALTER TABLE `customer` ENABLE KEYS */;
@@ -687,7 +693,7 @@ CREATE TABLE IF NOT EXISTS `jasa_service` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
--- Membuang data untuk tabel topik.jasa_service: ~1 rows (lebih kurang)
+-- Membuang data untuk tabel topik.jasa_service: ~0 rows (lebih kurang)
 /*!40000 ALTER TABLE `jasa_service` DISABLE KEYS */;
 INSERT INTO `jasa_service` (`id`, `nama`, `biaya`) VALUES
 	(1, 'Tune UP', '87000');
@@ -705,14 +711,18 @@ CREATE TABLE IF NOT EXISTS `kendaraan` (
   PRIMARY KEY (`id`),
   KEY `FK_kendaraan_customer` (`customer_id`),
   CONSTRAINT `FK_kendaraan_customer` FOREIGN KEY (`customer_id`) REFERENCES `customer` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
 
--- Membuang data untuk tabel topik.kendaraan: ~2 rows (lebih kurang)
+-- Membuang data untuk tabel topik.kendaraan: ~4 rows (lebih kurang)
 /*!40000 ALTER TABLE `kendaraan` DISABLE KEYS */;
 INSERT INTO `kendaraan` (`id`, `customer_id`, `merek`, `tipe`, `tahun`, `jenis`, `no_plat`) VALUES
 	(6, 10, '1', '1', '2010', '1', 'B 2456 FF');
 INSERT INTO `kendaraan` (`id`, `customer_id`, `merek`, `tipe`, `tahun`, `jenis`, `no_plat`) VALUES
-	(7, 9, '1', '2', '2013', '2', 'F 2540 GT');
+	(7, 9, '1', '2', '2014', '2', 'F 2540 GT');
+INSERT INTO `kendaraan` (`id`, `customer_id`, `merek`, `tipe`, `tahun`, `jenis`, `no_plat`) VALUES
+	(8, 9, '1', '2', '2016', '3', 'A 444 BA');
+INSERT INTO `kendaraan` (`id`, `customer_id`, `merek`, `tipe`, `tahun`, `jenis`, `no_plat`) VALUES
+	(9, 10, '1', '1', '2015', '1', 'E 2123 ER');
 /*!40000 ALTER TABLE `kendaraan` ENABLE KEYS */;
 
 -- membuang struktur untuk table topik.migration
@@ -1029,20 +1039,37 @@ CREATE TABLE IF NOT EXISTS `service` (
   `kendaraan_id` int(11) NOT NULL,
   `keluhan` longtext NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `status` tinyint(4) DEFAULT '1',
   `deleted` tinyint(4) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
   KEY `id_kendaraan` (`kendaraan_id`),
   KEY `customer_id` (`customer_id`),
   CONSTRAINT `FK_service_customer` FOREIGN KEY (`customer_id`) REFERENCES `customer` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `FK_service_kendaraan` FOREIGN KEY (`kendaraan_id`) REFERENCES `kendaraan` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=28 DEFAULT CHARSET=utf8;
 
--- Membuang data untuk tabel topik.service: ~2 rows (lebih kurang)
+-- Membuang data untuk tabel topik.service: ~10 rows (lebih kurang)
 /*!40000 ALTER TABLE `service` DISABLE KEYS */;
-INSERT INTO `service` (`id`, `kode_service`, `customer_id`, `kendaraan_id`, `keluhan`, `created_at`, `deleted`) VALUES
-	(16, 'SRVC-00000001', 9, 6, 'asd', '2016-12-16 00:06:04', 0);
-INSERT INTO `service` (`id`, `kode_service`, `customer_id`, `kendaraan_id`, `keluhan`, `created_at`, `deleted`) VALUES
-	(17, 'SRVC-00000002', 10, 7, 'sdd', '2016-12-16 00:06:13', 0);
+INSERT INTO `service` (`id`, `kode_service`, `customer_id`, `kendaraan_id`, `keluhan`, `created_at`, `status`, `deleted`) VALUES
+	(16, 'SRVC-00000001', 10, 6, 'asd', '2016-12-20 01:33:02', 0, 1);
+INSERT INTO `service` (`id`, `kode_service`, `customer_id`, `kendaraan_id`, `keluhan`, `created_at`, `status`, `deleted`) VALUES
+	(17, 'SRVC-00000002', 10, 7, 'sdd', '2016-12-19 23:30:38', 0, 1);
+INSERT INTO `service` (`id`, `kode_service`, `customer_id`, `kendaraan_id`, `keluhan`, `created_at`, `status`, `deleted`) VALUES
+	(20, 'SRVC-00000003', 10, 6, 'd', '2016-12-20 01:33:02', 0, 1);
+INSERT INTO `service` (`id`, `kode_service`, `customer_id`, `kendaraan_id`, `keluhan`, `created_at`, `status`, `deleted`) VALUES
+	(21, 'SRVC-00000004', 10, 6, 'dd', '2016-12-20 01:33:02', 0, 1);
+INSERT INTO `service` (`id`, `kode_service`, `customer_id`, `kendaraan_id`, `keluhan`, `created_at`, `status`, `deleted`) VALUES
+	(22, 'SRVC-00000005', 9, 8, 'e', '2016-12-19 23:37:52', 0, 1);
+INSERT INTO `service` (`id`, `kode_service`, `customer_id`, `kendaraan_id`, `keluhan`, `created_at`, `status`, `deleted`) VALUES
+	(23, 'SRVC-00000006', 10, 6, 'ddd', '2016-12-20 01:33:02', 2, 0);
+INSERT INTO `service` (`id`, `kode_service`, `customer_id`, `kendaraan_id`, `keluhan`, `created_at`, `status`, `deleted`) VALUES
+	(24, 'SRVC-00000007', 10, 6, 'asd', '2016-12-20 01:33:02', 1, 0);
+INSERT INTO `service` (`id`, `kode_service`, `customer_id`, `kendaraan_id`, `keluhan`, `created_at`, `status`, `deleted`) VALUES
+	(25, 'SRVC-00000008', 9, 8, 'asd', '2016-12-19 23:37:52', 1, 0);
+INSERT INTO `service` (`id`, `kode_service`, `customer_id`, `kendaraan_id`, `keluhan`, `created_at`, `status`, `deleted`) VALUES
+	(26, 'SRVC-00000009', 10, 9, 'asd', '2016-12-19 23:30:43', 1, 0);
+INSERT INTO `service` (`id`, `kode_service`, `customer_id`, `kendaraan_id`, `keluhan`, `created_at`, `status`, `deleted`) VALUES
+	(27, 'SRVC-00000010', 9, 7, 'asd', '2016-12-19 23:30:43', 1, 0);
 /*!40000 ALTER TABLE `service` ENABLE KEYS */;
 
 -- membuang struktur untuk table topik.session
@@ -1081,14 +1108,14 @@ CREATE TABLE IF NOT EXISTS `sms_gateway_me_config` (
   `key` varchar(64) NOT NULL,
   `value` text NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;
 
 -- Membuang data untuk tabel topik.sms_gateway_me_config: ~5 rows (lebih kurang)
 /*!40000 ALTER TABLE `sms_gateway_me_config` DISABLE KEYS */;
 INSERT INTO `sms_gateway_me_config` (`id`, `code`, `key`, `value`) VALUES
-	(1, 'CONFIG', 'email', 'haifahrul@gmail.com');
+	(1, 'CONFIG', 'email', 'topiksmsgateway@zain.site');
 INSERT INTO `sms_gateway_me_config` (`id`, `code`, `key`, `value`) VALUES
-	(2, 'CONFIG', 'password', '10352199');
+	(2, 'CONFIG', 'password', 'topiksmsgateway');
 INSERT INTO `sms_gateway_me_config` (`id`, `code`, `key`, `value`) VALUES
 	(3, 'CONFIG', 'device_id', '34759');
 INSERT INTO `sms_gateway_me_config` (`id`, `code`, `key`, `value`) VALUES
@@ -1097,6 +1124,8 @@ INSERT INTO `sms_gateway_me_config` (`id`, `code`, `key`, `value`) VALUES
 	(5, 'CONFIG', 'send_at', '0 minutes');
 INSERT INTO `sms_gateway_me_config` (`id`, `code`, `key`, `value`) VALUES
 	(6, 'CONFIG', 'expires_at', '+15 minutes');
+INSERT INTO `sms_gateway_me_config` (`id`, `code`, `key`, `value`) VALUES
+	(7, 'CONFIG', 'messages', 'Ayo service kendaraan Anda dengan rutin. Sudah saatnya service. \r\n');
 /*!40000 ALTER TABLE `sms_gateway_me_config` ENABLE KEYS */;
 
 -- membuang struktur untuk table topik.sparepart
@@ -1132,10 +1161,14 @@ CREATE TABLE IF NOT EXISTS `transaksi` (
   KEY `id_sparepart` (`sparepart_id`),
   CONSTRAINT `FK_transaksi_service` FOREIGN KEY (`service_id`) REFERENCES `service` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `FK_transaksi_sparepart` FOREIGN KEY (`sparepart_id`) REFERENCES `sparepart` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
--- Membuang data untuk tabel topik.transaksi: ~1 rows (lebih kurang)
+-- Membuang data untuk tabel topik.transaksi: ~2 rows (lebih kurang)
 /*!40000 ALTER TABLE `transaksi` DISABLE KEYS */;
+INSERT INTO `transaksi` (`id`, `service_id`, `sparepart_id`, `nota`, `total_pembayaran`) VALUES
+	(1, 17, 3, 'qwerty', '50000');
+INSERT INTO `transaksi` (`id`, `service_id`, `sparepart_id`, `nota`, `total_pembayaran`) VALUES
+	(2, 20, 2, 'asd', '20000');
 /*!40000 ALTER TABLE `transaksi` ENABLE KEYS */;
 
 -- membuang struktur untuk table topik.user
