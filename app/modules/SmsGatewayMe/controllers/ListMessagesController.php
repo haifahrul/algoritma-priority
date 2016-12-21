@@ -21,24 +21,29 @@ class ListMessagesController extends Controller
 
         $result = $smsGateway->getMessages($page);
 
-        $array = [];
-        foreach ($result['response']['result'] AS $item) {
-            if ($item['status'] == 'pending' OR $item['status'] == 'sent') {
-                $array[] = $item;
+        if (!empty($result)) {
+
+            $array = [];
+            foreach ($result['response']['result'] AS $item) {
+                if ($item['status'] == 'pending' OR $item['status'] == 'sent') {
+                    $array[] = $item;
+                }
             }
+
+            $dataProvider = new \yii\data\ArrayDataProvider([
+                'allModels' => $array,
+                'sort' => [
+                    'attributes' => ['id'],
+                ],
+            ]);
+
+            if (isset($this->page)) {
+                $dataProvider->pagination->pageSize = $this->page;
+            }
+
+            return $this->render('index', ['dataProvider' => $dataProvider]);
+        } else {
+            echo 'Data kosong';
         }
-
-        $dataProvider = new \yii\data\ArrayDataProvider([
-            'allModels' => $array,
-            'sort' => [
-                'attributes' => ['id'],
-            ],
-        ]);
-
-        if (isset($this->page)) {
-            $dataProvider->pagination->pageSize = $this->page;
-        }
-
-        return $this->render('index', ['dataProvider' => $dataProvider]);
     }
 }
