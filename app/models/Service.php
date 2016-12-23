@@ -24,6 +24,9 @@ use yii\helpers\ArrayHelper;
  */
 class Service extends \yii\db\ActiveRecord
 {
+    CONST BELUM = 1;
+    CONST SUDAH = 2;
+
     /**
      * @inheritdoc
      */
@@ -108,13 +111,10 @@ class Service extends \yii\db\ActiveRecord
 
     public function generateServiceCode()
     {
-        $frontString = 'SRVC-';
-        $middleNumber = '00000000';
+        $frontString = 'SVC-';
         $lastCode = Yii::$app->db->createCommand('SELECT `position` FROM attribute WHERE `name`="Count Code Service" OR `type`="Count Code Service"')->queryOne();
         $lastCode = $lastCode['position'] + 1;
-        $digit = strlen((string)$lastCode);
-        $number = substr($middleNumber, $digit);
-        $kode = $frontString . $number . $lastCode;
+        $kode = $frontString . $lastCode;
         $kodeService[] = $kode;
         $kodeService[] = $lastCode;
 
@@ -125,9 +125,11 @@ class Service extends \yii\db\ActiveRecord
     {
         // 1 adalah belum / perlu di service
         // 2 adalah Selesai di service
-        if ($id == Attribute::getAttributeCode('STATUS_SERVICE', 1)) {
+        if ($id == Attribute::getAttributeCode('STATUS_SERVICE', self::BELUM)) {
+            // BELUM
             return '<span class="label label-warning">' . Attribute::attribute_view('status_service', $id) . '</span>';
         } else {
+            // SUDAH
             return '<span class="label label-success">' . Attribute::attribute_view('status_service', $id) . '</span>';
         }
     }

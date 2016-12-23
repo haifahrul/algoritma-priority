@@ -83,7 +83,7 @@ author A. Fakhrurozi S.
         </div>
         <div class="box-footer">
             <?= Html::submitButton('<i class="glyphicon glyphicon-floppy-disk glyphicon-sm"> </i>' . Yii::t('app', ' Simpan'), ['class' => 'btn btn-primary btn-sm']) ?>
-            <?= Html::a('<i class="glyphicon glyphicon-remove glyphicon-sm"></i> Cancel ', Yii::$app->request->referrer, ['class' => 'btn btn-danger btn-sm']) ?>
+            <?= Html::a('<i class="glyphicon glyphicon-remove glyphicon-sm"></i> Cancel ', ['index'], ['class' => 'btn btn-danger btn-sm']) ?>
             <?php ActiveForm::end(); ?>
         </div>
     </div>

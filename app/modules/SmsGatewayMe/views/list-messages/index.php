@@ -48,6 +48,14 @@ $this->params['title'] = 'List' . $this->title;
                                 return $data['contact']['number'];
                             }
                         ],
+                        [
+                            'attribute' => 'Time',
+                            'value' => function ($data) {
+                                $formatter = Yii::$app->formatter;
+//                                return $formatter->asTime($data['send_at']);
+                                return date('H:i:s', $data['send_at'] + strtotime('-7 hour'));
+                            }
+                        ],
                         'status',
                     ],
                 ]);

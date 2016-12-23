@@ -24,7 +24,7 @@ $items = [];
 if (isset($callback) && is_callable($callback)) {
     $items = call_user_func($callback, Yii::$app->user->id);
 } else {
-    $items = Yii::$app->menus->getMenuAdmin();
+    $items = Yii::$app->menus->sidebarMenuAdmin();
 }
 
 $menuItems = Mimin::filterRouteMenu($items);

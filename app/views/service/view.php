@@ -1,9 +1,9 @@
 <?php
-
 use yii\helpers\Html;
 use yii\widgets\DetailView;
 use app\modules\webmaster\models\Attribute;
 use app\models\Service;
+use app\modules\webmaster\components\Mimin;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Service */
@@ -18,14 +18,22 @@ $formater = Yii::$app->formatter;
     <div class="box-header with-border">
         <h1><?php Html::encode($this->title) ?></h1>
         <p>
-            <?= Html::a(Yii::t('app', 'Update'), ['update', 'id' => $model->id], ['class' => 'btn btn-primary btn-sm']) ?>
-            <?= Html::a(Yii::t('app', 'Delete'), ['delete', 'id' => $model->id], [
-                'class' => 'btn btn-danger btn-sm',
-                'data' => [
-                    'confirm' => Yii::t('app', 'Are you sure you want to delete this item?'),
-                    'method' => 'post',
-                ],
-            ]) ?>
+            <?php
+            if ((Mimin::filterRoute($this->context->id . '/delete', true))) {
+                echo Html::a(Yii::t('app', 'Update'), ['update', 'id' => $model->id], ['class' => 'btn btn-primary btn-sm']);
+            }
+            ?>
+            <?php
+            if ((Mimin::filterRoute($this->context->id . '/delete', true))) {
+                echo Html::a(Yii::t('app', 'Delete'), ['delete', 'id' => $model->id], [
+                    'class' => 'btn btn-danger btn-sm',
+                    'data' => [
+                        'confirm' => Yii::t('app', 'Are you sure you want to delete this item?'),
+                        'method' => 'post',
+                    ],
+                ]);
+            }
+            ?>
         </p>
     </div>
     <div class="box-body">

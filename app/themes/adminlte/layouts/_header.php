@@ -14,7 +14,7 @@ else
     $username = "User Guest";
 /* @var $this View */
 
-$items = Yii::$app->menus->getMenuWebmaster();
+$items = Yii::$app->menus->headerMenuWebmaster();
 $menuItems = Mimin::filterRouteMenu($items);
 ?>
 

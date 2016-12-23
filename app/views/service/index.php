@@ -6,6 +6,7 @@ use yii\bootstrap\Modal;
 use yii\grid\GridView;
 use app\modules\webmaster\models\Attribute;
 use app\models\Service;
+use app\modules\webmaster\components\Mimin;
 
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\search\ServiceSearch */
@@ -26,8 +27,11 @@ $this->params['title'] = 'List' . $this->title;
             </div>
             <?= Html::a('<i class="glyphicon glyphicon-plus glyphicon-sm"></i> Create ', ['create'],
                 ['data-pjax' => 0, 'class' => 'btn btn-primary btn-sm btn-tambah1']) ?>
-            <?= Html::button('<span class="glyphicon glyphicon-remove glyphicon-sm"></span> Delete',
-                ['data-pjax' => 0, 'class' => 'btn btn-danger btn-sm', 'title' => 'hapus', 'id' => 'btn-deletes']) ?>
+            <?php
+            if ((Mimin::filterRoute($this->context->id . '/delete', true))) {
+                echo Html::button('<span class="glyphicon glyphicon-remove glyphicon-sm"></span> Delete', ['data-pjax' => 0, 'class' => 'btn btn-danger btn-sm', 'title' => 'hapus', 'id' => 'btn-deletes']);
+            }
+            ?>
             <?= Html::a('<i class=""></i> <b>Cek Antrian</b> ', ['queue'],
                 ['data-pjax' => 0, 'class' => 'btn btn-success btn-sm']) ?>
             </p>
@@ -61,6 +65,13 @@ $this->params['title'] = 'List' . $this->title;
 //                        'id',
                         'kode_service',
                         [
+                            'attribute' => 'kode_customer',
+                            'format' => 'raw',
+                            'value' => function ($data) {
+                                return $data['customer']['kode_customer'];
+                            }
+                        ],
+                        [
                             'attribute' => 'nama',
                             'format' => 'raw',
                             'value' => function ($data) {
@@ -89,13 +100,16 @@ $this->params['title'] = 'List' . $this->title;
                             'format' => 'raw',
                             'value' => function ($data) {
                                 return Service::getStatus($data['status']);
-                            }
+                            },
+                            'contentOptions' => ['class' => 'text-center'],
                         ],
                         [
                             'class' => 'yii\grid\ActionColumn',
                             //'header'=>'Pilihan',
                             'contentOptions' => ['style' => 'width:90px;', 'class' => 'text-center'],
-                            'template' => '{view} {update} {delete}',
+                            'template' => Mimin::filterTemplateActionColumn([
+                                'view', 'update', 'delete'
+                            ], $this->context->route),
                             'header' => 'Options',
                             'buttons' => [
                                 'view' => function ($url, $model) {

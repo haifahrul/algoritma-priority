@@ -15,6 +15,7 @@ class ServiceSearch extends Service
     public $page;
     public $no_plat;
     public $nama;
+    public $kode_customer;
 
     CONST belum = 1;
     CONST tidak_dihapus = 0;
@@ -24,7 +25,7 @@ class ServiceSearch extends Service
         return [
 //            [['id', 'customer_id', 'kendaraan_id'], 'integer'],
             [['status'], 'integer'],
-            [['no_plat', 'nama', 'kode_service'], 'string'],
+            [['no_plat', 'nama', 'kode_service', 'kode_customer'], 'string'],
             [['keluhan', 'created_at'], 'safe'],
             ['page', 'safe']
         ];
@@ -39,6 +40,7 @@ class ServiceSearch extends Service
     public function search($params)
     {
         $query = Service::find()->asArray();
+        $query->joinWith(['customer', 'kendaraan']);
         $query->where(['deleted' => self::tidak_dihapus]);
         $query->orderBy(['id' => SORT_ASC]);
 
@@ -51,8 +53,6 @@ class ServiceSearch extends Service
             $dataProvider->pagination->pageSize = $this->page;
         }
 
-        $query->joinWith(['customer', 'kendaraan']);
-
         $query->andFilterWhere([
 //            'id' => $this->id,
 //            'customer_id' => $this->customer_id,
@@ -62,6 +62,7 @@ class ServiceSearch extends Service
         ]);
 
         $query->andFilterWhere(['like', 'keluhan', $this->keluhan])
+            ->andFilterWhere(['like', 'customer.kode_customer', $this->kode_customer])
             ->andFilterWhere(['like', 'kode_service', $this->kode_service])
             ->andFilterWhere(['like', 'kendaraan.no_plat', $this->no_plat])
             ->andFilterWhere(['like', 'customer.nama', $this->nama]);

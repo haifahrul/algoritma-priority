@@ -4,36 +4,31 @@ use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\bootstrap\Modal;
 use yii\grid\GridView;
-use app\widgets\PageSize;
-use app\modules\webmaster\components\Mimin;
 
 /* @var $this yii\web\View */
-/* @var $searchModel app\models\search\CustomerSearch */
+/* @var $searchModel app\modules\webmaster\models\search\ConfigSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
-$this->title = Yii::t('app', 'Customers');
+$this->title = Yii::t('app', 'Configs');
 $this->params['breadcrumbs'][] = $this->title;
 $this->params['title'] = 'List' . $this->title;
 ?>
-    <div class="box">
-        <div class="">
-            <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
-            <p>
-            <div class="box-body">
-                <div class="table-responsive">
-                    <div class="pull-right">
-                        <?= PageSize::widget([
-                            'id' => 'select_page'
-                        ]); ?>
-                    </div>
-                    <?= Html::a('<i class="glyphicon glyphicon-plus glyphicon-sm"></i> Create Customer Baru ', ['create-new-customer'],
-                        ['data-pjax' => 0, 'class' => 'btn btn-primary btn-sm btn-tambah1']) ?>
-                    <!--                    --><?php //echo Html::a('<i class="glyphicon glyphicon-plus glyphicon-sm"></i> Create Data Customer ', ['create'], ['data-pjax' => 0, 'class' => 'btn btn-success btn-sm btn-tambah1']) ?>
-                    <?php
-                    if ((Mimin::filterRoute($this->context->id . '/delete', true))) {
-                        echo Html::button('<span class="glyphicon glyphicon-remove glyphicon-sm"></span> Delete', ['data-pjax' => 0, 'class' => 'btn btn-danger btn-sm', 'title' => 'hapus', 'id' => 'btn-deletes']);
-                    }
-                    ?>
-            </p>
+<div class="box">
+    <div class="box-header with-border">
+        <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
+        <p>
+        <div class="pull-right">
+            <?= \app\widgets\PageSize::widget([
+                'id' => 'select_page'
+            ]); ?>
+        </div>
+                <?php echo Html::a('<i class="glyphicon glyphicon-plus glyphicon-sm"></i> Create ', ['create'],
+                    ['data-pjax' => 0, 'class' => 'btn btn-primary btn-sm btn-tambah1']) ?>
+<!--        --><?php //echo Html::button('<span class="glyphicon glyphicon-remove glyphicon-sm"></span> Delete',
+//            ['data-pjax' => 0, 'class' => 'btn btn-danger btn-sm', 'title' => 'hapus', 'id' => 'btn-deletes']) ?>
+        </p>
+    </div>
+    <div class="box-body">
+        <div class="table-responsive">
             <?php Pjax::begin(['id' => 'grid']) ?>
             <?= GridView::widget([
                 'id' => 'gridView',
@@ -49,30 +44,22 @@ $this->params['title'] = 'List' . $this->title;
                 'dataProvider' => $dataProvider,
                 'filterModel' => $searchModel,
                 'columns' => [
-                    [
-                        'class' => 'yii\grid\CheckboxColumn',
-                        'name' => 'select',
-                        'contentOptions' => ['class' => 'text-center'],
+                    ['class' => 'yii\grid\CheckboxColumn',
+                        'name' => 'select'
                     ],
-                    [
-                        'class' => 'yii\grid\SerialColumn',
-                        'header' => "<div class='text-center'> No </div>",
+                    ['class' => 'yii\grid\SerialColumn',
+                        'header' => 'No',
                         'contentOptions' => ['class' => 'text-center'],
                     ],
 //                    'id',
-                    'nama',
-                    'kode_customer',
-                    'alamat',
-                    'no_telp',
-                    'email:email',
+                    'code',
+                    'key',
+                    'value:ntext',
                     [
                         'class' => 'yii\grid\ActionColumn',
                         //'header'=>'Pilihan',
                         'contentOptions' => ['style' => 'width:90px;', 'class' => 'text-center'],
-//                        'template' => '{view} {update} {delete}',
-                        'template' => Mimin::filterTemplateActionColumn([
-                            'view', 'update', 'delete'
-                        ], $this->context->route),
+                        'template' => '{view} {update}',
                         'header' => 'Options',
                         'buttons' => [
                             'view' => function ($url, $model) {
@@ -94,18 +81,6 @@ $this->params['title'] = 'List' . $this->title;
                                     'title' => Yii::t('app', 'Update')
                                 ]);
                             },
-                            'delete' => function ($url, $model) {
-                                $icon = '<i class = "fa fa-trash-o"></i>';
-
-                                return Html::a($icon, $url, [
-                                    'id' => 'btn-delete-row',
-                                    'data-pjax' => 0,
-                                    'data-method' => 'post',
-                                    'class' => 'btn btn-danger btn-xs',
-                                    'title' => Yii::t('app', 'Delete'),
-                                    'data-confirm' => Yii::t('yii', 'Are you sure to delete this item?'),
-                                ]);
-                            }
                         ],
                     ],
                 ],
@@ -114,12 +89,9 @@ $this->params['title'] = 'List' . $this->title;
             <?php Pjax::end() ?>
         </div>
     </div>
-    </div>
-    </div>
-
+</div>
 <?php $url = Url::to(['delete-items']);
 $js = <<< JS
-
 $(document).on("click","#btn-deletes", function() {
 if(confirm("Apakah Anda yakin ingin menghapus item ini ?")){
 var keys = $("#gridView").yiiGridView("getSelectedRows");
@@ -146,12 +118,12 @@ e.preventDefault();
 JS;
 $this->registerJs($js);
 ?>
-<?php
-Modal::begin([
-    //'size'=> 'modal-lg',
-    'id' => 'modalform',
-    'options' => ['class' => 'modal fade'],
-    'header' => '<h4 class="text-center modal-title">Create</h4>',]);
-echo '<div id="modalContent"></div>';
-Modal::end();
+<?php // Modal::begin([
+//   //'size'=> 'modal-lg',
+//   'id' => 'modalform',
+//   'options'=>['class'=> 'modal fade'],
+//   'header' => '<h4 class="text-center modal-title">Create</h4>',]);
+// echo '<div id="modalContent"></div>';
+// Modal::end();
 ?>
+

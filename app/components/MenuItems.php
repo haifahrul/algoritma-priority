@@ -12,7 +12,7 @@ use yii\helpers\Html;
  */
 class MenuItems
 {
-    public function getMenuAdmin()
+    public function sidebarMenuAdmin()
     {
         $items = [
             [
@@ -57,19 +57,25 @@ class MenuItems
                     ['label' => Yii::t('app', 'List Messages'), 'url' => ['/smsgatewayme/list-messages']],
                     ['label' => Yii::t('app', 'Test Send SMS'), 'url' => ['/smsgatewayme/test-send-sms/']],
                 ],
+                'visible' => Yii::$app->user->can('webmaster'),
             ],
         ];
 
         return $items;
     }
 
-    public function getMenuWebmaster()
+    public function headerMenuWebmaster()
     {
         $items = [
             [
                 'label' => Yii::t('app', 'Attribute'),
                 'url' => ['/webmaster/attribute/'],
                 'icon' => 'fa fa-cog',
+            ],
+            [
+                'label' => Yii::t('app', 'Config'),
+                'url' => ['/webmaster/config/'],
+                'icon' => 'fa fa-globe',
             ],
             [
                 'label' => Yii::t('app', 'Users Management'),
@@ -85,74 +91,4 @@ class MenuItems
 
         return $items;
     }
-
-//    public function getMenus()
-//    {
-//        return $item = [
-//            [
-//                'label' => Yii::t('app', 'Dashboard'),
-//                'url' => Yii::$app->homeUrl,
-//                'visible' => TRUE,
-//                'icon' => 'home',
-//            ],
-//            [
-//                'label' => Yii::t('app', 'Customer'),
-//                'url' => ['/customer/index'],
-//                'visible' => TRUE,
-//                'icon' => 'user',
-//            ],
-//            [
-//                'label' => Yii::t('app', 'Kendaraan'),
-//                'url' => ['/kendaraan/index'],
-//                'visible' => TRUE,
-//                'icon' => 'home',
-//            ],
-//            [
-//                'label' => Yii::t('app', 'Sparepart'),
-//                'url' => ['/sparepart/index'],
-//                'visible' => TRUE,
-//                'icon' => 'home',
-//            ],
-//            [
-//                'label' => Yii::t('app', 'Service'),
-//                'url' => ['/service/index'],
-//                'visible' => TRUE,
-//                'icon' => 'home',
-//            ],
-//            [
-//                'label' => Yii::t('app', 'Transaksi'),
-//                'url' => ['/transaksi/index'],
-//                'visible' => TRUE,
-//                'icon' => 'home',
-//            ],
-//            [
-//                'label' => Yii::t('app', 'SMS Gateway'),
-//                'url' => '#',
-//                'visible' => TRUE,
-//                'icon' => 'commenting',
-//                'items' => [
-//                    ['label' => Yii::t('app', 'List Messages'), 'url' => ['/smsgatewayme/list-messages']],
-////                    ['label' => Yii::t('app', 'Dosen Semester Ganjil'), 'url' => ['/admin/dosen-ganjil/']],
-////                    ['label' => Yii::t('app', 'Dosen Semester Genap'), 'url' => ['/admin/dosen-genap/']],
-//                ],
-//            ],
-////            [
-////                'label' => 'Options',
-////                'options' => ['class' => 'user-panel'],
-////                'active' => FALSE,
-////            ],
-////            [
-////                'label' => Yii::t('app', 'Attribute'),
-////                'url' => ['/webmaster/attribute'],
-////                'visible' => TRUE,
-////                'icon' => 'fa fa-cog',
-////            ],
-////            [
-////                'label' => Yii::t('app', 'Users Management'),
-////                'url' => ['/webmaster/user'],
-////                'visible' => TRUE,
-////                'icon' => 'users',
-////            ],
-//        ];
-//    }
 }

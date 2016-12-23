@@ -18,6 +18,8 @@ use yii\helpers\Json;
  */
 class ServiceController extends Controller
 {
+    CONST DONE = 1;
+
     public function behaviors()
     {
         return [
@@ -202,5 +204,13 @@ class ServiceController extends Controller
             }
         }
         echo Json::encode(['output' => '', 'selected' => '']);
+    }
+
+    public function actionDone($id)
+    {
+        $model = $this->findModel($id);
+        $model->updateAttributes(['status' => Service::SUDAH]);
+
+        return $this->redirect(['queue']);
     }
 }

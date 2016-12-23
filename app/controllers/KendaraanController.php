@@ -62,24 +62,29 @@ class KendaraanController extends Controller
         $model = new Kendaraan();
         $is_ajax = Yii::$app->request->isAjax;
         $postdata = Yii::$app->request->post();
-        $dataCustomer = Customer::find()->asArray()->all();
-        $dataCustomer = ArrayHelper::map($dataCustomer, 'id', 'nama');
+        $arrayCustomer = Customer::find()->asArray()->all();
 
-        if ($model->load($postdata) && $model->validate()) {
-            $transaction = Yii::$app->db->beginTransaction();
-            try {
+        foreach ($arrayCustomer AS $data) {
+            $dataCustomer[$data['id']] = $data['kode_customer'] . ' | ' . $data['nama'] . ' | ' . $data['no_telp'];
+        }
 
-                if ($model->save()) {
-                    $transaction->commit();
-                    Yii::$app->session->setFlash('success', ' Data telah disimpan!');
-                    return $this->redirect(['index']);
+        if ($model->load($postdata)) {
+            if ($model->validate()) {
+
+                $transaction = Yii::$app->db->beginTransaction();
+                try {
+
+                    if ($model->save()) {
+                        $transaction->commit();
+                        Yii::$app->session->setFlash('success', ' Data telah disimpan!');
+                        return $this->redirect(['index']);
+                    }
+                    //end if (save)
+                } catch (Exception $e) {
+                    $transaction->rollback();
+                    throw $e;
                 }
-                //end if (save)
-            } catch (Exception $e) {
-                $transaction->rollback();
-                throw $e;
             }
-
         }
 
         if ($is_ajax) {
@@ -100,8 +105,11 @@ class KendaraanController extends Controller
     {
         $model = $this->findModel($id);
         $idCustomer = $model->customer_id;
-        $dataCustomer = Customer::find()->asArray()->all();
-        $dataCustomer = ArrayHelper::map($dataCustomer, 'id', 'nama');
+        $arrayCustomer = Customer::find()->asArray()->all();
+
+        foreach ($arrayCustomer AS $data) {
+            $dataCustomer[$data['id']] = $data['kode_customer'] . ' | ' . $data['nama'] . ' | ' . $data['no_telp'];
+        }
 
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
             // If Customer ID update
@@ -194,7 +202,7 @@ class KendaraanController extends Controller
                     Yii::$app->db->createCommand("UPDATE `attribute` SET `position`=" . $lastCode . " WHERE `name`='Count Code Service' OR `type`='Count Code Service'")->execute();
                     $transaction->commit();
                     Yii::$app->session->setFlash('success', ' Data has been saved!');
-                    return $this->redirect(['/service/index']);
+                    return $this->redirect(['index']);
                 }
             } catch (Exception $e) {
                 $transaction->rollback();

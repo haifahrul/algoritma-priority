@@ -35,7 +35,7 @@ $config = [
 //            'webmaster/site/logout',
 //            'debug/*',
 //            'gii/*',
-            '*',
+//            '*',
         ],
     ],
     // komponen aplikasi

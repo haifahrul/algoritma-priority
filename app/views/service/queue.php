@@ -6,6 +6,7 @@ use yii\bootstrap\Modal;
 use yii\grid\GridView;
 use app\modules\webmaster\models\Attribute;
 use app\models\Service;
+use app\modules\webmaster\components\Mimin;
 
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\search\ServiceSearch */
@@ -14,6 +15,7 @@ $this->title = Yii::t('app', 'Antrian Service');
 $this->params['breadcrumbs'][] = $this->title;
 $this->params['title'] = 'List' . $this->title;
 ?>
+
 <div class="service-index">
     <div class="box">
         <div class="box-header with-border">
@@ -91,10 +93,21 @@ $this->params['title'] = 'List' . $this->title;
                         [
                             'class' => 'yii\grid\ActionColumn',
                             //'header'=>'Pilihan',
-                            'contentOptions' => ['style' => 'width:90px;', 'class' => 'text-center'],
-                            'template' => '{view} {update} {delete}',
+                            'contentOptions' => ['style' => 'width:120px;', 'class' => 'text-center'],
+                            'template' => Mimin::filterTemplateActionColumn([
+                                'done', 'view', 'update', 'delete'
+                            ], $this->context->route),
                             'header' => 'Options',
                             'buttons' => [
+                                'done' => function ($url, $model) {
+                                    $icon = '<i class = "fa fa-check"></i>';
+
+                                    return Html::a($icon, $url, [
+                                        'data-pjax' => 0,
+                                        'class' => 'btn btn-success btn-xs ',
+                                        'title' => Yii::t('app', 'Done')
+                                    ]);
+                                },
                                 'view' => function ($url, $model) {
                                     $icon = '<i class = "glyphicon glyphicon-zoom-in"></i>';
 

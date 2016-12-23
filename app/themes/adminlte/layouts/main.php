@@ -37,8 +37,8 @@ $avatarUser = Yii::$app->params['avatarUrl'] . 'default.jpg';
 
 </div>
 <div class="wrapper">
-    <?= $this->render('_header', ['avatar' =>$avatarUser]); ?>
-    <?= $this->render('_sidebar', ['avatar' =>$avatarUser]); ?>
+    <?php echo $this->render('_header', ['avatar' =>$avatarUser]); ?>
+    <?php echo $this->render('_sidebar', ['avatar' =>$avatarUser]); ?>
     <div class="content-wrapper">
         <section class="content-header">
             <h3><?= isset($this->params['breadcrumbs']) ? $this->title : '' ?></h3>

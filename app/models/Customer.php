@@ -2,6 +2,7 @@
 
 namespace app\models;
 
+use app\modules\webmaster\models\Attribute;
 use Yii;
 use yii\helpers\ArrayHelper;
 
@@ -9,6 +10,7 @@ use yii\helpers\ArrayHelper;
  * This is the model class for table "{{%customer}}".
  *
  * @property integer $id
+ * @property string $kode_customer
  * @property string $nama
  * @property string $alamat
  * @property string $no_telp
@@ -34,7 +36,8 @@ class Customer extends \yii\db\ActiveRecord
     {
         return [
             [['nama', 'alamat', 'no_telp'], 'required'],
-            [['nama', 'alamat', 'no_telp', 'email'], 'string', 'max' => 50],
+            ['no_telp', 'integer'],
+            [['nama', 'alamat', 'email', 'kode_customer'], 'string', 'max' => 50],
             ['email', 'email'],
             ['no_telp', 'unique', 'targetClass' => '\app\models\Customer', 'message' => Yii::t('app', 'No. Telp. sudah ada.')],
             ['email', 'unique', 'targetClass' => '\app\models\Customer', 'message' => Yii::t('app', 'Email ini sudah ada..')],
@@ -48,6 +51,7 @@ class Customer extends \yii\db\ActiveRecord
     {
         return [
             'id' => Yii::t('app', 'ID'),
+            'code_customer' => Yii::t('app', 'Code Customer'),
             'nama' => Yii::t('app', 'Nama'),
             'alamat' => Yii::t('app', 'Alamat'),
             'no_telp' => Yii::t('app', 'No Telp'),
@@ -86,5 +90,17 @@ class Customer extends \yii\db\ActiveRecord
         $data = ArrayHelper::getColumn($data, 'no_telp');
 
         return $data;
+    }
+
+    public function getLastCodeCustomer()
+    {
+        $frontString = 'CS-';
+        $lastCode = Yii::$app->db->createCommand('SELECT `position` FROM attribute WHERE `name`="Count Code Customer" OR `type`="Count Code Customer"')->queryOne();
+        $lastCode = $lastCode['position'] + 1;
+        $kode = $frontString . $lastCode;
+        $kodeService[] = $kode;
+        $kodeService[] = $lastCode;
+
+        return $kodeService;
     }
 }

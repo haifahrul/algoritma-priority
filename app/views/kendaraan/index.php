@@ -6,11 +6,12 @@ use yii\bootstrap\Modal;
 use yii\grid\GridView;
 use yii\helpers\ArrayHelper;
 use app\modules\webmaster\models\Attribute;
+use app\modules\webmaster\components\Mimin;
 
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\search\KendaraanSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
-$this->title = Yii::t('app', 'Kendaraans');
+$this->title = Yii::t('app', 'Kendaraan');
 $this->params['breadcrumbs'][] = $this->title;
 $this->params['title'] = 'List' . $this->title;
 ?>
@@ -26,8 +27,11 @@ $this->params['title'] = 'List' . $this->title;
             </div>
             <?= Html::a('<i class="glyphicon glyphicon-plus glyphicon-sm"></i> Create ', ['create'],
                 ['data-pjax' => 0, 'class' => 'btn btn-primary btn-sm btn-tambah1']) ?>
-            <?= Html::button('<span class="glyphicon glyphicon-remove glyphicon-sm"></span> Delete',
-                ['data-pjax' => 0, 'class' => 'btn btn-danger btn-sm', 'title' => 'hapus', 'id' => 'btn-deletes']) ?>
+            <?php
+            if ((Mimin::filterRoute($this->context->id . '/delete', true))) {
+                echo Html::button('<span class="glyphicon glyphicon-remove glyphicon-sm"></span> Delete', ['data-pjax' => 0, 'class' => 'btn btn-danger btn-sm', 'title' => 'hapus', 'id' => 'btn-deletes']);
+            }
+            ?>
             </p>
         </div>
         <div class="box-body">
@@ -97,7 +101,9 @@ $this->params['title'] = 'List' . $this->title;
                             'class' => 'yii\grid\ActionColumn',
                             //'header'=>'Pilihan',
                             'contentOptions' => ['style' => 'width:150px;', 'class' => 'text-center'],
-                            'template' => '{service} {update} {delete}',
+                            'template' => Mimin::filterTemplateActionColumn([
+                                'service', 'update', 'delete'
+                            ], $this->context->route),
                             'header' => 'Options',
                             'buttons' => [
                                 'service' => function ($url, $model) {

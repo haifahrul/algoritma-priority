@@ -4,6 +4,7 @@ use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\bootstrap\Modal;
 use yii\grid\GridView;
+use app\modules\webmaster\components\Mimin;
 
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\search\SparepartSearch */
@@ -23,8 +24,11 @@ $this->params['title'] = 'List' . $this->title;
         </div>
         <?= Html::a('<i class="glyphicon glyphicon-plus glyphicon-sm"></i> Create ', ['create'],
             ['data-pjax' => 0, 'class' => 'btn btn-primary btn-sm btn-tambah1']) ?>
-        <?= Html::button('<span class="glyphicon glyphicon-remove glyphicon-sm"></span> Delete',
-            ['data-pjax' => 0, 'class' => 'btn btn-danger btn-sm', 'title' => 'hapus', 'id' => 'btn-deletes']) ?>
+        <?php
+        if ((Mimin::filterRoute($this->context->id . '/delete', true))) {
+            echo Html::button('<span class="glyphicon glyphicon-remove glyphicon-sm"></span> Delete', ['data-pjax' => 0, 'class' => 'btn btn-danger btn-sm', 'title' => 'hapus', 'id' => 'btn-deletes']);
+        }
+        ?>
         </p>
         <div class="clearfix"></div>
         <div class="table-responsive">
@@ -65,7 +69,9 @@ $this->params['title'] = 'List' . $this->title;
                         'class' => 'yii\grid\ActionColumn',
                         //'header'=>'Pilihan',
                         'contentOptions' => ['style' => 'width:90px;', 'class' => 'text-center'],
-                        'template' => '{view} {update} {delete}',
+                        'template' => Mimin::filterTemplateActionColumn([
+                            'view', 'update', 'delete'
+                        ], $this->context->route),
                         'header' => 'Options',
                         'buttons' => [
                             'view' => function ($url, $model) {

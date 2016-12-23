@@ -14,11 +14,12 @@ class CustomerSearch extends Customer
 {
 
     public $page;
+
     public function rules()
     {
         return [
             [['id'], 'integer'],
-            [['nama', 'alamat', 'no_telp', 'email'], 'safe'],
+            [['nama', 'kode_customer', 'alamat', 'no_telp', 'email'], 'safe'],
             ['page', 'safe']
         ];
     }
@@ -33,7 +34,6 @@ class CustomerSearch extends Customer
     public function search($params)
     {
         $query = Customer::find()->asArray();
-        //$query = Customer::find();
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
@@ -41,17 +41,16 @@ class CustomerSearch extends Customer
         ]);
 
         $this->load($params);
-        if(isset($this->page)){
-            $dataProvider->pagination->pageSize=$this->page; 
+        if (isset($this->page)) {
+            $dataProvider->pagination->pageSize = $this->page;
         }
-        //$query->joinWith('idCostumer');
-
 
         $query->andFilterWhere([
             'id' => $this->id,
         ]);
 
         $query->andFilterWhere(['like', 'nama', $this->nama])
+            ->andFilterWhere(['like', 'kode_customer', $this->kode_customer])
             ->andFilterWhere(['like', 'alamat', $this->alamat])
             ->andFilterWhere(['like', 'no_telp', $this->no_telp])
             ->andFilterWhere(['like', 'email', $this->email]);
