@@ -26,6 +26,8 @@ class Service extends \yii\db\ActiveRecord
 {
     CONST BELUM = 1;
     CONST SUDAH = 2;
+    CONST UNDELETE = 0;
+    CONST DELETE = 1;
 
     /**
      * @inheritdoc
@@ -136,7 +138,10 @@ class Service extends \yii\db\ActiveRecord
 
     public static function getKodeService()
     {
-        $data = Yii::$app->db->createCommand('SELECT `id`, `kode_service` FROM {{%service}}')->queryAll();
+        $data = Yii::$app->db->createCommand('SELECT `id`, `kode_service` FROM {{%service}} WHERE status=:status AND deleted=:deleted')
+            ->bindValue(':status', self::SUDAH)
+            ->bindValue(':deleted', self::UNDELETE)
+            ->queryAll();
 
         return ArrayHelper::map($data, 'id', 'kode_service');
     }
