@@ -27,14 +27,14 @@ CREATE TABLE IF NOT EXISTS `attribute` (
   `position` int(11) NOT NULL,
   `status` tinyint(4) NOT NULL DEFAULT '1',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=60 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=62 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- Membuang data untuk tabel topik.attribute: 13 rows
 /*!40000 ALTER TABLE `attribute` DISABLE KEYS */;
 INSERT INTO `attribute` (`id`, `parent`, `name`, `content`, `code`, `type`, `position`, `status`) VALUES
 	(48, 46, 'Matic', NULL, 2, 'JENIS', 2, 1);
 INSERT INTO `attribute` (`id`, `parent`, `name`, `content`, `code`, `type`, `position`, `status`) VALUES
-	(47, 46, 'Bebek', NULL, 1, 'JENIS', 1, 1);
+	(47, 46, 'Manual', NULL, 1, 'JENIS', 1, 1);
 INSERT INTO `attribute` (`id`, `parent`, `name`, `content`, `code`, `type`, `position`, `status`) VALUES
 	(46, 0, 'JENIS', NULL, 0, 'JENIS', 0, 1);
 INSERT INTO `attribute` (`id`, `parent`, `name`, `content`, `code`, `type`, `position`, `status`) VALUES
@@ -44,19 +44,21 @@ INSERT INTO `attribute` (`id`, `parent`, `name`, `content`, `code`, `type`, `pos
 INSERT INTO `attribute` (`id`, `parent`, `name`, `content`, `code`, `type`, `position`, `status`) VALUES
 	(51, 0, 'TIPE', NULL, 0, 'TIPE', 0, 1);
 INSERT INTO `attribute` (`id`, `parent`, `name`, `content`, `code`, `type`, `position`, `status`) VALUES
-	(52, 46, 'Sport', NULL, 3, 'JENIS', 3, 1);
-INSERT INTO `attribute` (`id`, `parent`, `name`, `content`, `code`, `type`, `position`, `status`) VALUES
 	(53, 51, 'SUPRA X 125 CW-HELM IN FI MMC', NULL, 1, 'TIPE', 1, 1);
 INSERT INTO `attribute` (`id`, `parent`, `name`, `content`, `code`, `type`, `position`, `status`) VALUES
 	(54, 51, 'Vario eSP', NULL, 2, 'TIPE', 2, 1);
 INSERT INTO `attribute` (`id`, `parent`, `name`, `content`, `code`, `type`, `position`, `status`) VALUES
-	(55, 0, 'Count Kode Service', '(NULL)', 0, 'Count Code Service', 10, 1);
+	(55, 0, 'Count Kode Service', '(NULL)', 0, 'Count Code Service', 19, 1);
 INSERT INTO `attribute` (`id`, `parent`, `name`, `content`, `code`, `type`, `position`, `status`) VALUES
 	(56, 0, 'Status Service', NULL, 0, 'STATUS_SERVICE', 0, 1);
 INSERT INTO `attribute` (`id`, `parent`, `name`, `content`, `code`, `type`, `position`, `status`) VALUES
 	(57, 56, 'Belum', NULL, 1, 'STATUS_SERVICE', 1, 1);
 INSERT INTO `attribute` (`id`, `parent`, `name`, `content`, `code`, `type`, `position`, `status`) VALUES
 	(58, 56, 'Sudah', NULL, 2, 'STATUS_SERVICE', 2, 1);
+INSERT INTO `attribute` (`id`, `parent`, `name`, `content`, `code`, `type`, `position`, `status`) VALUES
+	(60, 49, 'Yamaha', NULL, 2, 'MEREK', 2, 1);
+INSERT INTO `attribute` (`id`, `parent`, `name`, `content`, `code`, `type`, `position`, `status`) VALUES
+	(61, 0, 'Count Code Customer', NULL, 0, 'Count Code Customer', 18, 1);
 /*!40000 ALTER TABLE `attribute` ENABLE KEYS */;
 
 -- membuang struktur untuk table topik.auth_assignment
@@ -97,22 +99,24 @@ CREATE TABLE IF NOT EXISTS `auth_item` (
   CONSTRAINT `auth_item_ibfk_1` FOREIGN KEY (`rule_name`) REFERENCES `auth_rule` (`name`) ON DELETE SET NULL ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
--- Membuang data untuk tabel topik.auth_item: ~126 rows (lebih kurang)
+-- Membuang data untuk tabel topik.auth_item: ~128 rows (lebih kurang)
 /*!40000 ALTER TABLE `auth_item` DISABLE KEYS */;
 INSERT INTO `auth_item` (`name`, `type`, `description`, `rule_name`, `data`, `created_at`, `updated_at`) VALUES
-	('/*', 2, NULL, NULL, NULL, 1481038176, 1481038176);
+	('/*', 2, NULL, NULL, NULL, 1482527586, 1482527586);
 INSERT INTO `auth_item` (`name`, `type`, `description`, `rule_name`, `data`, `created_at`, `updated_at`) VALUES
-	('/customer/*', 2, NULL, NULL, NULL, 1481037732, 1481037732);
+	('/customer/*', 2, NULL, NULL, NULL, 1482529728, 1482529728);
 INSERT INTO `auth_item` (`name`, `type`, `description`, `rule_name`, `data`, `created_at`, `updated_at`) VALUES
-	('/customer/create', 2, NULL, NULL, NULL, 1481038176, 1481038176);
+	('/customer/create', 2, NULL, NULL, NULL, 1482528231, 1482528231);
 INSERT INTO `auth_item` (`name`, `type`, `description`, `rule_name`, `data`, `created_at`, `updated_at`) VALUES
-	('/customer/delete', 2, NULL, NULL, NULL, 1481038176, 1481038176);
+	('/customer/create-new-customer', 2, NULL, NULL, NULL, 1482528229, 1482528229);
 INSERT INTO `auth_item` (`name`, `type`, `description`, `rule_name`, `data`, `created_at`, `updated_at`) VALUES
-	('/customer/delete-items', 2, NULL, NULL, NULL, 1481038176, 1481038176);
+	('/customer/delete', 2, NULL, NULL, NULL, 1482529655, 1482529655);
+INSERT INTO `auth_item` (`name`, `type`, `description`, `rule_name`, `data`, `created_at`, `updated_at`) VALUES
+	('/customer/delete-items', 2, NULL, NULL, NULL, 1482529728, 1482529728);
 INSERT INTO `auth_item` (`name`, `type`, `description`, `rule_name`, `data`, `created_at`, `updated_at`) VALUES
 	('/customer/index', 2, NULL, NULL, NULL, 1481038176, 1481038176);
 INSERT INTO `auth_item` (`name`, `type`, `description`, `rule_name`, `data`, `created_at`, `updated_at`) VALUES
-	('/customer/update', 2, NULL, NULL, NULL, 1481038176, 1481038176);
+	('/customer/update', 2, NULL, NULL, NULL, 1482529728, 1482529728);
 INSERT INTO `auth_item` (`name`, `type`, `description`, `rule_name`, `data`, `created_at`, `updated_at`) VALUES
 	('/customer/view', 2, NULL, NULL, NULL, 1481038177, 1481038177);
 INSERT INTO `auth_item` (`name`, `type`, `description`, `rule_name`, `data`, `created_at`, `updated_at`) VALUES
@@ -128,7 +132,7 @@ INSERT INTO `auth_item` (`name`, `type`, `description`, `rule_name`, `data`, `cr
 INSERT INTO `auth_item` (`name`, `type`, `description`, `rule_name`, `data`, `created_at`, `updated_at`) VALUES
 	('/debug/default/toolbar', 2, NULL, NULL, NULL, 1481038178, 1481038178);
 INSERT INTO `auth_item` (`name`, `type`, `description`, `rule_name`, `data`, `created_at`, `updated_at`) VALUES
-	('/debug/default/view', 2, NULL, NULL, NULL, 1481038178, 1481038178);
+	('/debug/default/view', 2, NULL, NULL, NULL, 1482529729, 1482529729);
 INSERT INTO `auth_item` (`name`, `type`, `description`, `rule_name`, `data`, `created_at`, `updated_at`) VALUES
 	('/gii/*', 2, NULL, NULL, NULL, 1481038178, 1481038178);
 INSERT INTO `auth_item` (`name`, `type`, `description`, `rule_name`, `data`, `created_at`, `updated_at`) VALUES
@@ -144,15 +148,31 @@ INSERT INTO `auth_item` (`name`, `type`, `description`, `rule_name`, `data`, `cr
 INSERT INTO `auth_item` (`name`, `type`, `description`, `rule_name`, `data`, `created_at`, `updated_at`) VALUES
 	('/gii/default/view', 2, NULL, NULL, NULL, 1481038179, 1481038179);
 INSERT INTO `auth_item` (`name`, `type`, `description`, `rule_name`, `data`, `created_at`, `updated_at`) VALUES
-	('/kendaraan/*', 2, NULL, NULL, NULL, 1481037736, 1481037736);
+	('/jasa-service/*', 2, NULL, NULL, NULL, 1482529729, 1482529729);
+INSERT INTO `auth_item` (`name`, `type`, `description`, `rule_name`, `data`, `created_at`, `updated_at`) VALUES
+	('/jasa-service/create', 2, NULL, NULL, NULL, 1482528881, 1482528881);
+INSERT INTO `auth_item` (`name`, `type`, `description`, `rule_name`, `data`, `created_at`, `updated_at`) VALUES
+	('/jasa-service/delete', 2, NULL, NULL, NULL, 1482529644, 1482529644);
+INSERT INTO `auth_item` (`name`, `type`, `description`, `rule_name`, `data`, `created_at`, `updated_at`) VALUES
+	('/jasa-service/delete-items', 2, NULL, NULL, NULL, 1482529730, 1482529730);
+INSERT INTO `auth_item` (`name`, `type`, `description`, `rule_name`, `data`, `created_at`, `updated_at`) VALUES
+	('/jasa-service/index', 2, NULL, NULL, NULL, 1482528878, 1482528878);
+INSERT INTO `auth_item` (`name`, `type`, `description`, `rule_name`, `data`, `created_at`, `updated_at`) VALUES
+	('/jasa-service/update', 2, NULL, NULL, NULL, 1482529730, 1482529730);
+INSERT INTO `auth_item` (`name`, `type`, `description`, `rule_name`, `data`, `created_at`, `updated_at`) VALUES
+	('/jasa-service/view', 2, NULL, NULL, NULL, 1482528878, 1482528878);
+INSERT INTO `auth_item` (`name`, `type`, `description`, `rule_name`, `data`, `created_at`, `updated_at`) VALUES
+	('/kendaraan/*', 2, NULL, NULL, NULL, 1482529731, 1482529731);
 INSERT INTO `auth_item` (`name`, `type`, `description`, `rule_name`, `data`, `created_at`, `updated_at`) VALUES
 	('/kendaraan/create', 2, NULL, NULL, NULL, 1481038179, 1481038179);
 INSERT INTO `auth_item` (`name`, `type`, `description`, `rule_name`, `data`, `created_at`, `updated_at`) VALUES
 	('/kendaraan/delete', 2, NULL, NULL, NULL, 1481038179, 1481038179);
 INSERT INTO `auth_item` (`name`, `type`, `description`, `rule_name`, `data`, `created_at`, `updated_at`) VALUES
-	('/kendaraan/delete-items', 2, NULL, NULL, NULL, 1481038180, 1481038180);
+	('/kendaraan/delete-items', 2, NULL, NULL, NULL, 1482529731, 1482529731);
 INSERT INTO `auth_item` (`name`, `type`, `description`, `rule_name`, `data`, `created_at`, `updated_at`) VALUES
 	('/kendaraan/index', 2, NULL, NULL, NULL, 1481038180, 1481038180);
+INSERT INTO `auth_item` (`name`, `type`, `description`, `rule_name`, `data`, `created_at`, `updated_at`) VALUES
+	('/kendaraan/service', 2, NULL, NULL, NULL, 1482528494, 1482528494);
 INSERT INTO `auth_item` (`name`, `type`, `description`, `rule_name`, `data`, `created_at`, `updated_at`) VALUES
 	('/kendaraan/update', 2, NULL, NULL, NULL, 1481038180, 1481038180);
 INSERT INTO `auth_item` (`name`, `type`, `description`, `rule_name`, `data`, `created_at`, `updated_at`) VALUES
@@ -182,7 +202,7 @@ INSERT INTO `auth_item` (`name`, `type`, `description`, `rule_name`, `data`, `cr
 INSERT INTO `auth_item` (`name`, `type`, `description`, `rule_name`, `data`, `created_at`, `updated_at`) VALUES
 	('/restful/index', 2, NULL, NULL, NULL, 1481038182, 1481038182);
 INSERT INTO `auth_item` (`name`, `type`, `description`, `rule_name`, `data`, `created_at`, `updated_at`) VALUES
-	('/service/*', 2, NULL, NULL, NULL, 1481037737, 1481037737);
+	('/service/*', 2, NULL, NULL, NULL, 1482529732, 1482529732);
 INSERT INTO `auth_item` (`name`, `type`, `description`, `rule_name`, `data`, `created_at`, `updated_at`) VALUES
 	('/service/create', 2, NULL, NULL, NULL, 1481038182, 1481038182);
 INSERT INTO `auth_item` (`name`, `type`, `description`, `rule_name`, `data`, `created_at`, `updated_at`) VALUES
@@ -190,13 +210,19 @@ INSERT INTO `auth_item` (`name`, `type`, `description`, `rule_name`, `data`, `cr
 INSERT INTO `auth_item` (`name`, `type`, `description`, `rule_name`, `data`, `created_at`, `updated_at`) VALUES
 	('/service/delete-items', 2, NULL, NULL, NULL, 1481038182, 1481038182);
 INSERT INTO `auth_item` (`name`, `type`, `description`, `rule_name`, `data`, `created_at`, `updated_at`) VALUES
+	('/service/done', 2, NULL, NULL, NULL, 1482528248, 1482528248);
+INSERT INTO `auth_item` (`name`, `type`, `description`, `rule_name`, `data`, `created_at`, `updated_at`) VALUES
 	('/service/index', 2, NULL, NULL, NULL, 1481038182, 1481038182);
+INSERT INTO `auth_item` (`name`, `type`, `description`, `rule_name`, `data`, `created_at`, `updated_at`) VALUES
+	('/service/list-kendaraan', 2, NULL, NULL, NULL, 1482528251, 1482528251);
+INSERT INTO `auth_item` (`name`, `type`, `description`, `rule_name`, `data`, `created_at`, `updated_at`) VALUES
+	('/service/queue', 2, NULL, NULL, NULL, 1482528252, 1482528252);
 INSERT INTO `auth_item` (`name`, `type`, `description`, `rule_name`, `data`, `created_at`, `updated_at`) VALUES
 	('/service/update', 2, NULL, NULL, NULL, 1481038182, 1481038182);
 INSERT INTO `auth_item` (`name`, `type`, `description`, `rule_name`, `data`, `created_at`, `updated_at`) VALUES
 	('/service/view', 2, NULL, NULL, NULL, 1481038182, 1481038182);
 INSERT INTO `auth_item` (`name`, `type`, `description`, `rule_name`, `data`, `created_at`, `updated_at`) VALUES
-	('/site/*', 2, NULL, NULL, NULL, 1481037739, 1481037739);
+	('/site/*', 2, NULL, NULL, NULL, 1482528282, 1482528282);
 INSERT INTO `auth_item` (`name`, `type`, `description`, `rule_name`, `data`, `created_at`, `updated_at`) VALUES
 	('/site/about', 2, NULL, NULL, NULL, 1481038183, 1481038183);
 INSERT INTO `auth_item` (`name`, `type`, `description`, `rule_name`, `data`, `created_at`, `updated_at`) VALUES
@@ -222,13 +248,43 @@ INSERT INTO `auth_item` (`name`, `type`, `description`, `rule_name`, `data`, `cr
 INSERT INTO `auth_item` (`name`, `type`, `description`, `rule_name`, `data`, `created_at`, `updated_at`) VALUES
 	('/site/signup', 2, NULL, NULL, NULL, 1481038184, 1481038184);
 INSERT INTO `auth_item` (`name`, `type`, `description`, `rule_name`, `data`, `created_at`, `updated_at`) VALUES
-	('/sms-gateway/*', 2, NULL, NULL, NULL, 1481126694, 1481126694);
+	('/sms-gateway/*', 2, NULL, NULL, NULL, 1482508850, 1482508850);
 INSERT INTO `auth_item` (`name`, `type`, `description`, `rule_name`, `data`, `created_at`, `updated_at`) VALUES
 	('/sms-gateway/send-sms', 2, NULL, NULL, NULL, 1481048523, 1481048523);
 INSERT INTO `auth_item` (`name`, `type`, `description`, `rule_name`, `data`, `created_at`, `updated_at`) VALUES
-	('/smsgatewayme/*', 2, NULL, NULL, NULL, 1481126661, 1481126661);
+	('/smsgatewayme/*', 2, NULL, NULL, NULL, 1482508851, 1482508851);
 INSERT INTO `auth_item` (`name`, `type`, `description`, `rule_name`, `data`, `created_at`, `updated_at`) VALUES
-	('/smsgatewayme/list-messages/*', 2, NULL, NULL, NULL, 1481126703, 1481126703);
+	('/smsgatewayme/config/*', 2, NULL, NULL, NULL, 1482529734, 1482529734);
+INSERT INTO `auth_item` (`name`, `type`, `description`, `rule_name`, `data`, `created_at`, `updated_at`) VALUES
+	('/smsgatewayme/config/create', 2, NULL, NULL, NULL, 1482529734, 1482529734);
+INSERT INTO `auth_item` (`name`, `type`, `description`, `rule_name`, `data`, `created_at`, `updated_at`) VALUES
+	('/smsgatewayme/config/delete', 2, NULL, NULL, NULL, 1482529734, 1482529734);
+INSERT INTO `auth_item` (`name`, `type`, `description`, `rule_name`, `data`, `created_at`, `updated_at`) VALUES
+	('/smsgatewayme/config/delete-items', 2, NULL, NULL, NULL, 1482529734, 1482529734);
+INSERT INTO `auth_item` (`name`, `type`, `description`, `rule_name`, `data`, `created_at`, `updated_at`) VALUES
+	('/smsgatewayme/config/index', 2, NULL, NULL, NULL, 1482529735, 1482529735);
+INSERT INTO `auth_item` (`name`, `type`, `description`, `rule_name`, `data`, `created_at`, `updated_at`) VALUES
+	('/smsgatewayme/config/update', 2, NULL, NULL, NULL, 1482529735, 1482529735);
+INSERT INTO `auth_item` (`name`, `type`, `description`, `rule_name`, `data`, `created_at`, `updated_at`) VALUES
+	('/smsgatewayme/config/view', 2, NULL, NULL, NULL, 1482529735, 1482529735);
+INSERT INTO `auth_item` (`name`, `type`, `description`, `rule_name`, `data`, `created_at`, `updated_at`) VALUES
+	('/smsgatewayme/default/*', 2, NULL, NULL, NULL, 1482529735, 1482529735);
+INSERT INTO `auth_item` (`name`, `type`, `description`, `rule_name`, `data`, `created_at`, `updated_at`) VALUES
+	('/smsgatewayme/default/index', 2, NULL, NULL, NULL, 1482529735, 1482529735);
+INSERT INTO `auth_item` (`name`, `type`, `description`, `rule_name`, `data`, `created_at`, `updated_at`) VALUES
+	('/smsgatewayme/list-messages/*', 2, NULL, NULL, NULL, 1482529735, 1482529735);
+INSERT INTO `auth_item` (`name`, `type`, `description`, `rule_name`, `data`, `created_at`, `updated_at`) VALUES
+	('/smsgatewayme/list-messages/index', 2, NULL, NULL, NULL, 1482529735, 1482529735);
+INSERT INTO `auth_item` (`name`, `type`, `description`, `rule_name`, `data`, `created_at`, `updated_at`) VALUES
+	('/smsgatewayme/send-message/*', 2, NULL, NULL, NULL, 1482529735, 1482529735);
+INSERT INTO `auth_item` (`name`, `type`, `description`, `rule_name`, `data`, `created_at`, `updated_at`) VALUES
+	('/smsgatewayme/send-message/index', 2, NULL, NULL, NULL, 1482529735, 1482529735);
+INSERT INTO `auth_item` (`name`, `type`, `description`, `rule_name`, `data`, `created_at`, `updated_at`) VALUES
+	('/smsgatewayme/send-message/send-one', 2, NULL, NULL, NULL, 1482529736, 1482529736);
+INSERT INTO `auth_item` (`name`, `type`, `description`, `rule_name`, `data`, `created_at`, `updated_at`) VALUES
+	('/smsgatewayme/test-send-sms/*', 2, NULL, NULL, NULL, 1482529736, 1482529736);
+INSERT INTO `auth_item` (`name`, `type`, `description`, `rule_name`, `data`, `created_at`, `updated_at`) VALUES
+	('/smsgatewayme/test-send-sms/index', 2, NULL, NULL, NULL, 1482529736, 1482529736);
 INSERT INTO `auth_item` (`name`, `type`, `description`, `rule_name`, `data`, `created_at`, `updated_at`) VALUES
 	('/social-media/*', 2, NULL, NULL, NULL, 1481038184, 1481038184);
 INSERT INTO `auth_item` (`name`, `type`, `description`, `rule_name`, `data`, `created_at`, `updated_at`) VALUES
@@ -244,7 +300,7 @@ INSERT INTO `auth_item` (`name`, `type`, `description`, `rule_name`, `data`, `cr
 INSERT INTO `auth_item` (`name`, `type`, `description`, `rule_name`, `data`, `created_at`, `updated_at`) VALUES
 	('/social-media/view', 2, NULL, NULL, NULL, 1481038185, 1481038185);
 INSERT INTO `auth_item` (`name`, `type`, `description`, `rule_name`, `data`, `created_at`, `updated_at`) VALUES
-	('/sparepart/*', 2, NULL, NULL, NULL, 1481037741, 1481037741);
+	('/sparepart/*', 2, NULL, NULL, NULL, 1482529737, 1482529737);
 INSERT INTO `auth_item` (`name`, `type`, `description`, `rule_name`, `data`, `created_at`, `updated_at`) VALUES
 	('/sparepart/create', 2, NULL, NULL, NULL, 1481038185, 1481038185);
 INSERT INTO `auth_item` (`name`, `type`, `description`, `rule_name`, `data`, `created_at`, `updated_at`) VALUES
@@ -258,7 +314,7 @@ INSERT INTO `auth_item` (`name`, `type`, `description`, `rule_name`, `data`, `cr
 INSERT INTO `auth_item` (`name`, `type`, `description`, `rule_name`, `data`, `created_at`, `updated_at`) VALUES
 	('/sparepart/view', 2, NULL, NULL, NULL, 1481038186, 1481038186);
 INSERT INTO `auth_item` (`name`, `type`, `description`, `rule_name`, `data`, `created_at`, `updated_at`) VALUES
-	('/transaksi/*', 2, NULL, NULL, NULL, 1481037741, 1481037741);
+	('/transaksi/*', 2, NULL, NULL, NULL, 1482529737, 1482529737);
 INSERT INTO `auth_item` (`name`, `type`, `description`, `rule_name`, `data`, `created_at`, `updated_at`) VALUES
 	('/transaksi/create', 2, NULL, NULL, NULL, 1481038187, 1481038187);
 INSERT INTO `auth_item` (`name`, `type`, `description`, `rule_name`, `data`, `created_at`, `updated_at`) VALUES
@@ -292,6 +348,20 @@ INSERT INTO `auth_item` (`name`, `type`, `description`, `rule_name`, `data`, `cr
 INSERT INTO `auth_item` (`name`, `type`, `description`, `rule_name`, `data`, `created_at`, `updated_at`) VALUES
 	('/webmaster/clean-assets/index', 2, NULL, NULL, NULL, 1481038189, 1481038189);
 INSERT INTO `auth_item` (`name`, `type`, `description`, `rule_name`, `data`, `created_at`, `updated_at`) VALUES
+	('/webmaster/config/*', 2, NULL, NULL, NULL, 1482524794, 1482524794);
+INSERT INTO `auth_item` (`name`, `type`, `description`, `rule_name`, `data`, `created_at`, `updated_at`) VALUES
+	('/webmaster/config/create', 2, NULL, NULL, NULL, 1482529739, 1482529739);
+INSERT INTO `auth_item` (`name`, `type`, `description`, `rule_name`, `data`, `created_at`, `updated_at`) VALUES
+	('/webmaster/config/delete', 2, NULL, NULL, NULL, 1482529739, 1482529739);
+INSERT INTO `auth_item` (`name`, `type`, `description`, `rule_name`, `data`, `created_at`, `updated_at`) VALUES
+	('/webmaster/config/delete-items', 2, NULL, NULL, NULL, 1482529739, 1482529739);
+INSERT INTO `auth_item` (`name`, `type`, `description`, `rule_name`, `data`, `created_at`, `updated_at`) VALUES
+	('/webmaster/config/index', 2, NULL, NULL, NULL, 1482529739, 1482529739);
+INSERT INTO `auth_item` (`name`, `type`, `description`, `rule_name`, `data`, `created_at`, `updated_at`) VALUES
+	('/webmaster/config/update', 2, NULL, NULL, NULL, 1482529739, 1482529739);
+INSERT INTO `auth_item` (`name`, `type`, `description`, `rule_name`, `data`, `created_at`, `updated_at`) VALUES
+	('/webmaster/config/view', 2, NULL, NULL, NULL, 1482529740, 1482529740);
+INSERT INTO `auth_item` (`name`, `type`, `description`, `rule_name`, `data`, `created_at`, `updated_at`) VALUES
 	('/webmaster/dashboard/*', 2, NULL, NULL, NULL, 1481038189, 1481038189);
 INSERT INTO `auth_item` (`name`, `type`, `description`, `rule_name`, `data`, `created_at`, `updated_at`) VALUES
 	('/webmaster/dashboard/index', 2, NULL, NULL, NULL, 1481038189, 1481038189);
@@ -316,9 +386,9 @@ INSERT INTO `auth_item` (`name`, `type`, `description`, `rule_name`, `data`, `cr
 INSERT INTO `auth_item` (`name`, `type`, `description`, `rule_name`, `data`, `created_at`, `updated_at`) VALUES
 	('/webmaster/role/permission', 2, NULL, NULL, NULL, 1481038190, 1481038190);
 INSERT INTO `auth_item` (`name`, `type`, `description`, `rule_name`, `data`, `created_at`, `updated_at`) VALUES
-	('/webmaster/role/selectreset', 2, NULL, NULL, NULL, 1481038191, 1481038191);
+	('/webmaster/role/selectreset', 2, NULL, NULL, NULL, 1482529741, 1482529741);
 INSERT INTO `auth_item` (`name`, `type`, `description`, `rule_name`, `data`, `created_at`, `updated_at`) VALUES
-	('/webmaster/role/selectrole', 2, NULL, NULL, NULL, 1481038191, 1481038191);
+	('/webmaster/role/selectrole', 2, NULL, NULL, NULL, 1482529741, 1482529741);
 INSERT INTO `auth_item` (`name`, `type`, `description`, `rule_name`, `data`, `created_at`, `updated_at`) VALUES
 	('/webmaster/role/update', 2, NULL, NULL, NULL, 1481038191, 1481038191);
 INSERT INTO `auth_item` (`name`, `type`, `description`, `rule_name`, `data`, `created_at`, `updated_at`) VALUES
@@ -326,31 +396,31 @@ INSERT INTO `auth_item` (`name`, `type`, `description`, `rule_name`, `data`, `cr
 INSERT INTO `auth_item` (`name`, `type`, `description`, `rule_name`, `data`, `created_at`, `updated_at`) VALUES
 	('/webmaster/route/*', 2, NULL, NULL, NULL, 1481038191, 1481038191);
 INSERT INTO `auth_item` (`name`, `type`, `description`, `rule_name`, `data`, `created_at`, `updated_at`) VALUES
-	('/webmaster/route/create', 2, NULL, NULL, NULL, 1481038191, 1481038191);
+	('/webmaster/route/create', 2, NULL, NULL, NULL, 1482529741, 1482529741);
 INSERT INTO `auth_item` (`name`, `type`, `description`, `rule_name`, `data`, `created_at`, `updated_at`) VALUES
-	('/webmaster/route/delete', 2, NULL, NULL, NULL, 1481038191, 1481038191);
+	('/webmaster/route/delete', 2, NULL, NULL, NULL, 1482529742, 1482529742);
 INSERT INTO `auth_item` (`name`, `type`, `description`, `rule_name`, `data`, `created_at`, `updated_at`) VALUES
-	('/webmaster/route/generate', 2, NULL, NULL, NULL, 1481038191, 1481038191);
+	('/webmaster/route/generate', 2, NULL, NULL, NULL, 1482529742, 1482529742);
 INSERT INTO `auth_item` (`name`, `type`, `description`, `rule_name`, `data`, `created_at`, `updated_at`) VALUES
-	('/webmaster/route/hapusitems', 2, NULL, NULL, NULL, 1481038192, 1481038192);
+	('/webmaster/route/hapusitems', 2, NULL, NULL, NULL, 1482529742, 1482529742);
 INSERT INTO `auth_item` (`name`, `type`, `description`, `rule_name`, `data`, `created_at`, `updated_at`) VALUES
-	('/webmaster/route/index', 2, NULL, NULL, NULL, 1481038192, 1481038192);
+	('/webmaster/route/index', 2, NULL, NULL, NULL, 1482529743, 1482529743);
 INSERT INTO `auth_item` (`name`, `type`, `description`, `rule_name`, `data`, `created_at`, `updated_at`) VALUES
-	('/webmaster/route/update', 2, NULL, NULL, NULL, 1481038192, 1481038192);
+	('/webmaster/route/update', 2, NULL, NULL, NULL, 1482529743, 1482529743);
 INSERT INTO `auth_item` (`name`, `type`, `description`, `rule_name`, `data`, `created_at`, `updated_at`) VALUES
-	('/webmaster/route/view', 2, NULL, NULL, NULL, 1481038192, 1481038192);
+	('/webmaster/route/view', 2, NULL, NULL, NULL, 1482527602, 1482527602);
 INSERT INTO `auth_item` (`name`, `type`, `description`, `rule_name`, `data`, `created_at`, `updated_at`) VALUES
-	('/webmaster/site/*', 2, NULL, NULL, NULL, 1481038192, 1481038192);
+	('/webmaster/site/*', 2, NULL, NULL, NULL, 1482529743, 1482529743);
 INSERT INTO `auth_item` (`name`, `type`, `description`, `rule_name`, `data`, `created_at`, `updated_at`) VALUES
-	('/webmaster/site/error', 2, NULL, NULL, NULL, 1481038192, 1481038192);
+	('/webmaster/site/error', 2, NULL, NULL, NULL, 1482529743, 1482529743);
 INSERT INTO `auth_item` (`name`, `type`, `description`, `rule_name`, `data`, `created_at`, `updated_at`) VALUES
-	('/webmaster/site/index', 2, NULL, NULL, NULL, 1481038192, 1481038192);
+	('/webmaster/site/index', 2, NULL, NULL, NULL, 1482529743, 1482529743);
 INSERT INTO `auth_item` (`name`, `type`, `description`, `rule_name`, `data`, `created_at`, `updated_at`) VALUES
-	('/webmaster/site/login', 2, NULL, NULL, NULL, 1481038193, 1481038193);
+	('/webmaster/site/login', 2, NULL, NULL, NULL, 1482529743, 1482529743);
 INSERT INTO `auth_item` (`name`, `type`, `description`, `rule_name`, `data`, `created_at`, `updated_at`) VALUES
 	('/webmaster/site/logout', 2, NULL, NULL, NULL, 1481038193, 1481038193);
 INSERT INTO `auth_item` (`name`, `type`, `description`, `rule_name`, `data`, `created_at`, `updated_at`) VALUES
-	('/webmaster/site/profile', 2, NULL, NULL, NULL, 1481038193, 1481038193);
+	('/webmaster/site/profile', 2, NULL, NULL, NULL, 1482529744, 1482529744);
 INSERT INTO `auth_item` (`name`, `type`, `description`, `rule_name`, `data`, `created_at`, `updated_at`) VALUES
 	('admin', 1, NULL, NULL, NULL, 1481037405, 1481037405);
 INSERT INTO `auth_item` (`name`, `type`, `description`, `rule_name`, `data`, `created_at`, `updated_at`) VALUES
@@ -371,30 +441,64 @@ CREATE TABLE IF NOT EXISTS `auth_item_child` (
   CONSTRAINT `auth_item_child_ibfk_2` FOREIGN KEY (`child`) REFERENCES `auth_item` (`name`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
--- Membuang data untuk tabel topik.auth_item_child: ~128 rows (lebih kurang)
+-- Membuang data untuk tabel topik.auth_item_child: ~132 rows (lebih kurang)
 /*!40000 ALTER TABLE `auth_item_child` DISABLE KEYS */;
 INSERT INTO `auth_item_child` (`parent`, `child`) VALUES
-	('admin', '/customer/*');
+	('admin', '/customer/create');
 INSERT INTO `auth_item_child` (`parent`, `child`) VALUES
-	('admin', '/kendaraan/*');
+	('admin', '/customer/create-new-customer');
 INSERT INTO `auth_item_child` (`parent`, `child`) VALUES
-	('admin', '/service/*');
+	('admin', '/customer/index');
+INSERT INTO `auth_item_child` (`parent`, `child`) VALUES
+	('admin', '/customer/view');
+INSERT INTO `auth_item_child` (`parent`, `child`) VALUES
+	('admin', '/jasa-service/create');
+INSERT INTO `auth_item_child` (`parent`, `child`) VALUES
+	('admin', '/jasa-service/index');
+INSERT INTO `auth_item_child` (`parent`, `child`) VALUES
+	('admin', '/jasa-service/view');
+INSERT INTO `auth_item_child` (`parent`, `child`) VALUES
+	('admin', '/kendaraan/create');
+INSERT INTO `auth_item_child` (`parent`, `child`) VALUES
+	('admin', '/kendaraan/index');
+INSERT INTO `auth_item_child` (`parent`, `child`) VALUES
+	('admin', '/kendaraan/service');
+INSERT INTO `auth_item_child` (`parent`, `child`) VALUES
+	('admin', '/kendaraan/view');
+INSERT INTO `auth_item_child` (`parent`, `child`) VALUES
+	('admin', '/service/create');
+INSERT INTO `auth_item_child` (`parent`, `child`) VALUES
+	('admin', '/service/done');
+INSERT INTO `auth_item_child` (`parent`, `child`) VALUES
+	('admin', '/service/index');
+INSERT INTO `auth_item_child` (`parent`, `child`) VALUES
+	('admin', '/service/list-kendaraan');
+INSERT INTO `auth_item_child` (`parent`, `child`) VALUES
+	('admin', '/service/queue');
+INSERT INTO `auth_item_child` (`parent`, `child`) VALUES
+	('admin', '/service/view');
 INSERT INTO `auth_item_child` (`parent`, `child`) VALUES
 	('admin', '/site/*');
 INSERT INTO `auth_item_child` (`parent`, `child`) VALUES
-	('admin', '/sms-gateway/*');
+	('admin', '/sparepart/create');
 INSERT INTO `auth_item_child` (`parent`, `child`) VALUES
-	('admin', '/smsgatewayme/list-messages/*');
+	('admin', '/sparepart/index');
 INSERT INTO `auth_item_child` (`parent`, `child`) VALUES
-	('admin', '/sparepart/*');
+	('admin', '/sparepart/view');
 INSERT INTO `auth_item_child` (`parent`, `child`) VALUES
-	('admin', '/transaksi/*');
+	('admin', '/transaksi/create');
+INSERT INTO `auth_item_child` (`parent`, `child`) VALUES
+	('admin', '/transaksi/index');
+INSERT INTO `auth_item_child` (`parent`, `child`) VALUES
+	('admin', '/transaksi/view');
 INSERT INTO `auth_item_child` (`parent`, `child`) VALUES
 	('webmaster', '/*');
 INSERT INTO `auth_item_child` (`parent`, `child`) VALUES
 	('webmaster', '/customer/*');
 INSERT INTO `auth_item_child` (`parent`, `child`) VALUES
 	('webmaster', '/customer/create');
+INSERT INTO `auth_item_child` (`parent`, `child`) VALUES
+	('webmaster', '/customer/create-new-customer');
 INSERT INTO `auth_item_child` (`parent`, `child`) VALUES
 	('webmaster', '/customer/delete');
 INSERT INTO `auth_item_child` (`parent`, `child`) VALUES
@@ -434,6 +538,20 @@ INSERT INTO `auth_item_child` (`parent`, `child`) VALUES
 INSERT INTO `auth_item_child` (`parent`, `child`) VALUES
 	('webmaster', '/gii/default/view');
 INSERT INTO `auth_item_child` (`parent`, `child`) VALUES
+	('webmaster', '/jasa-service/*');
+INSERT INTO `auth_item_child` (`parent`, `child`) VALUES
+	('webmaster', '/jasa-service/create');
+INSERT INTO `auth_item_child` (`parent`, `child`) VALUES
+	('webmaster', '/jasa-service/delete');
+INSERT INTO `auth_item_child` (`parent`, `child`) VALUES
+	('webmaster', '/jasa-service/delete-items');
+INSERT INTO `auth_item_child` (`parent`, `child`) VALUES
+	('webmaster', '/jasa-service/index');
+INSERT INTO `auth_item_child` (`parent`, `child`) VALUES
+	('webmaster', '/jasa-service/update');
+INSERT INTO `auth_item_child` (`parent`, `child`) VALUES
+	('webmaster', '/jasa-service/view');
+INSERT INTO `auth_item_child` (`parent`, `child`) VALUES
 	('webmaster', '/kendaraan/*');
 INSERT INTO `auth_item_child` (`parent`, `child`) VALUES
 	('webmaster', '/kendaraan/create');
@@ -443,6 +561,8 @@ INSERT INTO `auth_item_child` (`parent`, `child`) VALUES
 	('webmaster', '/kendaraan/delete-items');
 INSERT INTO `auth_item_child` (`parent`, `child`) VALUES
 	('webmaster', '/kendaraan/index');
+INSERT INTO `auth_item_child` (`parent`, `child`) VALUES
+	('webmaster', '/kendaraan/service');
 INSERT INTO `auth_item_child` (`parent`, `child`) VALUES
 	('webmaster', '/kendaraan/update');
 INSERT INTO `auth_item_child` (`parent`, `child`) VALUES
@@ -480,7 +600,13 @@ INSERT INTO `auth_item_child` (`parent`, `child`) VALUES
 INSERT INTO `auth_item_child` (`parent`, `child`) VALUES
 	('webmaster', '/service/delete-items');
 INSERT INTO `auth_item_child` (`parent`, `child`) VALUES
+	('webmaster', '/service/done');
+INSERT INTO `auth_item_child` (`parent`, `child`) VALUES
 	('webmaster', '/service/index');
+INSERT INTO `auth_item_child` (`parent`, `child`) VALUES
+	('webmaster', '/service/list-kendaraan');
+INSERT INTO `auth_item_child` (`parent`, `child`) VALUES
+	('webmaster', '/service/queue');
 INSERT INTO `auth_item_child` (`parent`, `child`) VALUES
 	('webmaster', '/service/update');
 INSERT INTO `auth_item_child` (`parent`, `child`) VALUES
@@ -512,9 +638,43 @@ INSERT INTO `auth_item_child` (`parent`, `child`) VALUES
 INSERT INTO `auth_item_child` (`parent`, `child`) VALUES
 	('webmaster', '/site/signup');
 INSERT INTO `auth_item_child` (`parent`, `child`) VALUES
+	('webmaster', '/sms-gateway/*');
+INSERT INTO `auth_item_child` (`parent`, `child`) VALUES
 	('webmaster', '/sms-gateway/send-sms');
 INSERT INTO `auth_item_child` (`parent`, `child`) VALUES
 	('webmaster', '/smsgatewayme/*');
+INSERT INTO `auth_item_child` (`parent`, `child`) VALUES
+	('webmaster', '/smsgatewayme/config/*');
+INSERT INTO `auth_item_child` (`parent`, `child`) VALUES
+	('webmaster', '/smsgatewayme/config/create');
+INSERT INTO `auth_item_child` (`parent`, `child`) VALUES
+	('webmaster', '/smsgatewayme/config/delete');
+INSERT INTO `auth_item_child` (`parent`, `child`) VALUES
+	('webmaster', '/smsgatewayme/config/delete-items');
+INSERT INTO `auth_item_child` (`parent`, `child`) VALUES
+	('webmaster', '/smsgatewayme/config/index');
+INSERT INTO `auth_item_child` (`parent`, `child`) VALUES
+	('webmaster', '/smsgatewayme/config/update');
+INSERT INTO `auth_item_child` (`parent`, `child`) VALUES
+	('webmaster', '/smsgatewayme/config/view');
+INSERT INTO `auth_item_child` (`parent`, `child`) VALUES
+	('webmaster', '/smsgatewayme/default/*');
+INSERT INTO `auth_item_child` (`parent`, `child`) VALUES
+	('webmaster', '/smsgatewayme/default/index');
+INSERT INTO `auth_item_child` (`parent`, `child`) VALUES
+	('webmaster', '/smsgatewayme/list-messages/*');
+INSERT INTO `auth_item_child` (`parent`, `child`) VALUES
+	('webmaster', '/smsgatewayme/list-messages/index');
+INSERT INTO `auth_item_child` (`parent`, `child`) VALUES
+	('webmaster', '/smsgatewayme/send-message/*');
+INSERT INTO `auth_item_child` (`parent`, `child`) VALUES
+	('webmaster', '/smsgatewayme/send-message/index');
+INSERT INTO `auth_item_child` (`parent`, `child`) VALUES
+	('webmaster', '/smsgatewayme/send-message/send-one');
+INSERT INTO `auth_item_child` (`parent`, `child`) VALUES
+	('webmaster', '/smsgatewayme/test-send-sms/*');
+INSERT INTO `auth_item_child` (`parent`, `child`) VALUES
+	('webmaster', '/smsgatewayme/test-send-sms/index');
 INSERT INTO `auth_item_child` (`parent`, `child`) VALUES
 	('webmaster', '/social-media/*');
 INSERT INTO `auth_item_child` (`parent`, `child`) VALUES
@@ -577,6 +737,20 @@ INSERT INTO `auth_item_child` (`parent`, `child`) VALUES
 	('webmaster', '/webmaster/clean-assets/*');
 INSERT INTO `auth_item_child` (`parent`, `child`) VALUES
 	('webmaster', '/webmaster/clean-assets/index');
+INSERT INTO `auth_item_child` (`parent`, `child`) VALUES
+	('webmaster', '/webmaster/config/*');
+INSERT INTO `auth_item_child` (`parent`, `child`) VALUES
+	('webmaster', '/webmaster/config/create');
+INSERT INTO `auth_item_child` (`parent`, `child`) VALUES
+	('webmaster', '/webmaster/config/delete');
+INSERT INTO `auth_item_child` (`parent`, `child`) VALUES
+	('webmaster', '/webmaster/config/delete-items');
+INSERT INTO `auth_item_child` (`parent`, `child`) VALUES
+	('webmaster', '/webmaster/config/index');
+INSERT INTO `auth_item_child` (`parent`, `child`) VALUES
+	('webmaster', '/webmaster/config/update');
+INSERT INTO `auth_item_child` (`parent`, `child`) VALUES
+	('webmaster', '/webmaster/config/view');
 INSERT INTO `auth_item_child` (`parent`, `child`) VALUES
 	('webmaster', '/webmaster/dashboard/*');
 INSERT INTO `auth_item_child` (`parent`, `child`) VALUES
@@ -657,9 +831,9 @@ CREATE TABLE IF NOT EXISTS `config` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `code` varchar(64) NOT NULL,
   `key` varchar(64) NOT NULL,
-  `value` text NOT NULL,
+  `value` longtext NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=latin1;
 
 -- Membuang data untuk tabel topik.config: ~0 rows (lebih kurang)
 /*!40000 ALTER TABLE `config` DISABLE KEYS */;
@@ -670,19 +844,50 @@ INSERT INTO `config` (`id`, `code`, `key`, `value`) VALUES
 -- membuang struktur untuk table topik.customer
 CREATE TABLE IF NOT EXISTS `customer` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
+  `kode_customer` varchar(50) NOT NULL,
   `nama` varchar(50) NOT NULL,
   `alamat` varchar(50) NOT NULL,
   `no_telp` varchar(50) NOT NULL,
   `email` varchar(50) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=36 DEFAULT CHARSET=utf8;
 
--- Membuang data untuk tabel topik.customer: ~2 rows (lebih kurang)
+-- Membuang data untuk tabel topik.customer: ~4 rows (lebih kurang)
 /*!40000 ALTER TABLE `customer` DISABLE KEYS */;
-INSERT INTO `customer` (`id`, `nama`, `alamat`, `no_telp`, `email`) VALUES
-	(9, 'Fahrul', 'Bogor', '0857105685710', 'haifahrul@gmail.com');
-INSERT INTO `customer` (`id`, `nama`, `alamat`, `no_telp`, `email`) VALUES
-	(10, 'Topik', 'jakbar', '08', '');
+INSERT INTO `customer` (`id`, `kode_customer`, `nama`, `alamat`, `no_telp`, `email`) VALUES
+	(19, 'CS-2', 'Fahrul', 'Bogor', '085710568571', '');
+INSERT INTO `customer` (`id`, `kode_customer`, `nama`, `alamat`, `no_telp`, `email`) VALUES
+	(20, 'CS-3', 'Topik', '2', '2', '');
+INSERT INTO `customer` (`id`, `kode_customer`, `nama`, `alamat`, `no_telp`, `email`) VALUES
+	(21, 'CS-4', 'test', 'e', '1', '');
+INSERT INTO `customer` (`id`, `kode_customer`, `nama`, `alamat`, `no_telp`, `email`) VALUES
+	(22, 'CS-5', '123qwe', 'dd', '21', '');
+INSERT INTO `customer` (`id`, `kode_customer`, `nama`, `alamat`, `no_telp`, `email`) VALUES
+	(23, 'CS-6', 'Indah', 'indah', '8888888', '');
+INSERT INTO `customer` (`id`, `kode_customer`, `nama`, `alamat`, `no_telp`, `email`) VALUES
+	(24, 'CS-7', 'Zihan', 'Zihan', '0823', '');
+INSERT INTO `customer` (`id`, `kode_customer`, `nama`, `alamat`, `no_telp`, `email`) VALUES
+	(25, 'CS-8', 'Zihan', 'Zihan', '082322', '');
+INSERT INTO `customer` (`id`, `kode_customer`, `nama`, `alamat`, `no_telp`, `email`) VALUES
+	(26, 'CS-9', 'Zihan', 'Zihan', '0823222', '');
+INSERT INTO `customer` (`id`, `kode_customer`, `nama`, `alamat`, `no_telp`, `email`) VALUES
+	(27, 'CS-10', 'Zihan', 'Zihan', '08232222', '');
+INSERT INTO `customer` (`id`, `kode_customer`, `nama`, `alamat`, `no_telp`, `email`) VALUES
+	(28, 'CS-11', 'Zihan', 'Zihan', '082322222', '');
+INSERT INTO `customer` (`id`, `kode_customer`, `nama`, `alamat`, `no_telp`, `email`) VALUES
+	(29, 'CS-12', 'Zihan', 'Zihan', '0823222221', '');
+INSERT INTO `customer` (`id`, `kode_customer`, `nama`, `alamat`, `no_telp`, `email`) VALUES
+	(30, 'CS-13', 'Zihan', 'Zihan', '08232222211', '');
+INSERT INTO `customer` (`id`, `kode_customer`, `nama`, `alamat`, `no_telp`, `email`) VALUES
+	(31, 'CS-14', 'Zihan', 'Zihan', '082322222111', '');
+INSERT INTO `customer` (`id`, `kode_customer`, `nama`, `alamat`, `no_telp`, `email`) VALUES
+	(32, 'CS-15', 'Zihan', 'Zihan', '0823222221113', '');
+INSERT INTO `customer` (`id`, `kode_customer`, `nama`, `alamat`, `no_telp`, `email`) VALUES
+	(33, 'CS-16', 'Zihan', 'Zihan', '08232222211133', '');
+INSERT INTO `customer` (`id`, `kode_customer`, `nama`, `alamat`, `no_telp`, `email`) VALUES
+	(34, 'CS-17', 'Zihan', 'Zihan', '08232211', '');
+INSERT INTO `customer` (`id`, `kode_customer`, `nama`, `alamat`, `no_telp`, `email`) VALUES
+	(35, 'CS-18', 'sasdhasdhasd', 'asd', '009808', '');
 /*!40000 ALTER TABLE `customer` ENABLE KEYS */;
 
 -- membuang struktur untuk table topik.jasa_service
@@ -711,18 +916,46 @@ CREATE TABLE IF NOT EXISTS `kendaraan` (
   PRIMARY KEY (`id`),
   KEY `FK_kendaraan_customer` (`customer_id`),
   CONSTRAINT `FK_kendaraan_customer` FOREIGN KEY (`customer_id`) REFERENCES `customer` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=35 DEFAULT CHARSET=utf8;
 
--- Membuang data untuk tabel topik.kendaraan: ~4 rows (lebih kurang)
+-- Membuang data untuk tabel topik.kendaraan: ~6 rows (lebih kurang)
 /*!40000 ALTER TABLE `kendaraan` DISABLE KEYS */;
 INSERT INTO `kendaraan` (`id`, `customer_id`, `merek`, `tipe`, `tahun`, `jenis`, `no_plat`) VALUES
-	(6, 10, '1', '1', '2010', '1', 'B 2456 FF');
+	(17, 19, '1', '1', '2016', '1', 'F 2540 GT');
 INSERT INTO `kendaraan` (`id`, `customer_id`, `merek`, `tipe`, `tahun`, `jenis`, `no_plat`) VALUES
-	(7, 9, '1', '2', '2014', '2', 'F 2540 GT');
+	(18, 20, '1', '1', '2016', '1', '22');
 INSERT INTO `kendaraan` (`id`, `customer_id`, `merek`, `tipe`, `tahun`, `jenis`, `no_plat`) VALUES
-	(8, 9, '1', '2', '2016', '3', 'A 444 BA');
+	(19, 21, '1', '1', '2016', '1', 'ee');
 INSERT INTO `kendaraan` (`id`, `customer_id`, `merek`, `tipe`, `tahun`, `jenis`, `no_plat`) VALUES
-	(9, 10, '1', '1', '2015', '1', 'E 2123 ER');
+	(20, 22, '1', '1', '2016', '1', '21ed');
+INSERT INTO `kendaraan` (`id`, `customer_id`, `merek`, `tipe`, `tahun`, `jenis`, `no_plat`) VALUES
+	(21, 23, '1', '1', '2016', '1', 'indah');
+INSERT INTO `kendaraan` (`id`, `customer_id`, `merek`, `tipe`, `tahun`, `jenis`, `no_plat`) VALUES
+	(22, 19, '1', '1', '2016', '1', 'F 2540 GTS');
+INSERT INTO `kendaraan` (`id`, `customer_id`, `merek`, `tipe`, `tahun`, `jenis`, `no_plat`) VALUES
+	(23, 24, '1', '1', '2016', '1', 'Zihan');
+INSERT INTO `kendaraan` (`id`, `customer_id`, `merek`, `tipe`, `tahun`, `jenis`, `no_plat`) VALUES
+	(24, 25, '1', '1', '2016', '1', 'Zihanf');
+INSERT INTO `kendaraan` (`id`, `customer_id`, `merek`, `tipe`, `tahun`, `jenis`, `no_plat`) VALUES
+	(25, 26, '1', '1', '2016', '1', 'Zihanf2');
+INSERT INTO `kendaraan` (`id`, `customer_id`, `merek`, `tipe`, `tahun`, `jenis`, `no_plat`) VALUES
+	(26, 27, '1', '1', '2016', '1', 'Zihandd');
+INSERT INTO `kendaraan` (`id`, `customer_id`, `merek`, `tipe`, `tahun`, `jenis`, `no_plat`) VALUES
+	(27, 28, '1', '1', '2016', '1', 'Zihan2222');
+INSERT INTO `kendaraan` (`id`, `customer_id`, `merek`, `tipe`, `tahun`, `jenis`, `no_plat`) VALUES
+	(28, 29, '1', '1', '2016', '1', 'Zihan22221');
+INSERT INTO `kendaraan` (`id`, `customer_id`, `merek`, `tipe`, `tahun`, `jenis`, `no_plat`) VALUES
+	(29, 30, '1', '1', '2016', '1', 'Zihan222211');
+INSERT INTO `kendaraan` (`id`, `customer_id`, `merek`, `tipe`, `tahun`, `jenis`, `no_plat`) VALUES
+	(30, 31, '1', '1', '2016', '1', 'Zihan2222111');
+INSERT INTO `kendaraan` (`id`, `customer_id`, `merek`, `tipe`, `tahun`, `jenis`, `no_plat`) VALUES
+	(31, 32, '1', '1', '2016', '1', 'Zihan22221113');
+INSERT INTO `kendaraan` (`id`, `customer_id`, `merek`, `tipe`, `tahun`, `jenis`, `no_plat`) VALUES
+	(32, 33, '1', '1', '2016', '1', 'Zihan222211133');
+INSERT INTO `kendaraan` (`id`, `customer_id`, `merek`, `tipe`, `tahun`, `jenis`, `no_plat`) VALUES
+	(33, 34, '1', '1', '2016', '1', 'Zihan2222111331');
+INSERT INTO `kendaraan` (`id`, `customer_id`, `merek`, `tipe`, `tahun`, `jenis`, `no_plat`) VALUES
+	(34, 35, '1', '1', '2016', '1', 'asd8080d808s');
 /*!40000 ALTER TABLE `kendaraan` ENABLE KEYS */;
 
 -- membuang struktur untuk table topik.migration
@@ -755,7 +988,7 @@ CREATE TABLE IF NOT EXISTS `route` (
   PRIMARY KEY (`name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
--- Membuang data untuk tabel topik.route: ~122 rows (lebih kurang)
+-- Membuang data untuk tabel topik.route: ~151 rows (lebih kurang)
 /*!40000 ALTER TABLE `route` DISABLE KEYS */;
 INSERT INTO `route` (`name`, `alias`, `type`, `status`) VALUES
 	('/*', '*', '', 1);
@@ -763,6 +996,8 @@ INSERT INTO `route` (`name`, `alias`, `type`, `status`) VALUES
 	('/customer/*', '*', 'customer', 1);
 INSERT INTO `route` (`name`, `alias`, `type`, `status`) VALUES
 	('/customer/create', 'create', 'customer', 1);
+INSERT INTO `route` (`name`, `alias`, `type`, `status`) VALUES
+	('/customer/create-new-customer', 'create-new-customer', 'customer', 1);
 INSERT INTO `route` (`name`, `alias`, `type`, `status`) VALUES
 	('/customer/delete', 'delete', 'customer', 1);
 INSERT INTO `route` (`name`, `alias`, `type`, `status`) VALUES
@@ -802,6 +1037,20 @@ INSERT INTO `route` (`name`, `alias`, `type`, `status`) VALUES
 INSERT INTO `route` (`name`, `alias`, `type`, `status`) VALUES
 	('/gii/default/view', 'view', 'gii/default', 1);
 INSERT INTO `route` (`name`, `alias`, `type`, `status`) VALUES
+	('/jasa-service/*', '*', 'jasa-service', 1);
+INSERT INTO `route` (`name`, `alias`, `type`, `status`) VALUES
+	('/jasa-service/create', 'create', 'jasa-service', 1);
+INSERT INTO `route` (`name`, `alias`, `type`, `status`) VALUES
+	('/jasa-service/delete', 'delete', 'jasa-service', 1);
+INSERT INTO `route` (`name`, `alias`, `type`, `status`) VALUES
+	('/jasa-service/delete-items', 'delete-items', 'jasa-service', 1);
+INSERT INTO `route` (`name`, `alias`, `type`, `status`) VALUES
+	('/jasa-service/index', 'index', 'jasa-service', 1);
+INSERT INTO `route` (`name`, `alias`, `type`, `status`) VALUES
+	('/jasa-service/update', 'update', 'jasa-service', 1);
+INSERT INTO `route` (`name`, `alias`, `type`, `status`) VALUES
+	('/jasa-service/view', 'view', 'jasa-service', 1);
+INSERT INTO `route` (`name`, `alias`, `type`, `status`) VALUES
 	('/kendaraan/*', '*', 'kendaraan', 1);
 INSERT INTO `route` (`name`, `alias`, `type`, `status`) VALUES
 	('/kendaraan/create', 'create', 'kendaraan', 1);
@@ -811,6 +1060,8 @@ INSERT INTO `route` (`name`, `alias`, `type`, `status`) VALUES
 	('/kendaraan/delete-items', 'delete-items', 'kendaraan', 1);
 INSERT INTO `route` (`name`, `alias`, `type`, `status`) VALUES
 	('/kendaraan/index', 'index', 'kendaraan', 1);
+INSERT INTO `route` (`name`, `alias`, `type`, `status`) VALUES
+	('/kendaraan/service', 'service', 'kendaraan', 1);
 INSERT INTO `route` (`name`, `alias`, `type`, `status`) VALUES
 	('/kendaraan/update', 'update', 'kendaraan', 1);
 INSERT INTO `route` (`name`, `alias`, `type`, `status`) VALUES
@@ -848,7 +1099,13 @@ INSERT INTO `route` (`name`, `alias`, `type`, `status`) VALUES
 INSERT INTO `route` (`name`, `alias`, `type`, `status`) VALUES
 	('/service/delete-items', 'delete-items', 'service', 1);
 INSERT INTO `route` (`name`, `alias`, `type`, `status`) VALUES
+	('/service/done', 'done', 'service', 1);
+INSERT INTO `route` (`name`, `alias`, `type`, `status`) VALUES
 	('/service/index', 'index', 'service', 1);
+INSERT INTO `route` (`name`, `alias`, `type`, `status`) VALUES
+	('/service/list-kendaraan', 'list-kendaraan', 'service', 1);
+INSERT INTO `route` (`name`, `alias`, `type`, `status`) VALUES
+	('/service/queue', 'queue', 'service', 1);
 INSERT INTO `route` (`name`, `alias`, `type`, `status`) VALUES
 	('/service/update', 'update', 'service', 1);
 INSERT INTO `route` (`name`, `alias`, `type`, `status`) VALUES
@@ -907,6 +1164,16 @@ INSERT INTO `route` (`name`, `alias`, `type`, `status`) VALUES
 	('/smsgatewayme/list-messages/*', '*', 'smsgatewayme/list-messages', 1);
 INSERT INTO `route` (`name`, `alias`, `type`, `status`) VALUES
 	('/smsgatewayme/list-messages/index', 'index', 'smsgatewayme/list-messages', 1);
+INSERT INTO `route` (`name`, `alias`, `type`, `status`) VALUES
+	('/smsgatewayme/send-message/*', '*', 'smsgatewayme/send-message', 1);
+INSERT INTO `route` (`name`, `alias`, `type`, `status`) VALUES
+	('/smsgatewayme/send-message/index', 'index', 'smsgatewayme/send-message', 1);
+INSERT INTO `route` (`name`, `alias`, `type`, `status`) VALUES
+	('/smsgatewayme/send-message/send-one', 'send-one', 'smsgatewayme/send-message', 1);
+INSERT INTO `route` (`name`, `alias`, `type`, `status`) VALUES
+	('/smsgatewayme/test-send-sms/*', '*', 'smsgatewayme/test-send-sms', 1);
+INSERT INTO `route` (`name`, `alias`, `type`, `status`) VALUES
+	('/smsgatewayme/test-send-sms/index', 'index', 'smsgatewayme/test-send-sms', 1);
 INSERT INTO `route` (`name`, `alias`, `type`, `status`) VALUES
 	('/social-media/*', '*', 'social-media', 1);
 INSERT INTO `route` (`name`, `alias`, `type`, `status`) VALUES
@@ -969,6 +1236,20 @@ INSERT INTO `route` (`name`, `alias`, `type`, `status`) VALUES
 	('/webmaster/clean-assets/*', '*', 'webmaster/clean-assets', 1);
 INSERT INTO `route` (`name`, `alias`, `type`, `status`) VALUES
 	('/webmaster/clean-assets/index', 'index', 'webmaster/clean-assets', 1);
+INSERT INTO `route` (`name`, `alias`, `type`, `status`) VALUES
+	('/webmaster/config/*', '*', 'webmaster/config', 1);
+INSERT INTO `route` (`name`, `alias`, `type`, `status`) VALUES
+	('/webmaster/config/create', 'create', 'webmaster/config', 1);
+INSERT INTO `route` (`name`, `alias`, `type`, `status`) VALUES
+	('/webmaster/config/delete', 'delete', 'webmaster/config', 1);
+INSERT INTO `route` (`name`, `alias`, `type`, `status`) VALUES
+	('/webmaster/config/delete-items', 'delete-items', 'webmaster/config', 1);
+INSERT INTO `route` (`name`, `alias`, `type`, `status`) VALUES
+	('/webmaster/config/index', 'index', 'webmaster/config', 1);
+INSERT INTO `route` (`name`, `alias`, `type`, `status`) VALUES
+	('/webmaster/config/update', 'update', 'webmaster/config', 1);
+INSERT INTO `route` (`name`, `alias`, `type`, `status`) VALUES
+	('/webmaster/config/view', 'view', 'webmaster/config', 1);
 INSERT INTO `route` (`name`, `alias`, `type`, `status`) VALUES
 	('/webmaster/dashboard/*', '*', 'webmaster/dashboard', 1);
 INSERT INTO `route` (`name`, `alias`, `type`, `status`) VALUES
@@ -1046,30 +1327,52 @@ CREATE TABLE IF NOT EXISTS `service` (
   KEY `customer_id` (`customer_id`),
   CONSTRAINT `FK_service_customer` FOREIGN KEY (`customer_id`) REFERENCES `customer` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `FK_service_kendaraan` FOREIGN KEY (`kendaraan_id`) REFERENCES `kendaraan` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=28 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=56 DEFAULT CHARSET=utf8;
 
 -- Membuang data untuk tabel topik.service: ~10 rows (lebih kurang)
 /*!40000 ALTER TABLE `service` DISABLE KEYS */;
 INSERT INTO `service` (`id`, `kode_service`, `customer_id`, `kendaraan_id`, `keluhan`, `created_at`, `status`, `deleted`) VALUES
-	(16, 'SRVC-00000001', 10, 6, 'asd', '2016-12-20 01:33:02', 0, 1);
+	(35, '0', 19, 17, 'r', '2016-12-24 02:49:12', 2, 0);
 INSERT INTO `service` (`id`, `kode_service`, `customer_id`, `kendaraan_id`, `keluhan`, `created_at`, `status`, `deleted`) VALUES
-	(17, 'SRVC-00000002', 10, 7, 'sdd', '2016-12-19 23:30:38', 0, 1);
+	(36, '0', 20, 18, '2', '2016-12-24 04:18:22', 2, 0);
 INSERT INTO `service` (`id`, `kode_service`, `customer_id`, `kendaraan_id`, `keluhan`, `created_at`, `status`, `deleted`) VALUES
-	(20, 'SRVC-00000003', 10, 6, 'd', '2016-12-20 01:33:02', 0, 1);
+	(37, '0', 21, 19, 'e', '2016-12-24 02:49:52', 2, 0);
 INSERT INTO `service` (`id`, `kode_service`, `customer_id`, `kendaraan_id`, `keluhan`, `created_at`, `status`, `deleted`) VALUES
-	(21, 'SRVC-00000004', 10, 6, 'dd', '2016-12-20 01:33:02', 0, 1);
+	(38, 'SVC-2', 19, 17, 'o', '2016-12-24 02:34:08', 1, 0);
 INSERT INTO `service` (`id`, `kode_service`, `customer_id`, `kendaraan_id`, `keluhan`, `created_at`, `status`, `deleted`) VALUES
-	(22, 'SRVC-00000005', 9, 8, 'e', '2016-12-19 23:37:52', 0, 1);
+	(39, 'SVC-3', 22, 20, 'e', '2016-12-24 02:35:56', 1, 0);
 INSERT INTO `service` (`id`, `kode_service`, `customer_id`, `kendaraan_id`, `keluhan`, `created_at`, `status`, `deleted`) VALUES
-	(23, 'SRVC-00000006', 10, 6, 'ddd', '2016-12-20 01:33:02', 2, 0);
+	(40, 'SVC-4', 23, 21, 'indah', '2016-12-24 02:37:20', 1, 0);
 INSERT INTO `service` (`id`, `kode_service`, `customer_id`, `kendaraan_id`, `keluhan`, `created_at`, `status`, `deleted`) VALUES
-	(24, 'SRVC-00000007', 10, 6, 'asd', '2016-12-20 01:33:02', 1, 0);
+	(41, 'SVC-5', 19, 22, 'aa', '2016-12-24 03:14:25', 1, 0);
 INSERT INTO `service` (`id`, `kode_service`, `customer_id`, `kendaraan_id`, `keluhan`, `created_at`, `status`, `deleted`) VALUES
-	(25, 'SRVC-00000008', 9, 8, 'asd', '2016-12-19 23:37:52', 1, 0);
+	(42, 'SVC-6', 23, 21, 'd', '2016-12-24 03:15:07', 1, 0);
 INSERT INTO `service` (`id`, `kode_service`, `customer_id`, `kendaraan_id`, `keluhan`, `created_at`, `status`, `deleted`) VALUES
-	(26, 'SRVC-00000009', 10, 9, 'asd', '2016-12-19 23:30:43', 1, 0);
+	(43, 'SVC-7', 24, 23, 'w', '2016-12-24 03:40:20', 1, 0);
 INSERT INTO `service` (`id`, `kode_service`, `customer_id`, `kendaraan_id`, `keluhan`, `created_at`, `status`, `deleted`) VALUES
-	(27, 'SRVC-00000010', 9, 7, 'asd', '2016-12-19 23:30:43', 1, 0);
+	(44, 'SVC-8', 25, 24, 'w', '2016-12-24 03:43:37', 1, 0);
+INSERT INTO `service` (`id`, `kode_service`, `customer_id`, `kendaraan_id`, `keluhan`, `created_at`, `status`, `deleted`) VALUES
+	(45, 'SVC-9', 26, 25, 'w', '2016-12-24 03:45:35', 1, 0);
+INSERT INTO `service` (`id`, `kode_service`, `customer_id`, `kendaraan_id`, `keluhan`, `created_at`, `status`, `deleted`) VALUES
+	(46, 'SVC-10', 27, 26, 'w', '2016-12-24 03:47:51', 1, 0);
+INSERT INTO `service` (`id`, `kode_service`, `customer_id`, `kendaraan_id`, `keluhan`, `created_at`, `status`, `deleted`) VALUES
+	(47, 'SVC-11', 28, 27, 'w', '2016-12-24 03:49:54', 1, 0);
+INSERT INTO `service` (`id`, `kode_service`, `customer_id`, `kendaraan_id`, `keluhan`, `created_at`, `status`, `deleted`) VALUES
+	(48, 'SVC-12', 29, 28, 'w', '2016-12-24 03:49:59', 1, 0);
+INSERT INTO `service` (`id`, `kode_service`, `customer_id`, `kendaraan_id`, `keluhan`, `created_at`, `status`, `deleted`) VALUES
+	(49, 'SVC-13', 30, 29, 'w', '2016-12-24 03:57:00', 1, 0);
+INSERT INTO `service` (`id`, `kode_service`, `customer_id`, `kendaraan_id`, `keluhan`, `created_at`, `status`, `deleted`) VALUES
+	(50, 'SVC-14', 31, 30, 'w', '2016-12-24 03:57:28', 1, 0);
+INSERT INTO `service` (`id`, `kode_service`, `customer_id`, `kendaraan_id`, `keluhan`, `created_at`, `status`, `deleted`) VALUES
+	(51, 'SVC-15', 32, 31, 'w', '2016-12-24 03:57:45', 1, 0);
+INSERT INTO `service` (`id`, `kode_service`, `customer_id`, `kendaraan_id`, `keluhan`, `created_at`, `status`, `deleted`) VALUES
+	(52, 'SVC-16', 33, 32, 'w', '2016-12-24 03:58:48', 1, 0);
+INSERT INTO `service` (`id`, `kode_service`, `customer_id`, `kendaraan_id`, `keluhan`, `created_at`, `status`, `deleted`) VALUES
+	(53, 'SVC-17', 34, 33, 'w', '2016-12-24 03:59:35', 1, 0);
+INSERT INTO `service` (`id`, `kode_service`, `customer_id`, `kendaraan_id`, `keluhan`, `created_at`, `status`, `deleted`) VALUES
+	(54, 'SVC-18', 35, 34, 'ee', '2016-12-24 04:09:30', 1, 0);
+INSERT INTO `service` (`id`, `kode_service`, `customer_id`, `kendaraan_id`, `keluhan`, `created_at`, `status`, `deleted`) VALUES
+	(55, 'SVC-19', 35, 34, 'sasdhasdhasd', '2016-12-24 04:19:21', 2, 0);
 /*!40000 ALTER TABLE `service` ENABLE KEYS */;
 
 -- membuang struktur untuk table topik.session
@@ -1113,11 +1416,11 @@ CREATE TABLE IF NOT EXISTS `sms_gateway_me_config` (
 -- Membuang data untuk tabel topik.sms_gateway_me_config: ~5 rows (lebih kurang)
 /*!40000 ALTER TABLE `sms_gateway_me_config` DISABLE KEYS */;
 INSERT INTO `sms_gateway_me_config` (`id`, `code`, `key`, `value`) VALUES
-	(1, 'CONFIG', 'email', 'topiksmsgateway@zain.site');
+	(1, 'CONFIG', 'email', 'Topik.hidayat1001@gmail.com');
 INSERT INTO `sms_gateway_me_config` (`id`, `code`, `key`, `value`) VALUES
-	(2, 'CONFIG', 'password', 'topiksmsgateway');
+	(2, 'CONFIG', 'password', 'topik1001');
 INSERT INTO `sms_gateway_me_config` (`id`, `code`, `key`, `value`) VALUES
-	(3, 'CONFIG', 'device_id', '34759');
+	(3, 'CONFIG', 'device_id', '35800');
 INSERT INTO `sms_gateway_me_config` (`id`, `code`, `key`, `value`) VALUES
 	(4, 'CONFIG', 'page', '500');
 INSERT INTO `sms_gateway_me_config` (`id`, `code`, `key`, `value`) VALUES
@@ -1161,14 +1464,12 @@ CREATE TABLE IF NOT EXISTS `transaksi` (
   KEY `id_sparepart` (`sparepart_id`),
   CONSTRAINT `FK_transaksi_service` FOREIGN KEY (`service_id`) REFERENCES `service` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `FK_transaksi_sparepart` FOREIGN KEY (`sparepart_id`) REFERENCES `sparepart` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
--- Membuang data untuk tabel topik.transaksi: ~2 rows (lebih kurang)
+-- Membuang data untuk tabel topik.transaksi: ~1 rows (lebih kurang)
 /*!40000 ALTER TABLE `transaksi` DISABLE KEYS */;
 INSERT INTO `transaksi` (`id`, `service_id`, `sparepart_id`, `nota`, `total_pembayaran`) VALUES
-	(1, 17, 3, 'qwerty', '50000');
-INSERT INTO `transaksi` (`id`, `service_id`, `sparepart_id`, `nota`, `total_pembayaran`) VALUES
-	(2, 20, 2, 'asd', '20000');
+	(3, 35, 2, '2', '2');
 /*!40000 ALTER TABLE `transaksi` ENABLE KEYS */;
 
 -- membuang struktur untuk table topik.user
