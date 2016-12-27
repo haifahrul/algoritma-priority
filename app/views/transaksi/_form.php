@@ -35,70 +35,91 @@ author A. Fakhrurozi S.
                         'allowClear' => true
                     ],
                 ]) ?>
-                <?= $form->field($model, 'sparepart_id')->widget(Select2::className(), [
-                    'data' => $dataSparepart,
-                    'options' => ['placeholder' => '--- Select sparepart ---'],
-                    'pluginOptions' => [
-                        'allowClear' => true
-                    ],
-                ]) ?>
+                <!--                --><?php //$form->field($model, 'sparepart_id')->widget(Select2::className(), [
+                //                    'data' => $dataSparepart,
+                //                    'options' => ['placeholder' => '--- Select sparepart ---'],
+                //                    'pluginOptions' => [
+                //                        'allowClear' => true
+                //                    ],
+                //                ]) ?>
+
                 <?php DynamicFormWidget::begin([
                     'widgetContainer' => 'dynamicform_wrapper', // required: only alphanumeric characters plus "_" [A-Za-z0-9_]
                     'widgetBody' => '.container-items', // required: css class selector
-                    'widgetItem' => '.item', // required: css class
-//                    'limit' => 4, // the maximum times, an element can be cloned (default 999)
-                    'min' => 0, // 0 or 1 (default 1)
+                    'widgetItem' => '.input-item', // required: css class
+                    'limit' => 999, // the maximum times, an element can be cloned (default 999)
+                    'min' => 1, // 0 or 1 (default 1)
                     'insertButton' => '.add-item', // css class
                     'deleteButton' => '.remove-item', // css class
-                    'model' => $modelSparepart[0],
+                    'model' => $modelTransaksiSparepart[0],
                     'formId' => 'dynamic-form',
                     'formFields' => [
-                        'nama',
-                        'harga',
+                        'sparepart_id',
+                        'qty',
+                        'harga'
                     ],
                 ]); ?>
 
-                <div class="container-items"><!-- widgetContainer -->
-                    <?php foreach ($modelSparepart as $i => $sparepart): ?>
-                    <div class="item panel panel-default"><!-- widgetBody -->
-                        <div class="panel-heading">
-                            <h3 class="panel-title pull-left">Address</h3>
-                            <div class="pull-right">
-                                <button type="button" class="add-item btn btn-success btn-xs"><i
-                                        class="glyphicon glyphicon-plus"></i></button>
-                                <button type="button" class="remove-item btn btn-danger btn-xs"><i
-                                        class="glyphicon glyphicon-minus"></i></button>
-                            </div>
-                            <div class="clearfix"></div>
-                        </div>
-                        <div class="panel-body">
+                <div class="table-responsive--">
+                    <table class="table table-bordered">
+                        <thead>
+                        <tr>
+                            <th></th>
+                            <th><?= Yii::t('app', 'Nama') ?></th>
+                            <th><?= Yii::t('app', 'Qty') ?></th>
+                            <th><?= Yii::t('app', 'Harga') ?></th>
+                        </tr>
+                        </thead>
+                        <tbody class="container-items">
+                        <?php foreach ($modelTransaksiSparepart as $i => $modelTransaksiSparepart): ?>
                             <?php
                             // necessary for update action.
-                            if (!$sparepart->isNewRecord) {
-                                echo Html::activeHiddenInput($sparepart, "[{$i}]id");
-                            }
+//                        if (!$modelServiceDetail->isNewRecord) {
+//                            echo Html::activeHiddenInput($modelServiceDetail, "[{$i}]service_id");
+//                        }
                             ?>
-                            <?= $form->field($sparepart, "[{$i}]nama")->textInput(['maxlength' => true]) ?>
-                            <?= $form->field($sparepart, "[{$i}]harga")->textInput(['maxlength' => true, 'disabled' => true]) ?>
-                        </div><!-- .row -->
-                    </div>
+                            <tr class="input-item">
+                                <td class="text-center">
+                                    <button type="button" class="remove-item btn btn-danger btn-xs"><i
+                                            class="fa fa-minus"></i></button>
+                                </td>
+                                <td class="col-md-10">
+                                    <?php echo $form->field($modelTransaksiSparepart, "[{$i}]sparepart_id")->textInput()->label(FALSE) ?>
+                                </td>
+                                <td>
+                                    <?= $form->field($modelTransaksiSparepart, "[{$i}]qty")->textInput()->label(FALSE) ?>
+                                </td>
+                                <td>
+                                    <?= $form->field($modelTransaksiSparepart, "[{$i}]harga")->textInput()->label(FALSE) ?>
+                                </td>
+                            </tr>
+                        <?php endforeach; ?>
+                        </tbody>
+                        <tfoot>
+                        <tr>
+                            <td colspan="3" class="text-right">
+                                <!--                            --><?php //if ($model->isNewRecord) { ?>
+                                <?= Html::button('<span class = "glyphicon glyphicon-plus"></span> ' . Yii::t('app', ''), ['class' => 'add-item btn btn-success btn-xs']) ?>
+                                <!--                            --><?php //} ?>
+                            </td>
+                        </tr>
+                        </tfoot>
+                    </table>
                 </div>
-            <?php endforeach; ?>
+                <?php DynamicFormWidget::end(); ?>
             </div>
-            <?php DynamicFormWidget::end(); ?>
+            <div class="col-sm-12 col-md-5">
+                <?= $form->field($model, 'nama')->textInput(['id' => 'nama', 'maxlength' => true, 'disabled' => true]) ?>
+                <?= $form->field($model, 'no_telp')->textInput(['id' => 'no_telp', 'maxlength' => true, 'disabled' => true]) ?>
+                <?= $form->field($model, 'no_plat')->textInput(['id' => 'no_plat', 'maxlength' => true, 'disabled' => true]) ?>
+                <?= $form->field($model, 'total_pembayaran')->textInput(['maxlength' => true, 'readonly' => true]) ?>
+            </div>
         </div>
-        <div class="col-sm-12 col-md-5">
-            <?= $form->field($model, 'nama')->textInput(['id' => 'nama', 'maxlength' => true, 'disabled' => true]) ?>
-            <?= $form->field($model, 'no_telp')->textInput(['id' => 'no_telp', 'maxlength' => true, 'disabled' => true]) ?>
-            <?= $form->field($model, 'no_plat')->textInput(['id' => 'no_plat', 'maxlength' => true, 'disabled' => true]) ?>
-            <?= $form->field($model, 'total_pembayaran')->textInput(['maxlength' => true, 'readonly' => true]) ?>
+        <div class="box-footer">
+            <?= Html::submitButton('<i class="glyphicon glyphicon-floppy-disk glyphicon-sm"> </i>' . Yii::t('app', ' Simpan'), ['class' => 'btn btn-primary btn-sm']) ?>
+            <?= Html::a('<i class="glyphicon glyphicon-remove glyphicon-sm"></i> Cancel ', Yii::$app->request->referrer, ['class' => 'btn btn-danger btn-sm']) ?>
         </div>
-    </div>
-    <div class="box-footer">
-        <?= Html::submitButton('<i class="glyphicon glyphicon-floppy-disk glyphicon-sm"> </i>' . Yii::t('app', ' Simpan'), ['class' => 'btn btn-primary btn-sm']) ?>
-        <?= Html::a('<i class="glyphicon glyphicon-remove glyphicon-sm"></i> Cancel ', Yii::$app->request->referrer, ['class' => 'btn btn-danger btn-sm']) ?>
-    </div>
-<?php ActiveForm::end(); ?>
+        <?php ActiveForm::end(); ?>
     </div>
 
 <?php

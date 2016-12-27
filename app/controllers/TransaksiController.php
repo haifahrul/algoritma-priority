@@ -3,6 +3,7 @@
 namespace app\controllers;
 
 use app\models\Customer;
+use app\models\TransaksiSparepart;
 use Yii;
 use app\models\Transaksi;
 use app\models\Service;
@@ -58,70 +59,60 @@ class TransaksiController extends Controller
     public function actionCreate()
     {
         $model = new Transaksi();
-        $modelSparepart = [new Sparepart()];
+        $modelTransaksiSparepart = [new TransaksiSparepart()];
+
         $dataService = Service::getKodeService();
         $dataSparepart = Sparepart::getSparepartList();
-        $is_ajax = Yii::$app->request->isAjax;
-        $postdata = Yii::$app->request->post();
 
-        $modelSparepart = Model::createMultiple(Sparepart::className());
-        Model::loadMultiple($modelSparepart, Yii::$app->request->post());
+        $isAjax = Yii::$app->request->isAjax;
+        $postData = Yii::$app->request->post();
 
-        // validate all models
-        $valid = $model->validate();
-        $valid = Model::validateMultiple($modelSparepart) && $valid;
+        if ($model->load($postData)) {
 
-        if ($valid) {
-            $transaction = \Yii::$app->db->beginTransaction();
-            try {
-                if ($flag = $model->save(false)) {
-                    foreach ($modelSparepart as $sparepart) {
-                        $modelAddress->customer_id = $modelCustomer->id;
-                        if (!($flag = $modelAddress->save(false))) {
-                            $transaction->rollBack();
-                            break;
+            $modelTransaksiSparepart = Model::createMultiple(TransaksiSparepart::className());
+            Model::loadMultiple($modelTransaksiSparepart, Yii::$app->request->post());
+
+            // validate all models
+            $validTransaksi = $model->validate();
+
+            if ($validTransaksi) {
+                $transaction = \Yii::$app->db->beginTransaction();
+                try {
+                    if ($flag = $model->save(false)) {
+                        if ($validTransaksiSparepart = Model::validateMultiple($modelTransaksiSparepart)) {
+                            foreach ($modelTransaksiSparepart as $transaksiSparepart) {
+                                $transaksiSparepart->transaksi_id = $model->id;
+                                if (!($flag = $transaksiSparepart->save(false))) {
+                                    $transaction->rollBack();
+                                    break;
+                                }
+                            }
                         }
                     }
+                    if ($flag) {
+                        $transaction->commit();
+                        return $this->redirect(['view', 'id' => $model->id]);
+                    }
+                } catch (Exception $e) {
+                    $transaction->rollBack();
                 }
-                if ($flag) {
-                    $transaction->commit();
-                    return $this->redirect(['view', 'id' => $modelCustomer->id]);
-                }
-            } catch (Exception $e) {
-                $transaction->rollBack();
             }
         }
 
-//        if ($model->load($postdata) && $model->validate()) {
-//            $transaction = Yii::$app->db->beginTransaction();
-//            try {
-//
-//                if ($model->save()) {
-//                    $transaction->commit();
-//                    Yii::$app->session->setFlash('success', ' Data telah disimpan!');
-//                    return $this->redirect(['index']);
-//                }
-//                //end if (save)
-//            } catch (Exception $e) {
-//                $transaction->rollback();
-//                throw $e;
-//            }
-//        }
-
-        if ($is_ajax) {
+        if ($isAjax) {
             //render view
             return $this->renderAjax('create', [
                 'model' => $model,
                 'dataService' => $dataService,
                 'dataSparepart' => $dataSparepart,
-                'modelSparepart' => $modelSparepart
+                'modelTransaksiSparepart' => $modelTransaksiSparepart
             ]);
         } else {
             return $this->render('create', [
                 'model' => $model,
                 'dataService' => $dataService,
                 'dataSparepart' => $dataSparepart,
-                'modelSparepart' => $modelSparepart
+                'modelTransaksiSparepart' => $modelTransaksiSparepart
             ]);
         }
     }

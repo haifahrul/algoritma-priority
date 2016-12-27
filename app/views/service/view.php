@@ -18,6 +18,8 @@ $formater = Yii::$app->formatter;
     <div class="box-header with-border">
         <h1><?php Html::encode($this->title) ?></h1>
         <p>
+            <?= Html::a('<i class="fa fa-arrow-left"></i><b> Kembali</b> ', Yii::$app->request->referrer,
+                ['data-pjax' => 0, 'class' => 'btn btn-default btn-sm btn-tambah1']) ?>
             <?php
             if ((Mimin::filterRoute($this->context->id . '/delete', true))) {
                 echo Html::a(Yii::t('app', 'Update'), ['update', 'id' => $model->id], ['class' => 'btn btn-primary btn-sm']);
@@ -35,7 +37,9 @@ $formater = Yii::$app->formatter;
             }
             ?>
             <?php
-                echo Html::a(Yii::t('app', 'Checkout'), ['/transaksi/create', 'id' => $model->id], ['class' => 'btn btn-success btn-sm']);
+                if($model->status == 2) {
+                    echo Html::a(Yii::t('app', 'Checkout'), ['/transaksi/create', 'id' => $model->id], ['class' => 'btn btn-success btn-sm']);
+                }
             ?>
         </p>
     </div>

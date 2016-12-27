@@ -72,7 +72,6 @@ $this->params['title'] = 'List' . $this->title;
                                 return $data['kendaraan']['no_plat'];
                             }
                         ],
-                        'keluhan:ntext',
                         [
                             'attribute' => 'created_at',
                             'format' => 'raw',

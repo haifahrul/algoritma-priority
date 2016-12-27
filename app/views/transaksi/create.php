@@ -16,6 +16,6 @@ $this->params['title'] = $this->title;
         'model' => $model,
         'dataService' => $dataService,
         'dataSparepart' => $dataSparepart,
-        'modelSparepart' => $modelSparepart
+        'modelTransaksiSparepart' => $modelTransaksiSparepart
     ]) ?>
 </div>
