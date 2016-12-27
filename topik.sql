@@ -13,10 +13,12 @@
 
 
 -- Membuang struktur basisdata untuk topik
+DROP DATABASE IF EXISTS `topik`;
 CREATE DATABASE IF NOT EXISTS `topik` /*!40100 DEFAULT CHARACTER SET utf8 */;
 USE `topik`;
 
 -- membuang struktur untuk table topik.attribute
+DROP TABLE IF EXISTS `attribute`;
 CREATE TABLE IF NOT EXISTS `attribute` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `parent` int(11) NOT NULL,
@@ -29,7 +31,7 @@ CREATE TABLE IF NOT EXISTS `attribute` (
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=63 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
--- Membuang data untuk tabel topik.attribute: 14 rows
+-- Membuang data untuk tabel topik.attribute: 15 rows
 /*!40000 ALTER TABLE `attribute` DISABLE KEYS */;
 INSERT INTO `attribute` (`id`, `parent`, `name`, `content`, `code`, `type`, `position`, `status`) VALUES
 	(48, 46, 'Matic', NULL, 2, 'JENIS', 2, 1);
@@ -48,7 +50,7 @@ INSERT INTO `attribute` (`id`, `parent`, `name`, `content`, `code`, `type`, `pos
 INSERT INTO `attribute` (`id`, `parent`, `name`, `content`, `code`, `type`, `position`, `status`) VALUES
 	(54, 51, 'Vario eSP', NULL, 2, 'TIPE', 2, 1);
 INSERT INTO `attribute` (`id`, `parent`, `name`, `content`, `code`, `type`, `position`, `status`) VALUES
-	(55, 0, 'Count Kode Service', '(NULL)', 0, 'Count Code Service', 41, 1);
+	(55, 0, 'Count Kode Service', '(NULL)', 0, 'Count Code Service', 47, 1);
 INSERT INTO `attribute` (`id`, `parent`, `name`, `content`, `code`, `type`, `position`, `status`) VALUES
 	(56, 0, 'Status Service', NULL, 0, 'STATUS_SERVICE', 0, 1);
 INSERT INTO `attribute` (`id`, `parent`, `name`, `content`, `code`, `type`, `position`, `status`) VALUES
@@ -58,12 +60,13 @@ INSERT INTO `attribute` (`id`, `parent`, `name`, `content`, `code`, `type`, `pos
 INSERT INTO `attribute` (`id`, `parent`, `name`, `content`, `code`, `type`, `position`, `status`) VALUES
 	(60, 49, 'Yamaha', NULL, 2, 'MEREK', 2, 1);
 INSERT INTO `attribute` (`id`, `parent`, `name`, `content`, `code`, `type`, `position`, `status`) VALUES
-	(61, 0, 'Count Code Customer', NULL, 0, 'Count Code Customer', 19, 1);
+	(61, 0, 'Count Code Customer', NULL, 0, 'Count Code Customer', 22, 1);
 INSERT INTO `attribute` (`id`, `parent`, `name`, `content`, `code`, `type`, `position`, `status`) VALUES
 	(62, 56, 'Checkout', NULL, 3, 'STATUS_SERVICE', 3, 1);
 /*!40000 ALTER TABLE `attribute` ENABLE KEYS */;
 
 -- membuang struktur untuk table topik.auth_assignment
+DROP TABLE IF EXISTS `auth_assignment`;
 CREATE TABLE IF NOT EXISTS `auth_assignment` (
   `item_name` varchar(64) COLLATE utf8_unicode_ci NOT NULL,
   `user_id` varchar(64) COLLATE utf8_unicode_ci NOT NULL,
@@ -87,6 +90,7 @@ INSERT INTO `auth_assignment` (`item_name`, `user_id`, `created_at`) VALUES
 /*!40000 ALTER TABLE `auth_assignment` ENABLE KEYS */;
 
 -- membuang struktur untuk table topik.auth_item
+DROP TABLE IF EXISTS `auth_item`;
 CREATE TABLE IF NOT EXISTS `auth_item` (
   `name` varchar(64) COLLATE utf8_unicode_ci NOT NULL,
   `type` int(11) NOT NULL,
@@ -434,6 +438,7 @@ INSERT INTO `auth_item` (`name`, `type`, `description`, `rule_name`, `data`, `cr
 /*!40000 ALTER TABLE `auth_item` ENABLE KEYS */;
 
 -- membuang struktur untuk table topik.auth_item_child
+DROP TABLE IF EXISTS `auth_item_child`;
 CREATE TABLE IF NOT EXISTS `auth_item_child` (
   `parent` varchar(64) COLLATE utf8_unicode_ci NOT NULL,
   `child` varchar(64) COLLATE utf8_unicode_ci NOT NULL,
@@ -816,6 +821,7 @@ INSERT INTO `auth_item_child` (`parent`, `child`) VALUES
 /*!40000 ALTER TABLE `auth_item_child` ENABLE KEYS */;
 
 -- membuang struktur untuk table topik.auth_rule
+DROP TABLE IF EXISTS `auth_rule`;
 CREATE TABLE IF NOT EXISTS `auth_rule` (
   `name` varchar(64) COLLATE utf8_unicode_ci NOT NULL,
   `data` text COLLATE utf8_unicode_ci,
@@ -829,6 +835,7 @@ CREATE TABLE IF NOT EXISTS `auth_rule` (
 /*!40000 ALTER TABLE `auth_rule` ENABLE KEYS */;
 
 -- membuang struktur untuk table topik.config
+DROP TABLE IF EXISTS `config`;
 CREATE TABLE IF NOT EXISTS `config` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `code` varchar(64) NOT NULL,
@@ -844,6 +851,7 @@ INSERT INTO `config` (`id`, `code`, `key`, `value`) VALUES
 /*!40000 ALTER TABLE `config` ENABLE KEYS */;
 
 -- membuang struktur untuk table topik.customer
+DROP TABLE IF EXISTS `customer`;
 CREATE TABLE IF NOT EXISTS `customer` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `kode_customer` varchar(50) NOT NULL,
@@ -852,15 +860,14 @@ CREATE TABLE IF NOT EXISTS `customer` (
   `no_telp` varchar(50) NOT NULL,
   `email` varchar(50) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=37 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=40 DEFAULT CHARSET=utf8;
 
--- Membuang data untuk tabel topik.customer: ~0 rows (lebih kurang)
+-- Membuang data untuk tabel topik.customer: ~1 rows (lebih kurang)
 /*!40000 ALTER TABLE `customer` DISABLE KEYS */;
-INSERT INTO `customer` (`id`, `kode_customer`, `nama`, `alamat`, `no_telp`, `email`) VALUES
-	(36, 'CS-19', 'Fahrul', 'Bogor', '085710568571', '');
 /*!40000 ALTER TABLE `customer` ENABLE KEYS */;
 
 -- membuang struktur untuk table topik.jasa_service
+DROP TABLE IF EXISTS `jasa_service`;
 CREATE TABLE IF NOT EXISTS `jasa_service` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `nama` varchar(50) NOT NULL,
@@ -875,6 +882,7 @@ INSERT INTO `jasa_service` (`id`, `nama`, `biaya`) VALUES
 /*!40000 ALTER TABLE `jasa_service` ENABLE KEYS */;
 
 -- membuang struktur untuk table topik.kendaraan
+DROP TABLE IF EXISTS `kendaraan`;
 CREATE TABLE IF NOT EXISTS `kendaraan` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `customer_id` int(11) NOT NULL,
@@ -886,17 +894,14 @@ CREATE TABLE IF NOT EXISTS `kendaraan` (
   PRIMARY KEY (`id`),
   KEY `FK_kendaraan_customer` (`customer_id`),
   CONSTRAINT `FK_kendaraan_customer` FOREIGN KEY (`customer_id`) REFERENCES `customer` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=37 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=40 DEFAULT CHARSET=utf8;
 
--- Membuang data untuk tabel topik.kendaraan: ~1 rows (lebih kurang)
+-- Membuang data untuk tabel topik.kendaraan: ~3 rows (lebih kurang)
 /*!40000 ALTER TABLE `kendaraan` DISABLE KEYS */;
-INSERT INTO `kendaraan` (`id`, `customer_id`, `merek`, `tipe`, `tahun`, `jenis`, `no_plat`) VALUES
-	(35, 36, '1', '2', '2013', '2', 'F 2540 GT');
-INSERT INTO `kendaraan` (`id`, `customer_id`, `merek`, `tipe`, `tahun`, `jenis`, `no_plat`) VALUES
-	(36, 36, '2', '1', '2016', '1', 'B 777 AS');
 /*!40000 ALTER TABLE `kendaraan` ENABLE KEYS */;
 
 -- membuang struktur untuk table topik.migration
+DROP TABLE IF EXISTS `migration`;
 CREATE TABLE IF NOT EXISTS `migration` (
   `version` varchar(180) NOT NULL,
   `apply_time` int(11) DEFAULT NULL,
@@ -918,6 +923,7 @@ INSERT INTO `migration` (`version`, `apply_time`) VALUES
 /*!40000 ALTER TABLE `migration` ENABLE KEYS */;
 
 -- membuang struktur untuk table topik.route
+DROP TABLE IF EXISTS `route`;
 CREATE TABLE IF NOT EXISTS `route` (
   `name` varchar(64) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
   `alias` varchar(64) COLLATE utf8_unicode_ci NOT NULL,
@@ -1251,11 +1257,13 @@ INSERT INTO `route` (`name`, `alias`, `type`, `status`) VALUES
 /*!40000 ALTER TABLE `route` ENABLE KEYS */;
 
 -- membuang struktur untuk table topik.service
+DROP TABLE IF EXISTS `service`;
 CREATE TABLE IF NOT EXISTS `service` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `kode_service` varchar(50) NOT NULL DEFAULT '0',
   `customer_id` int(11) NOT NULL,
   `kendaraan_id` int(11) NOT NULL,
+  `keluhan` longtext,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `status` tinyint(4) DEFAULT '1',
   `deleted` tinyint(4) NOT NULL DEFAULT '0',
@@ -1264,21 +1272,14 @@ CREATE TABLE IF NOT EXISTS `service` (
   KEY `customer_id` (`customer_id`),
   CONSTRAINT `FK_service_customer` FOREIGN KEY (`customer_id`) REFERENCES `customer` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `FK_service_kendaraan` FOREIGN KEY (`kendaraan_id`) REFERENCES `kendaraan` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=78 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=84 DEFAULT CHARSET=utf8;
 
--- Membuang data untuk tabel topik.service: ~4 rows (lebih kurang)
+-- Membuang data untuk tabel topik.service: ~6 rows (lebih kurang)
 /*!40000 ALTER TABLE `service` DISABLE KEYS */;
-INSERT INTO `service` (`id`, `kode_service`, `customer_id`, `kendaraan_id`, `created_at`, `status`, `deleted`) VALUES
-	(74, 'SVC-38', 36, 35, '2016-12-28 00:11:27', 3, 0);
-INSERT INTO `service` (`id`, `kode_service`, `customer_id`, `kendaraan_id`, `created_at`, `status`, `deleted`) VALUES
-	(75, 'SVC-39', 36, 36, '2016-12-27 23:00:13', 2, 0);
-INSERT INTO `service` (`id`, `kode_service`, `customer_id`, `kendaraan_id`, `created_at`, `status`, `deleted`) VALUES
-	(76, 'SVC-40', 36, 35, '2016-12-27 03:04:30', 1, 0);
-INSERT INTO `service` (`id`, `kode_service`, `customer_id`, `kendaraan_id`, `created_at`, `status`, `deleted`) VALUES
-	(77, 'SVC-41', 36, 35, '2016-12-27 19:15:42', 1, 0);
 /*!40000 ALTER TABLE `service` ENABLE KEYS */;
 
 -- membuang struktur untuk table topik.service_detail
+DROP TABLE IF EXISTS `service_detail`;
 CREATE TABLE IF NOT EXISTS `service_detail` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `service_id` int(11) NOT NULL,
@@ -1289,21 +1290,14 @@ CREATE TABLE IF NOT EXISTS `service_detail` (
   KEY `sparepart_id` (`sparepart_id`),
   CONSTRAINT `FK_service_detail_service` FOREIGN KEY (`service_id`) REFERENCES `service` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `FK_service_detail_sparepart` FOREIGN KEY (`sparepart_id`) REFERENCES `sparepart` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=28 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=40 DEFAULT CHARSET=utf8;
 
--- Membuang data untuk tabel topik.service_detail: ~0 rows (lebih kurang)
+-- Membuang data untuk tabel topik.service_detail: ~8 rows (lebih kurang)
 /*!40000 ALTER TABLE `service_detail` DISABLE KEYS */;
-INSERT INTO `service_detail` (`id`, `service_id`, `sparepart_id`, `qty`) VALUES
-	(22, 74, 2, 2);
-INSERT INTO `service_detail` (`id`, `service_id`, `sparepart_id`, `qty`) VALUES
-	(23, 74, 1, 1);
-INSERT INTO `service_detail` (`id`, `service_id`, `sparepart_id`, `qty`) VALUES
-	(26, 75, 4, 2);
-INSERT INTO `service_detail` (`id`, `service_id`, `sparepart_id`, `qty`) VALUES
-	(27, 75, 3, 2);
 /*!40000 ALTER TABLE `service_detail` ENABLE KEYS */;
 
 -- membuang struktur untuk table topik.session
+DROP TABLE IF EXISTS `session`;
 CREATE TABLE IF NOT EXISTS `session` (
   `id` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `expire` int(11) DEFAULT NULL,
@@ -1319,6 +1313,7 @@ CREATE TABLE IF NOT EXISTS `session` (
 /*!40000 ALTER TABLE `session` ENABLE KEYS */;
 
 -- membuang struktur untuk table topik.sms_gateway
+DROP TABLE IF EXISTS `sms_gateway`;
 CREATE TABLE IF NOT EXISTS `sms_gateway` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `customer_id` int(11) NOT NULL,
@@ -1333,6 +1328,7 @@ CREATE TABLE IF NOT EXISTS `sms_gateway` (
 /*!40000 ALTER TABLE `sms_gateway` ENABLE KEYS */;
 
 -- membuang struktur untuk table topik.sms_gateway_me_config
+DROP TABLE IF EXISTS `sms_gateway_me_config`;
 CREATE TABLE IF NOT EXISTS `sms_gateway_me_config` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `code` varchar(64) NOT NULL,
@@ -1360,6 +1356,7 @@ INSERT INTO `sms_gateway_me_config` (`id`, `code`, `key`, `value`) VALUES
 /*!40000 ALTER TABLE `sms_gateway_me_config` ENABLE KEYS */;
 
 -- membuang struktur untuk table topik.sparepart
+DROP TABLE IF EXISTS `sparepart`;
 CREATE TABLE IF NOT EXISTS `sparepart` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `nama` varchar(50) NOT NULL,
@@ -1371,7 +1368,7 @@ CREATE TABLE IF NOT EXISTS `sparepart` (
 -- Membuang data untuk tabel topik.sparepart: ~4 rows (lebih kurang)
 /*!40000 ALTER TABLE `sparepart` DISABLE KEYS */;
 INSERT INTO `sparepart` (`id`, `nama`, `harga`, `stok`) VALUES
-	(1, 'Oli SPX 2', '45000', '30');
+	(1, 'Oli SPX 2', '45000', '20');
 INSERT INTO `sparepart` (`id`, `nama`, `harga`, `stok`) VALUES
 	(2, 'Oli SPX 1', '45000', '20');
 INSERT INTO `sparepart` (`id`, `nama`, `harga`, `stok`) VALUES
@@ -1381,32 +1378,29 @@ INSERT INTO `sparepart` (`id`, `nama`, `harga`, `stok`) VALUES
 /*!40000 ALTER TABLE `sparepart` ENABLE KEYS */;
 
 -- membuang struktur untuk table topik.transaksi
+DROP TABLE IF EXISTS `transaksi`;
 CREATE TABLE IF NOT EXISTS `transaksi` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `service_id` int(11) NOT NULL,
   `customer_id` int(11) NOT NULL,
+  `kendaraan_id` int(11) NOT NULL,
   `nota` varchar(50) NOT NULL,
   `total_pembayaran` bigint(20) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `id_service` (`service_id`),
   KEY `customer_id` (`customer_id`),
+  KEY `kendaraan_id` (`kendaraan_id`),
   CONSTRAINT `FK_transaksi_customer` FOREIGN KEY (`customer_id`) REFERENCES `customer` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `FK_transaksi_kendaraan` FOREIGN KEY (`kendaraan_id`) REFERENCES `kendaraan` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `FK_transaksi_service` FOREIGN KEY (`service_id`) REFERENCES `service` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=33 DEFAULT CHARSET=utf8;
 
 -- Membuang data untuk tabel topik.transaksi: ~0 rows (lebih kurang)
 /*!40000 ALTER TABLE `transaksi` DISABLE KEYS */;
-INSERT INTO `transaksi` (`id`, `service_id`, `customer_id`, `nota`, `total_pembayaran`) VALUES
-	(19, 74, 36, 'INVOICE-SVC-38', 135000);
-INSERT INTO `transaksi` (`id`, `service_id`, `customer_id`, `nota`, `total_pembayaran`) VALUES
-	(20, 75, 36, 'INVOICE-SVC-39', 140000);
-INSERT INTO `transaksi` (`id`, `service_id`, `customer_id`, `nota`, `total_pembayaran`) VALUES
-	(21, 74, 36, 'INVOICE-SVC-38', 135000);
-INSERT INTO `transaksi` (`id`, `service_id`, `customer_id`, `nota`, `total_pembayaran`) VALUES
-	(22, 74, 36, 'INVOICE-SVC-38', 135000);
 /*!40000 ALTER TABLE `transaksi` ENABLE KEYS */;
 
 -- membuang struktur untuk table topik.transaksi_sparepart
+DROP TABLE IF EXISTS `transaksi_sparepart`;
 CREATE TABLE IF NOT EXISTS `transaksi_sparepart` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `transaksi_id` int(11) NOT NULL,
@@ -1418,29 +1412,14 @@ CREATE TABLE IF NOT EXISTS `transaksi_sparepart` (
   KEY `sparepart_id` (`sparepart_id`),
   CONSTRAINT `FK_transaksi_sparepart_sparepart` FOREIGN KEY (`sparepart_id`) REFERENCES `sparepart` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `FK_transaksi_sparepart_transaksi` FOREIGN KEY (`transaksi_id`) REFERENCES `transaksi` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8;
 
 -- Membuang data untuk tabel topik.transaksi_sparepart: ~0 rows (lebih kurang)
 /*!40000 ALTER TABLE `transaksi_sparepart` DISABLE KEYS */;
-INSERT INTO `transaksi_sparepart` (`id`, `transaksi_id`, `sparepart_id`, `qty`, `harga`) VALUES
-	(1, 19, 2, 2, 45000);
-INSERT INTO `transaksi_sparepart` (`id`, `transaksi_id`, `sparepart_id`, `qty`, `harga`) VALUES
-	(2, 19, 1, 1, 45000);
-INSERT INTO `transaksi_sparepart` (`id`, `transaksi_id`, `sparepart_id`, `qty`, `harga`) VALUES
-	(3, 20, 4, 2, 35000);
-INSERT INTO `transaksi_sparepart` (`id`, `transaksi_id`, `sparepart_id`, `qty`, `harga`) VALUES
-	(4, 20, 3, 2, 35000);
-INSERT INTO `transaksi_sparepart` (`id`, `transaksi_id`, `sparepart_id`, `qty`, `harga`) VALUES
-	(5, 21, 2, 2, 45000);
-INSERT INTO `transaksi_sparepart` (`id`, `transaksi_id`, `sparepart_id`, `qty`, `harga`) VALUES
-	(6, 21, 1, 1, 45000);
-INSERT INTO `transaksi_sparepart` (`id`, `transaksi_id`, `sparepart_id`, `qty`, `harga`) VALUES
-	(7, 22, 2, 2, 45000);
-INSERT INTO `transaksi_sparepart` (`id`, `transaksi_id`, `sparepart_id`, `qty`, `harga`) VALUES
-	(8, 22, 1, 1, 45000);
 /*!40000 ALTER TABLE `transaksi_sparepart` ENABLE KEYS */;
 
 -- membuang struktur untuk table topik.user
+DROP TABLE IF EXISTS `user`;
 CREATE TABLE IF NOT EXISTS `user` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `username` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
