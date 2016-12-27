@@ -29,7 +29,10 @@
         "kartik-v/yii2-export": "*",
         "kartik-v/yii2-grid": "@dev",
         "kartik-v/yii2-mpdf": "dev-master",
-        "kartik-v/yii2-dynagrid": "@dev"
+        "kartik-v/yii2-dynagrid": "@dev",
+        "wbraganca/yii2-selectivity": "^1.0",
+        "yiisoft/yii2-jui": "^2.0",
+        "wbraganca/yii2-dynamicform": "*"
     },
     "require-dev": {
         "yiisoft/yii2-codeception": "*",

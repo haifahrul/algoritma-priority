@@ -2,6 +2,7 @@
 
 namespace app\controllers;
 
+use app\models\Customer;
 use Yii;
 use app\models\Transaksi;
 use app\models\Service;
@@ -11,6 +12,7 @@ use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\helpers\Json;
+use app\components\Model;
 
 /**
  * created zaza zayinul hikayat
@@ -56,49 +58,102 @@ class TransaksiController extends Controller
     public function actionCreate()
     {
         $model = new Transaksi();
-		$dataService = Service::getKodeService();
-		$dataSparepart = Sparepart::getSparepartList();
-		
+        $modelSparepart = [new Sparepart()];
+        $dataService = Service::getKodeService();
+        $dataSparepart = Sparepart::getSparepartList();
         $is_ajax = Yii::$app->request->isAjax;
         $postdata = Yii::$app->request->post();
-        if ($model->load($postdata) && $model->validate()) {
-            $transaction = Yii::$app->db->beginTransaction();
-            try {
 
-                if ($model->save()) {
-                    $transaction->commit();
-                    Yii::$app->session->setFlash('success', ' Data telah disimpan!');
-                    return $this->redirect(['index']);
+        $modelSparepart = Model::createMultiple(Sparepart::className());
+        Model::loadMultiple($modelSparepart, Yii::$app->request->post());
+
+        // validate all models
+        $valid = $model->validate();
+        $valid = Model::validateMultiple($modelSparepart) && $valid;
+
+        if ($valid) {
+            $transaction = \Yii::$app->db->beginTransaction();
+            try {
+                if ($flag = $model->save(false)) {
+                    foreach ($modelSparepart as $sparepart) {
+                        $modelAddress->customer_id = $modelCustomer->id;
+                        if (!($flag = $modelAddress->save(false))) {
+                            $transaction->rollBack();
+                            break;
+                        }
+                    }
                 }
-                //end if (save) 
+                if ($flag) {
+                    $transaction->commit();
+                    return $this->redirect(['view', 'id' => $modelCustomer->id]);
+                }
             } catch (Exception $e) {
-                $transaction->rollback();
-                throw $e;
+                $transaction->rollBack();
             }
         }
+
+//        if ($model->load($postdata) && $model->validate()) {
+//            $transaction = Yii::$app->db->beginTransaction();
+//            try {
+//
+//                if ($model->save()) {
+//                    $transaction->commit();
+//                    Yii::$app->session->setFlash('success', ' Data telah disimpan!');
+//                    return $this->redirect(['index']);
+//                }
+//                //end if (save)
+//            } catch (Exception $e) {
+//                $transaction->rollback();
+//                throw $e;
+//            }
+//        }
 
         if ($is_ajax) {
             //render view
             return $this->renderAjax('create', [
                 'model' => $model,
-				'dataService' => $dataService,
-				'dataSparepart' => $dataSparepart
+                'dataService' => $dataService,
+                'dataSparepart' => $dataSparepart,
+                'modelSparepart' => $modelSparepart
             ]);
         } else {
             return $this->render('create', [
                 'model' => $model,
-				'dataService' => $dataService,
-				'dataSparepart' => $dataSparepart
+                'dataService' => $dataService,
+                'dataSparepart' => $dataSparepart,
+                'modelSparepart' => $modelSparepart
             ]);
-
         }
+    }
+
+    // AJAX | Get Data Customer and Kendaraan
+    public function actionGetCustomer($id)
+    {
+        $customerId = Yii::$app->db->createCommand('SELECT `customer_id` FROM {{service}} WHERE `id`=:id')
+            ->bindValue(':id', $id)
+            ->queryOne();
+        $customerId = $customerId['customer_id'];
+
+        $customer = Yii::$app->db->createCommand('SELECT nama, no_telp FROM {{customer}} WHERE `id`=:id')
+            ->bindValue(':id', $customerId)
+            ->queryOne();
+
+        $kendaraan = Yii::$app->db->createCommand('SELECT `no_plat` FROM {{kendaraan}} WHERE `customer_id`=:customer_id')
+            ->bindValue(':customer_id', $customerId)
+            ->queryOne();
+
+        echo json_encode([
+            'nama' => $customer['nama'],
+            'no_telp' => $customer['no_telp'],
+            'no_plat' => $kendaraan['no_plat']
+        ]);
     }
 
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
-		$dataService = Service::getKodeService();
-		$dataSparepart = Sparepart::getSparepartList();
+        $dataService = Service::getKodeService();
+        $dataSparepart = Sparepart::getSparepartList();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             Yii::$app->session->setFlash('success', ' Data has been saved!');
@@ -107,14 +162,14 @@ class TransaksiController extends Controller
             if (Yii::$app->request->isAjax) {
                 return $this->renderAjax('update', [
                     'model' => $model,
-					'dataService' => $dataService,
-					'dataSparepart' => $dataSparepart
+                    'dataService' => $dataService,
+                    'dataSparepart' => $dataSparepart
                 ]);
             } else {
                 return $this->render('update', [
                     'model' => $model,
-					'dataService' => $dataService,
-					'dataSparepart' => $dataSparepart
+                    'dataService' => $dataService,
+                    'dataSparepart' => $dataSparepart
                 ]);
             }
         }

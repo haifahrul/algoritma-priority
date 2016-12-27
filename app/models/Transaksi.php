@@ -18,6 +18,12 @@ use Yii;
  */
 class Transaksi extends \yii\db\ActiveRecord
 {
+
+    public $nama;
+    public $no_telp;
+    public $no_plat;
+    public $qty;
+
     /**
      * @inheritdoc
      */
@@ -33,7 +39,7 @@ class Transaksi extends \yii\db\ActiveRecord
     {
         return [
             [['service_id', 'sparepart_id', 'nota', 'total_pembayaran'], 'required'],
-            [['service_id', 'sparepart_id'], 'integer'],
+            [['service_id', 'sparepart_id', 'qty'], 'integer'],
             [['nota', 'total_pembayaran'], 'string', 'max' => 50],
             [['service_id'], 'exist', 'skipOnError' => true, 'targetClass' => Service::className(), 'targetAttribute' => ['service_id' => 'id']],
             [['sparepart_id'], 'exist', 'skipOnError' => true, 'targetClass' => Sparepart::className(), 'targetAttribute' => ['sparepart_id' => 'id']],

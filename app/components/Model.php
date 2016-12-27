@@ -10,7 +10,8 @@ namespace app\components;
 use Yii;
 use yii\helpers\ArrayHelper;
 
-class Model extends \yii\base\Model {
+class Model extends \yii\base\Model
+{
     /**
      * Creates and populates a set of models.
      *
@@ -19,7 +20,8 @@ class Model extends \yii\base\Model {
      *
      * @return array
      */
-    public static function createMultiple($modelClass, $multipleModels = []) {
+    public static function createMultiple($modelClass, $multipleModels = [])
+    {
         $model = new $modelClass;
         $formName = $model->formName();
         $post = Yii::$app->request->post($formName);

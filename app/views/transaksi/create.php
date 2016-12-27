@@ -15,6 +15,7 @@ $this->params['title'] = $this->title;
     <?= $this->render('_form', [
         'model' => $model,
         'dataService' => $dataService,
-        'dataSparepart' => $dataSparepart
+        'dataSparepart' => $dataSparepart,
+        'modelSparepart' => $modelSparepart
     ]) ?>
 </div>

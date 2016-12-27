@@ -17,7 +17,8 @@ $this->params['title'] = $this->title;
     <?= $this->render('_form', [
         'model' => $model,
         'dataCustomer' => $dataCustomer,
-        'dataKendaraan' => $dataKendaraan
+        'dataSparepart' => $dataSparepart,
+        'modelServiceDetail' => $modelServiceDetail,
     ]) ?>
 
 </div>

@@ -13,7 +13,6 @@ use yii\helpers\ArrayHelper;
  * @property string $kode_service
  * @property integer $customer_id
  * @property integer $kendaraan_id
- * @property string $keluhan
  * @property string $created_at
  * @property integer $status
  * @property integer $deleted
@@ -43,23 +42,12 @@ class Service extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['customer_id', 'kendaraan_id', 'keluhan'], 'required'],
+            [['customer_id', 'kendaraan_id'], 'required'],
             [['customer_id', 'kendaraan_id', 'status', 'deleted'], 'integer'],
-            [['keluhan'], 'string'],
             [['created_at', 'kode_service'], 'safe'],
             [['customer_id'], 'exist', 'skipOnError' => true, 'targetClass' => Customer::className(), 'targetAttribute' => ['customer_id' => 'id']],
             [['kendaraan_id'], 'exist', 'skipOnError' => true, 'targetClass' => Kendaraan::className(), 'targetAttribute' => ['kendaraan_id' => 'id']],
-            [['keluhan'], 'required', 'on' => 'createFromCustomer'],
-            [['keluhan'], 'required', 'on' => 'createFromKendaraan'],
         ];
-    }
-
-    public function scenarios()
-    {
-        $scenarios = parent::scenarios();
-        $scenarios['createFromCustomer'] = ['keluhan'];
-        $scenarios['createFromKendaraan'] = ['keluhan'];
-        return $scenarios;
     }
 
     /**
@@ -72,7 +60,6 @@ class Service extends \yii\db\ActiveRecord
             'kode_service' => Yii::t('app', 'Kode Service'),
             'customer_id' => Yii::t('app', 'Customer'),
             'kendaraan_id' => Yii::t('app', 'Kendaraan'),
-            'keluhan' => Yii::t('app', 'Keluhan'),
             'created_at' => Yii::t('app', 'Tanggal Service'),
             'status' => Yii::t('app', 'Status')
         ];
@@ -144,5 +131,9 @@ class Service extends \yii\db\ActiveRecord
             ->queryAll();
 
         return ArrayHelper::map($data, 'id', 'kode_service');
+    }
+
+    public static function setLastCode($lastCode) {
+        Yii::$app->db->createCommand("UPDATE `attribute` SET `position`=" . $lastCode . " WHERE `name`='Count Code Service' OR `type`='Count Code Service'")->execute();
     }
 }

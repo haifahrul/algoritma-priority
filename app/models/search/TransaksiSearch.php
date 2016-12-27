@@ -51,7 +51,7 @@ class TransaksiSearch extends Transaksi
 
         $query->andFilterWhere(['like', 'nota', $this->nota])
             ->andFilterWhere(['like', 'service.kode_service', $this->service_id])
-            ->andFilterWhere(['like', 'sparepart.nama', $this->sparepart_id])
+//            ->andFilterWhere(['like', 'sparepart.nama', $this->sparepart_id])
             ->andFilterWhere(['like', 'total_pembayaran', $this->total_pembayaran]);
 
         return $dataProvider;

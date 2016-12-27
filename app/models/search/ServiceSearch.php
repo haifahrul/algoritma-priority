@@ -26,7 +26,7 @@ class ServiceSearch extends Service
 //            [['id', 'customer_id', 'kendaraan_id'], 'integer'],
             [['status'], 'integer'],
             [['no_plat', 'nama', 'kode_service', 'kode_customer'], 'string'],
-            [['keluhan', 'created_at'], 'safe'],
+            [['created_at'], 'safe'],
             ['page', 'safe']
         ];
     }
@@ -61,8 +61,7 @@ class ServiceSearch extends Service
             'status' => $this->status
         ]);
 
-        $query->andFilterWhere(['like', 'keluhan', $this->keluhan])
-            ->andFilterWhere(['like', 'customer.kode_customer', $this->kode_customer])
+        $query->andFilterWhere(['like', 'customer.kode_customer', $this->kode_customer])
             ->andFilterWhere(['like', 'kode_service', $this->kode_service])
             ->andFilterWhere(['like', 'kendaraan.no_plat', $this->no_plat])
             ->andFilterWhere(['like', 'customer.nama', $this->nama]);
@@ -97,8 +96,7 @@ class ServiceSearch extends Service
             'status' => $this->status
         ]);
 
-        $query->andFilterWhere(['like', 'keluhan', $this->keluhan])
-            ->andFilterWhere(['like', 'kode_service', $this->kode_service])
+        $query->andFilterWhere(['like', 'kode_service', $this->kode_service])
             ->andFilterWhere(['like', 'kendaraan.no_plat', $this->no_plat])
             ->andFilterWhere(['like', 'customer.nama', $this->nama]);
 
