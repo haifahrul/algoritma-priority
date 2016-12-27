@@ -18,6 +18,7 @@ use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\helpers\Json;
 use app\components\Model;
+use kartik\mpdf\Pdf;
 
 /**
  * created zaza zayinul hikayat
@@ -49,7 +50,7 @@ class TransaksiController extends Controller
 
     public function actionView($id)
     {
-        $transaksi = Transaksi::find()->joinWith(['service', 'customer'])->where(['transaksi.id' => $id])->asArray()->one();
+        $transaksi = Transaksi::find()->joinWith(['service', 'customer', 'kendaraan'])->where(['transaksi.id' => $id])->asArray()->one();
         $transaksiSparepart = TransaksiSparepart::find()->joinWith(['sparepart'])->where(['transaksi_id' => $transaksi['id']])->asArray()->all();
 
         $query = TransaksiSparepart::find()->asArray();
@@ -64,7 +65,6 @@ class TransaksiController extends Controller
             'transaksiSparepart' => $transaksiSparepart,
             'dataProvider' => $dataProvider
         ]);
-
     }
 
     public function actionCheckout($id)
@@ -94,6 +94,7 @@ class TransaksiController extends Controller
                 try {
                     $model->service_id = $id;
                     $model->customer_id = $dataService['customer_id'];
+                    $model->kendaraan_id = $dataService['kendaraan_id'];
                     $model->nota = Config::getConfig('transaksi')['value'] . '-' . $dataService['kode_service'];
 
                     $service = Service::findOne($id);
@@ -106,6 +107,12 @@ class TransaksiController extends Controller
                             $transaksiSparepart->sparepart_id = $value['sparepart_id'];
                             $transaksiSparepart->qty = $value['qty'];
                             $transaksiSparepart->harga = $value['sparepart']['harga'];
+
+                            // Update Stok
+                            $sparepart = Sparepart::findOne($value['sparepart_id']);
+                            $stok = $sparepart->stok - $value['qty'];
+                            $sparepart->updateAttributes(['stok' => $stok]);
+
                             if (!($flag = $transaksiSparepart->save(false))) {
                                 $transaction->rollBack();
                                 break;
@@ -296,5 +303,62 @@ class TransaksiController extends Controller
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');
         }
+    }
+
+    public function actionPrint($id)
+    {
+        $transaksi = Transaksi::find()->joinWith(['service', 'customer', 'kendaraan'])->where(['transaksi.id' => $id])->asArray()->one();
+        $transaksiSparepart = TransaksiSparepart::find()->joinWith(['sparepart'])->where(['transaksi_id' => $transaksi['id']])->asArray()->all();
+
+        $query = TransaksiSparepart::find()->asArray();
+        $query->joinWith(['sparepart']);
+        $query->where(['transaksi_id' => $transaksi['id']]);
+        $dataProvider = new ActiveDataProvider([
+            'query' => $query,
+        ]);
+
+        // get your HTML raw content without any layouts or scripts
+        $content = $this->renderPartial('print', [
+            'transaksi' => $transaksi,
+            'transaksiSparepart' => $transaksiSparepart,
+            'dataProvider' => $dataProvider
+        ]);
+
+        // setup kartik\mpdf\Pdf component
+        $pdf = new Pdf([
+            // set to use core fonts only
+            'mode' => Pdf::MODE_CORE,
+            // A4 paper format
+            'format' => Pdf::FORMAT_A4,
+            // portrait orientation
+            'orientation' => Pdf::ORIENT_PORTRAIT,
+            // stream to browser inline
+//            'destination' => Pdf::DEST_FILE,
+            // your html content input
+//            'content' => $content,
+            // format content from your own css file if needed or use the
+            // enhanced bootstrap css built by Krajee for mPDF formatting
+            'cssFile' => '@vendor/kartik-v/yii2-mpdf/assets/kv-mpdf-bootstrap.min.css',
+            // any css to be embedded if required
+            'cssInline' => '.kv-heading-1{font-size:18px}',
+            // set mPDF properties on the fly
+            'options' => ['title' => $transaksi['nota']],
+            // call mPDF methods on the fly
+            'methods' => [
+                'SetHeader' => [$transaksi['nota']],
+                'SetFooter' => ['{PAGENO}'],
+            ]
+        ]);
+
+//        $pdf = new Pdf(); // or new Pdf();
+//        $mpdf = $pdf->getApi(); // fetches mpdf api
+//        $pdf->cssFile = '@vendor/kartik-v/yii2-mpdf/assets/kv-mpdf-bootstrap.min.css';
+//        $pdf->cssInline = '.kv-heading-1{font-size:18px}';
+//        $pdf->SetHeader('Kartik Header'); // call methods or set any properties
+//        $pdf->WriteHtml($content); // call mpdf write html
+        echo $pdf->output($content, $transaksi['nota'] . '.pdf', 'D'); // call the mpdf api output as needed
+
+        // return the pdf output as per the destination setting
+//        return $pdf->render();
     }
 }

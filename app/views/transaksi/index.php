@@ -23,8 +23,8 @@ $this->params['title'] = 'List' . $this->title;
                     'id' => 'select_page'
                 ]); ?>
             </div>
-<!--            --><?php //echo Html::a('<i class="glyphicon glyphicon-plus glyphicon-sm"></i> Create ', ['create'],
-//                ['data-pjax' => 0, 'class' => 'btn btn-primary btn-sm btn-tambah1']) ?>
+            <!--            --><?php //echo Html::a('<i class="glyphicon glyphicon-plus glyphicon-sm"></i> Create ', ['create'],
+            //                ['data-pjax' => 0, 'class' => 'btn btn-primary btn-sm btn-tambah1']) ?>
             <?php
             if ((Mimin::filterRoute($this->context->id . '/delete', true))) {
                 echo Html::button('<span class="glyphicon glyphicon-remove glyphicon-sm"></span> Delete', ['data-pjax' => 0, 'class' => 'btn btn-danger btn-sm', 'title' => 'hapus', 'id' => 'btn-deletes']);
@@ -57,6 +57,7 @@ $this->params['title'] = 'List' . $this->title;
                             'contentOptions' => ['class' => 'text-center'],
                         ],
 //                        'id',
+                        'nota',
                         [
                             'attribute' => 'service_id',
                             'format' => 'raw',
@@ -71,7 +72,20 @@ $this->params['title'] = 'List' . $this->title;
                                 return $data['customer']['nama'];
                             }
                         ],
-                        'nota',
+                        [
+                            'attribute' => 'no_telp',
+                            'format' => 'raw',
+                            'value' => function ($data) {
+                                return $data['customer']['no_telp'];
+                            }
+                        ],
+                        [
+                            'attribute' => 'no_plat',
+                            'format' => 'raw',
+                            'value' => function ($data) {
+                                return $data['kendaraan']['no_plat'];
+                            }
+                        ],
                         [
                             'attribute' => 'total_pembayaran',
                             'format' => 'raw',
@@ -94,6 +108,7 @@ $this->params['title'] = 'List' . $this->title;
 
                                     return Html::a($icon, $url, [
                                         'id' => 'btn-print',
+//                                        'target'=>'_blank',
                                         'data-pjax' => 0,
                                         'class' => 'btn btn-success btn-xs',
                                         'title' => Yii::t('app', 'Print')

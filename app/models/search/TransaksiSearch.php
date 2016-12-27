@@ -17,7 +17,8 @@ class TransaksiSearch extends Transaksi
     public function rules()
     {
         return [
-            [['id', 'service_id', 'customer_id'], 'integer'],
+            [['id', 'service_id', 'customer_id', 'kendaraan_id'], 'integer'],
+            [['no_telp', 'no_plat'], 'string'],
             [['nota', 'total_pembayaran'], 'safe'],
             ['page', 'safe']
         ];
@@ -32,7 +33,7 @@ class TransaksiSearch extends Transaksi
     public function search($params)
     {
         $query = Transaksi::find()->asArray();
-        $query->joinWith(['customer', 'service', 'transaksiSparepart']);
+        $query->joinWith(['customer', 'service', 'transaksiSparepart', 'kendaraan']);
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
@@ -52,6 +53,8 @@ class TransaksiSearch extends Transaksi
         $query->andFilterWhere(['like', 'nota', $this->nota])
             ->andFilterWhere(['like', 'service.kode_service', $this->service_id])
             ->andFilterWhere(['like', 'customer.nama', $this->customer_id])
+            ->andFilterWhere(['like', 'customer.no_telp', $this->no_telp])
+            ->andFilterWhere(['like', 'kendaraan.no_plat', $this->no_plat])
             ->andFilterWhere(['like', 'total_pembayaran', $this->total_pembayaran]);
 
         return $dataProvider;

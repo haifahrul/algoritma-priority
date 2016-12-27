@@ -16,36 +16,12 @@ $formatter = Yii::$app->formatter;
 <div class="transaksi-view box">
     <div class="box-header with-border">
         <h1><?php Html::encode($this->title) ?></h1>
-        <p>
-            <?= Html::a('<i class="fa fa-arrow-left"></i><b> Kembali</b> ', ['index'],
-                ['data-pjax' => 0, 'class' => 'btn btn-default btn-sm btn-tambah1']) ?>
-            <?php
-            //            if ((Mimin::filterRoute($this->context->id . '/delete', true))) {
-            //                echo Html::a(Yii::t('app', 'Update'), ['update', 'id' => $transaksi['id']], ['class' => 'btn btn-primary btn-sm']);
-            //            }
-            ?>
-            <?php
-            echo Html::a(Yii::t('app', 'Print'), ['print', 'id' => $transaksi['id']], ['class' => 'btn btn-success btn-sm']);
-            ?>
-            <?php
-            if ((Mimin::filterRoute($this->context->id . '/delete', true))) {
-                echo Html::a(Yii::t('app', 'Delete'), ['delete', 'id' => $transaksi['id']], [
-                    'class' => 'btn btn-danger btn-sm',
-                    'data' => [
-                        'confirm' => Yii::t('app', 'Are you sure you want to delete this item?'),
-                        'method' => 'post',
-                    ],
-                ]);
-            }
-            ?>
-        </p>
     </div>
     <div class="box-body">
         <div class="col-md-4 col-xs-12">
             <?= DetailView::widget([
                 'model' => $transaksi,
                 'attributes' => [
-//                'id',
                     'nota',
                     [
                         'attribute' => 'service',

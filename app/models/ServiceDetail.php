@@ -32,7 +32,15 @@ class ServiceDetail extends \yii\db\ActiveRecord
             [['sparepart_id', 'qty'], 'required'],
             [['service_id', 'sparepart_id', 'qty'], 'integer'],
             [['service_id'], 'exist', 'skipOnError' => true, 'targetClass' => Service::className(), 'targetAttribute' => ['service_id' => 'id']],
+            [['sparepart_id', 'qty'], 'required', 'on' => 'udpate'],
         ];
+    }
+
+    public function scenarios()
+    {
+        $scenarios = parent::scenarios();
+        $scenarios['udpate'] = ['sparepart_id', 'qty'];
+        return $scenarios;
     }
 
     /**

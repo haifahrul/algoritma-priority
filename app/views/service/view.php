@@ -70,6 +70,7 @@ $formater = Yii::$app->formatter;
                         'value' => Attribute::attribute_view('jenis', $model->kendaraan->jenis)
                     ],
                     'kendaraan.tahun',
+                    'keluhan:ntext',
                     [
                         'attribute' => 'created_at',
                         'format' => 'raw',

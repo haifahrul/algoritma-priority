@@ -10,6 +10,7 @@ use Yii;
  * @property integer $id
  * @property integer $service_id
  * @property integer $customer_id
+ * @property integer $kendaraan_id
  * @property string $nota
  * @property string $total_pembayaran
  *
@@ -39,7 +40,7 @@ class Transaksi extends \yii\db\ActiveRecord
     {
         return [
             [['total_pembayaran'], 'required'],
-            [['service_id', 'customer_id', 'qty'], 'integer'],
+            [['service_id', 'customer_id', 'kendaraan_id', 'qty'], 'integer'],
             [['nota', 'total_pembayaran'], 'string', 'max' => 50],
         ];
     }
@@ -53,6 +54,7 @@ class Transaksi extends \yii\db\ActiveRecord
             'id' => Yii::t('app', 'ID'),
             'service_id' => Yii::t('app', 'Service'),
             'customer_id' => Yii::t('app', 'Customer'),
+            'kendaraan_id' => Yii::t('app', 'Kendaraan'),
             'nota' => Yii::t('app', 'Nota'),
             'total_pembayaran' => Yii::t('app', 'Total Pembayaran'),
         ];
@@ -83,6 +85,11 @@ class Transaksi extends \yii\db\ActiveRecord
     public function getTransaksiSparepart()
     {
         return $this->hasOne(TransaksiSparepart::className(), ['transaksi_id' => 'id']);
+    }
+
+    public function getKendaraan()
+    {
+        return $this->hasOne(Kendaraan::className(), ['id' => 'kendaraan_id']);
     }
 
     /**

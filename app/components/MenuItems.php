@@ -45,7 +45,7 @@ class MenuItems
                 'url' => '#',
                 'icon' => 'database',
                 'items' => [
-                    ['label' => Yii::t('app', 'Jasa Service'), 'url' => ['/jasa-service/index/']],
+//                    ['label' => Yii::t('app', 'Jasa Service'), 'url' => ['/jasa-service/index/']],
                     ['label' => Yii::t('app', 'Sparepart'), 'url' => ['/sparepart/index']],
                 ],
             ],

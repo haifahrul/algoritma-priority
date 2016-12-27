@@ -156,7 +156,7 @@ class ServiceController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
-        $modelServiceDetail = ServiceDetail::findAll(['service_id' => $model->id]);
+        $modelServiceDetail = ServiceDetail::find()->where(['service_id' => $model->id])->all();
         $dataCustomer = ArrayHelper::map(Customer::find()->select('id, nama')->where(['id' => $model->customer_id])->all(), 'id', 'nama');
         $dataKendaraan = ArrayHelper::map(Kendaraan::find()->select('id, no_plat')->where(['customer_id' => $model->customer_id])->all(), 'id', 'no_plat');
         $dataSparepart = ArrayHelper::map(Sparepart::find()->asArray()->all(), 'id', 'nama');
@@ -253,7 +253,6 @@ class ServiceController extends Controller
             'status' => $status,
         ]);
     }
-
 
     protected function findModel($id)
     {

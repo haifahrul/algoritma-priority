@@ -1,5 +1,5 @@
 <?php
-
+use kartik\mpdf\Pdf;
 require(__DIR__ . '/bootstrap.php');
 $params = require(__DIR__ . '/params.php');
 
@@ -40,6 +40,14 @@ $config = [
     ],
     // komponen aplikasi
     'components' => [
+        // setup Krajee Pdf component
+        'pdf' => [
+            'class' => Pdf::className(),
+            'format' => Pdf::FORMAT_A4,
+            'orientation' => Pdf::ORIENT_PORTRAIT,
+            'destination' => Pdf::DEST_BROWSER,
+            // refer settings section for all configuration options
+        ],
         //class setting themes
         'menus' => [
             'class' => 'app\components\MenuItems',
