@@ -65,10 +65,10 @@ $this->params['title'] = 'List' . $this->title;
                             }
                         ],
                         [
-                            'attribute' => 'sparepart_id',
+                            'attribute' => 'customer_id',
                             'format' => 'raw',
                             'value' => function ($data) {
-                                return $data['sparepart']['nama'];
+                                return $data['customer']['nama'];
                             }
                         ],
                         'nota',

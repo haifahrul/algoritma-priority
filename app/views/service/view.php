@@ -34,6 +34,9 @@ $formater = Yii::$app->formatter;
                 ]);
             }
             ?>
+            <?php
+                echo Html::a(Yii::t('app', 'Checkout'), ['/transaksi/create', 'id' => $model->id], ['class' => 'btn btn-success btn-sm']);
+            ?>
         </p>
     </div>
     <div class="box-body">

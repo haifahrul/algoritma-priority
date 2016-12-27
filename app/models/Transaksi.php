@@ -9,12 +9,12 @@ use Yii;
  *
  * @property integer $id
  * @property integer $service_id
- * @property integer $sparepart_id
+ * @property integer $customer_id
  * @property string $nota
  * @property string $total_pembayaran
  *
  * @property Service $service
- * @property Sparepart $sparepart
+ * @property Customer $customer
  */
 class Transaksi extends \yii\db\ActiveRecord
 {
@@ -38,11 +38,9 @@ class Transaksi extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['service_id', 'sparepart_id', 'nota', 'total_pembayaran'], 'required'],
-            [['service_id', 'sparepart_id', 'qty'], 'integer'],
+            [['nota', 'total_pembayaran'], 'required'],
+            [['service_id', 'customer_id', 'qty'], 'integer'],
             [['nota', 'total_pembayaran'], 'string', 'max' => 50],
-            [['service_id'], 'exist', 'skipOnError' => true, 'targetClass' => Service::className(), 'targetAttribute' => ['service_id' => 'id']],
-            [['sparepart_id'], 'exist', 'skipOnError' => true, 'targetClass' => Sparepart::className(), 'targetAttribute' => ['sparepart_id' => 'id']],
         ];
     }
 
@@ -54,7 +52,7 @@ class Transaksi extends \yii\db\ActiveRecord
         return [
             'id' => Yii::t('app', 'ID'),
             'service_id' => Yii::t('app', 'Service'),
-            'sparepart_id' => Yii::t('app', 'Sparepart'),
+            'customer_id' => Yii::t('app', 'Customer'),
             'nota' => Yii::t('app', 'Nota'),
             'total_pembayaran' => Yii::t('app', 'Total Pembayaran'),
         ];
@@ -71,9 +69,10 @@ class Transaksi extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getSparepart()
+
+    public function getCustomer()
     {
-        return $this->hasOne(Sparepart::className(), ['id' => 'sparepart_id']);
+        return $this->hasOne(Customer::className(), ['id' => 'customer_id']);
     }
 
     /**
