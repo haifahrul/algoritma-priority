@@ -22,7 +22,9 @@ $formater = Yii::$app->formatter;
                 ['data-pjax' => 0, 'class' => 'btn btn-default btn-sm btn-tambah1']) ?>
             <?php
             if ((Mimin::filterRoute($this->context->id . '/delete', true))) {
-                echo Html::a(Yii::t('app', 'Update'), ['update', 'id' => $model->id], ['class' => 'btn btn-primary btn-sm']);
+                if ($model->status != Service::CHECKOUT) {
+                    echo Html::a(Yii::t('app', 'Update'), ['update', 'id' => $model->id], ['class' => 'btn btn-primary btn-sm']);
+                }
             }
             ?>
             <?php

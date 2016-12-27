@@ -135,12 +135,14 @@ $this->params['title'] = 'List' . $this->title;
                                 'update' => function ($url, $model) {
                                     $icon = '<i class = "fa fa-pencil"></i>';
 
-                                    return Html::a($icon, $url, [
-                                        'id' => 'btn-update-row',
-                                        'data-pjax' => 0,
-                                        'class' => 'btn btn-default btn-xs',
-                                        'title' => Yii::t('app', 'Update')
-                                    ]);
+                                    if ($model['status'] != Service::CHECKOUT) {
+                                        return Html::a($icon, $url, [
+                                            'id' => 'btn-update-row',
+                                            'data-pjax' => 0,
+                                            'class' => 'btn btn-default btn-xs',
+                                            'title' => Yii::t('app', 'Update')
+                                        ]);
+                                    }
                                 },
                                 'delete' => function ($url, $model) {
                                     $icon = '<i class = "fa fa-trash-o"></i>';
