@@ -159,6 +159,7 @@ class ServiceController extends Controller
         $modelServiceDetail = ServiceDetail::findAll(['service_id' => $model->id]);
         $dataCustomer = ArrayHelper::map(Customer::find()->select('id, nama')->where(['id' => $model->customer_id])->all(), 'id', 'nama');
         $dataKendaraan = ArrayHelper::map(Kendaraan::find()->select('id, no_plat')->where(['customer_id' => $model->customer_id])->all(), 'id', 'no_plat');
+        $dataSparepart = ArrayHelper::map(Sparepart::find()->asArray()->all(), 'id', 'nama');
 
         if ($model->load(Yii::$app->request->post())) {
             $oldIDs = ArrayHelper::map($modelServiceDetail, 'service_id', 'service_id');
@@ -208,7 +209,8 @@ class ServiceController extends Controller
             'model' => $model,
             'modelServiceDetail' => (empty($modelServiceDetail)) ? [new ServiceDetail()] : $modelServiceDetail,
             'dataCustomer' => $dataCustomer,
-            'dataKendaraan' => $dataKendaraan
+            'dataKendaraan' => $dataKendaraan,
+            'dataSparepart' => $dataSparepart,
         ]);
     }
 

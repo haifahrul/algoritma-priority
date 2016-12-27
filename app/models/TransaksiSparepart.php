@@ -32,10 +32,10 @@ class TransaksiSparepart extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['transaksi_id', 'sparepart_id', 'qty', 'harga'], 'required'],
+//            [['transaksi_id', 'sparepart_id', 'qty', 'harga'], 'required'],
             [['transaksi_id', 'sparepart_id', 'qty', 'harga'], 'integer'],
-            [['sparepart_id'], 'exist', 'skipOnError' => true, 'targetClass' => Sparepart::className(), 'targetAttribute' => ['sparepart_id' => 'id']],
-            [['transaksi_id'], 'exist', 'skipOnError' => true, 'targetClass' => Transaksi::className(), 'targetAttribute' => ['transaksi_id' => 'id']],
+//            [['sparepart_id'], 'exist', 'skipOnError' => true, 'targetClass' => Sparepart::className(), 'targetAttribute' => ['sparepart_id' => 'id']],
+//            [['transaksi_id'], 'exist', 'skipOnError' => true, 'targetClass' => Transaksi::className(), 'targetAttribute' => ['transaksi_id' => 'id']],
         ];
     }
 

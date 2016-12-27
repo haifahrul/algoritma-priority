@@ -87,19 +87,20 @@ author A. Fakhrurozi S.
                                         class="fa fa-minus"></i></button>
                             </td>
                             <td class="col-md-10">
-                                <!--                                --><?php //echo $form->field($modelServiceDetail, "[{$i}]nama")->widget(AutoComplete::className(), [
+                                <?php echo $form->field($modelServiceDetail, "[{$i}]sparepart_id")->dropDownList($dataSparepart, ['prompt' => '--- Select Sparepart ---'])->label(false) ?>
+                                <!--                                --><?php //echo $form->field($modelServiceDetail, "[{$i}]sparepart_id")->widget(AutoComplete::className(), [
                                 //                                    'clientOptions' => [
                                 //                                        'source' => $dataSparepart,
                                 //                                    ],
                                 //                                ])->label(false) ?>
-                                <?php echo $form->field($modelServiceDetail, "[{$i}]nama")->textInput()->label(FALSE) ?>
-                                <!--                                --><?php //echo $form->field($modelServiceDetail, "[{$i}]nama")->widget(SelectivityWidget::className(), [
-                                //                                    'pluginOptions' => [
-                                //                                        'allowClear' => true,
-                                //                                        'items' => $dataSparepart,
-                                //                                        'placeholder' => 'No city selected'
-                                //                                    ]
-                                //                                ])->label(false) ?>
+                                <!--                                --><?php //echo $form->field($modelServiceDetail, "[{$i}]nama")->textInput()->label(FALSE) ?>
+                                <!--                                                                --><?php //echo $form->field($modelServiceDetail, "[{$i}]nama")->widget(SelectivityWidget::className(), [
+                                //                                                                    'pluginOptions' => [
+                                //                                                                        'allowClear' => true,
+                                //                                                                        'items' => $dataSparepart,
+                                //                                                                        'placeholder' => 'No city selected'
+                                //                                                                    ]
+                                //                                                                ])->label(false) ?>
                             </td>
                             <td>
                                 <?= $form->field($modelServiceDetail, "[{$i}]qty")->textInput()->label(FALSE) ?>

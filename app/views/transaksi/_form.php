@@ -14,14 +14,15 @@ author A. Fakhrurozi S.
     <div class="transaksi-form form box">
         <?php $form = ActiveForm::begin([
             'id' => 'dynamic-form',
-            'options' => [
-                'class' => 'form-horizontal'
-            ],
-            'layout' => 'horizontal',
-            'fieldConfig' => [
-                'template' => "<div class=\"col-md-3\">{label}</div>\n<div class=\"col-md-8\">{input}{error}</div><div class=\"col-md-3\"></div>\n",
-                'labelOptions' => ['class' => 'text-left1'],
-            ],
+//            'options' => [
+//                'class' => 'form-horizontal'
+//            ],
+//            'layout' => 'horizontal',
+//            'fieldConfig' => [
+////                'template' => "<div class=\"col-md-3\">{label}</div>\n<div class=\"col-md-8\">{input}{error}</div><div class=\"col-md-3\"></div>\n",
+//                'template' => "<div class=\"\">{label}</div>\n<div class=\"col-md-8\">{input}{error}</div><div class=\"col-md-3\"></div>\n",
+//                'labelOptions' => ['class' => 'text-left'],
+//            ],
             //'enableAjaxValidation' => true,
             //'validateOnBlur' => true
         ]); ?>
@@ -83,14 +84,14 @@ author A. Fakhrurozi S.
                                     <button type="button" class="remove-item btn btn-danger btn-xs"><i
                                             class="fa fa-minus"></i></button>
                                 </td>
-                                <td class="col-md-10">
+                                <td>
                                     <?php echo $form->field($modelTransaksiSparepart, "[{$i}]sparepart_id")->textInput()->label(FALSE) ?>
                                 </td>
                                 <td>
                                     <?= $form->field($modelTransaksiSparepart, "[{$i}]qty")->textInput()->label(FALSE) ?>
                                 </td>
                                 <td>
-                                    <?= $form->field($modelTransaksiSparepart, "[{$i}]harga")->textInput()->label(FALSE) ?>
+                                    <?= $form->field($modelTransaksiSparepart, "[{$i}]harga")->textInput(['readonly' => true])->label(FALSE) ?>
                                 </td>
                             </tr>
                         <?php endforeach; ?>
@@ -108,7 +109,7 @@ author A. Fakhrurozi S.
                 </div>
                 <?php DynamicFormWidget::end(); ?>
             </div>
-            <div class="col-sm-12 col-md-5">
+            <div class="col-sm-12 col-md-4 col-md-push-1">
                 <?= $form->field($model, 'nama')->textInput(['id' => 'nama', 'maxlength' => true, 'disabled' => true]) ?>
                 <?= $form->field($model, 'no_telp')->textInput(['id' => 'no_telp', 'maxlength' => true, 'disabled' => true]) ?>
                 <?= $form->field($model, 'no_plat')->textInput(['id' => 'no_plat', 'maxlength' => true, 'disabled' => true]) ?>

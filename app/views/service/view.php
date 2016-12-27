@@ -37,9 +37,9 @@ $formater = Yii::$app->formatter;
             }
             ?>
             <?php
-                if($model->status == 2) {
-                    echo Html::a(Yii::t('app', 'Checkout'), ['/transaksi/create', 'id' => $model->id], ['class' => 'btn btn-success btn-sm']);
-                }
+            if ($model->status == 2) {
+                echo Html::a(Yii::t('app', 'Checkout'), ['/transaksi/checkout', 'id' => $model->id], ['class' => 'btn btn-success btn-sm']);
+            }
             ?>
         </p>
     </div>
@@ -88,7 +88,15 @@ $formater = Yii::$app->formatter;
                 'showOnEmpty' => true,
                 'summary' => '',
                 'tableOptions' => ['class' => 'table table-striped table-bordered table-condensed table-hover'],
-                'columns' => ['nama', 'qty']
+                'columns' => [
+                    [
+                        'attribute' => 'nama',
+                        'value' => function ($data) {
+                            return $data['sparepart']['nama'];
+                        }
+                    ],
+                    'qty'
+                ]
             ]) ?>
         </div>
     </div>

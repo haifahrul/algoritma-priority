@@ -8,7 +8,7 @@ use Yii;
  * This is the model class for table "service_detail".
  *
  * @property integer $service_id
- * @property string $nama
+ * @property integer $nama
  * @property string $qty
  *
  * @property Service $service
@@ -29,9 +29,8 @@ class ServiceDetail extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['nama', 'qty'], 'required'],
-            [['service_id', 'qty'], 'integer'],
-            [['nama'], 'string', 'max' => 255],
+            [['sparepart_id', 'qty'], 'required'],
+            [['service_id', 'sparepart_id', 'qty'], 'integer'],
             [['service_id'], 'exist', 'skipOnError' => true, 'targetClass' => Service::className(), 'targetAttribute' => ['service_id' => 'id']],
         ];
     }
@@ -42,8 +41,8 @@ class ServiceDetail extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'service_id' => Yii::t('app', 'Service ID'),
-            'nama' => Yii::t('app', 'Nama Service'),
+            'service_id' => Yii::t('app', 'Service'),
+            'sparepart_id' => Yii::t('app', 'Sparepart'),
             'qty' => Yii::t('app', 'Qty'),
         ];
     }
@@ -54,5 +53,10 @@ class ServiceDetail extends \yii\db\ActiveRecord
     public function getService()
     {
         return $this->hasOne(Service::className(), ['id' => 'service_id']);
+    }
+
+    public function getSparepart()
+    {
+        return $this->hasOne(Sparepart::className(), ['id' => 'sparepart_id']);
     }
 }

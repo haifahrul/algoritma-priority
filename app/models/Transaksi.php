@@ -38,7 +38,7 @@ class Transaksi extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['nota', 'total_pembayaran'], 'required'],
+            [['total_pembayaran'], 'required'],
             [['service_id', 'customer_id', 'qty'], 'integer'],
             [['nota', 'total_pembayaran'], 'string', 'max' => 50],
         ];
@@ -73,6 +73,16 @@ class Transaksi extends \yii\db\ActiveRecord
     public function getCustomer()
     {
         return $this->hasOne(Customer::className(), ['id' => 'customer_id']);
+    }
+
+    public function getSparepart()
+    {
+        return $this->hasOne(Sparepart::className(), ['id' => 'sparepart_id']);
+    }
+
+    public function getTransaksiSparepart()
+    {
+        return $this->hasOne(TransaksiSparepart::className(), ['transaksi_id' => 'id']);
     }
 
     /**

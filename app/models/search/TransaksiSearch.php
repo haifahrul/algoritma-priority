@@ -32,7 +32,7 @@ class TransaksiSearch extends Transaksi
     public function search($params)
     {
         $query = Transaksi::find()->asArray();
-        $query->joinWith(['customer', 'service']);
+        $query->joinWith(['customer', 'service', 'transaksiSparepart']);
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,

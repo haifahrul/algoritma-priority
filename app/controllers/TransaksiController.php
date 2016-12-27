@@ -3,12 +3,16 @@
 namespace app\controllers;
 
 use app\models\Customer;
+use app\models\Kendaraan;
+use app\models\ServiceDetail;
 use app\models\TransaksiSparepart;
+use app\modules\webmaster\models\Config;
 use Yii;
 use app\models\Transaksi;
 use app\models\Service;
 use app\models\Sparepart;
 use app\models\search\TransaksiSearch;
+use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -45,15 +49,87 @@ class TransaksiController extends Controller
 
     public function actionView($id)
     {
-        if (Yii::$app->request->isAjax) {
-            return $this->renderAjax('view', [
-                'model' => $this->findModel($id),
-            ]);
-        } else {
-            return $this->render('view', [
-                'model' => $this->findModel($id),
-            ]);
+        $transaksi = Transaksi::find()->joinWith(['service', 'customer'])->where(['transaksi.id' => $id])->asArray()->one();
+        $transaksiSparepart = TransaksiSparepart::find()->joinWith(['sparepart'])->where(['transaksi_id' => $transaksi['id']])->asArray()->all();
+
+        $query = TransaksiSparepart::find()->asArray();
+        $query->joinWith(['sparepart']);
+        $query->where(['transaksi_id' => $transaksi['id']]);
+        $dataProvider = new ActiveDataProvider([
+            'query' => $query,
+        ]);
+
+        return $this->render('view', [
+            'transaksi' => $transaksi,
+            'transaksiSparepart' => $transaksiSparepart,
+            'dataProvider' => $dataProvider
+        ]);
+
+    }
+
+    public function actionCheckout($id)
+    {
+        $model = new Transaksi();
+        $dataService = Service::findOne($id)->toArray();
+        $dataServiceDetail = ServiceDetail::find()->joinWith(['sparepart'])->where(['service_id' => $dataService['id']])->asArray()->all();
+        $dataCustomer = Customer::findOne($dataService['customer_id'])->toArray();
+        $dataKendaraan = Kendaraan::findOne($dataService['kendaraan_id'])->toArray();
+        $dataProvider = ServiceDetail::find()->joinWith(['sparepart'])->where(['service_id' => $dataService['id']])->asArray();
+        $dataProvider = new ActiveDataProvider([
+            'query' => $dataProvider,
+        ]);
+
+        $data = [];
+        foreach ($dataServiceDetail AS $value) {
+            $data[] = $value['qty'] * $value['sparepart']['harga'];
         }
+        $totalPembayaran = array_sum($data);
+
+        if ($model->load(Yii::$app->request->post())) {
+            // validate models transaksi
+            $validTransaksi = $model->validate();
+
+            if ($validTransaksi) {
+                $transaction = \Yii::$app->db->beginTransaction();
+                try {
+                    $model->service_id = $id;
+                    $model->customer_id = $dataService['customer_id'];
+                    $model->nota = Config::getConfig('transaksi')['value'] . '-' . $dataService['kode_service'];
+
+                    $service = Service::findOne($id);
+                    $service->updateAttributes(['status' => Service::CHECKOUT]);
+
+                    if ($flag = $model->save(false)) {
+                        foreach ($dataServiceDetail as $value) {
+                            $transaksiSparepart = new TransaksiSparepart();
+                            $transaksiSparepart->transaksi_id = $model->id;
+                            $transaksiSparepart->sparepart_id = $value['sparepart_id'];
+                            $transaksiSparepart->qty = $value['qty'];
+                            $transaksiSparepart->harga = $value['sparepart']['harga'];
+                            if (!($flag = $transaksiSparepart->save(false))) {
+                                $transaction->rollBack();
+                                break;
+                            }
+                        }
+                    }
+                    if ($flag) {
+                        $transaction->commit();
+                        return $this->redirect(['view', 'id' => $model->id]);
+                    }
+                } catch (Exception $e) {
+                    $transaction->rollBack();
+                }
+            }
+        }
+
+        return $this->render('checkout', [
+            'model' => $model,
+            'dataService' => $dataService,
+            'dataCustomer' => $dataCustomer,
+            'dataKendaraan' => $dataKendaraan,
+            'dataProvider' => $dataProvider,
+            'totalPembayaran' => $totalPembayaran
+        ]);
     }
 
     public function actionCreate()

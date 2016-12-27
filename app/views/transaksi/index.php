@@ -23,8 +23,8 @@ $this->params['title'] = 'List' . $this->title;
                     'id' => 'select_page'
                 ]); ?>
             </div>
-            <?= Html::a('<i class="glyphicon glyphicon-plus glyphicon-sm"></i> Create ', ['create'],
-                ['data-pjax' => 0, 'class' => 'btn btn-primary btn-sm btn-tambah1']) ?>
+<!--            --><?php //echo Html::a('<i class="glyphicon glyphicon-plus glyphicon-sm"></i> Create ', ['create'],
+//                ['data-pjax' => 0, 'class' => 'btn btn-primary btn-sm btn-tambah1']) ?>
             <?php
             if ((Mimin::filterRoute($this->context->id . '/delete', true))) {
                 echo Html::button('<span class="glyphicon glyphicon-remove glyphicon-sm"></span> Delete', ['data-pjax' => 0, 'class' => 'btn btn-danger btn-sm', 'title' => 'hapus', 'id' => 'btn-deletes']);
@@ -85,7 +85,7 @@ $this->params['title'] = 'List' . $this->title;
                             //'header'=>'Pilihan',
                             'contentOptions' => ['style' => 'width:160px;', 'class' => 'text-center'],
                             'template' => Mimin::filterTemplateActionColumn([
-                                'print', 'view', 'update', 'delete'
+                                'print', 'view', 'delete'
                             ], $this->context->route),
                             'header' => 'Options',
                             'buttons' => [
@@ -95,7 +95,7 @@ $this->params['title'] = 'List' . $this->title;
                                     return Html::a($icon, $url, [
                                         'id' => 'btn-print',
                                         'data-pjax' => 0,
-                                        'class' => 'btn btn-default btn-xs',
+                                        'class' => 'btn btn-success btn-xs',
                                         'title' => Yii::t('app', 'Print')
                                     ]);
                                 },

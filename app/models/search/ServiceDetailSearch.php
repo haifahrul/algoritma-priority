@@ -17,8 +17,7 @@ class ServiceDetailSearch extends ServiceDetail
     public function rules()
     {
         return [
-            [['nama'], 'string'],
-            [['qty'], 'integer'],
+            [['qty', 'sparepart_id'], 'integer'],
             ['page', 'safe']
         ];
     }
@@ -32,8 +31,9 @@ class ServiceDetailSearch extends ServiceDetail
     public function search($params, $id)
     {
         $query = ServiceDetail::find()->asArray();
+        $query->joinWith(['sparepart']);
         $query->where(['service_id' => $id]);
-        $query->orderBy(['nama' => SORT_ASC]);
+        $query->orderBy(['sparepart.nama' => SORT_ASC]);
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
@@ -49,7 +49,7 @@ class ServiceDetailSearch extends ServiceDetail
             'qty' => $this->qty
         ]);
 
-        $query->andFilterWhere(['like', 'nama', $this->nama]);
+        $query->andFilterWhere(['like', 'sparepart.nama', $this->sparepart_id]);
 
         return $dataProvider;
     }

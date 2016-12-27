@@ -25,6 +25,7 @@ class Service extends \yii\db\ActiveRecord
 {
     CONST BELUM = 1;
     CONST SUDAH = 2;
+    CONST CHECKOUT = 3;
     CONST UNDELETE = 0;
     CONST DELETE = 1;
 
@@ -117,9 +118,12 @@ class Service extends \yii\db\ActiveRecord
         if ($id == Attribute::getAttributeCode('STATUS_SERVICE', self::BELUM)) {
             // BELUM
             return '<span class="label label-warning">' . Attribute::attribute_view('status_service', $id) . '</span>';
-        } else {
+        } elseif ($id == Attribute::getAttributeCode('STATUS_SERVICE', self::SUDAH)) {
             // SUDAH
             return '<span class="label label-success">' . Attribute::attribute_view('status_service', $id) . '</span>';
+        } else {
+            // CHECKOUT
+            return '<span class="label label-primary">' . Attribute::attribute_view('status_service', $id) . '</span>';
         }
     }
 
