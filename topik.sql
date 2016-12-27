@@ -27,9 +27,9 @@ CREATE TABLE IF NOT EXISTS `attribute` (
   `position` int(11) NOT NULL,
   `status` tinyint(4) NOT NULL DEFAULT '1',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=62 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=63 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
--- Membuang data untuk tabel topik.attribute: 13 rows
+-- Membuang data untuk tabel topik.attribute: 14 rows
 /*!40000 ALTER TABLE `attribute` DISABLE KEYS */;
 INSERT INTO `attribute` (`id`, `parent`, `name`, `content`, `code`, `type`, `position`, `status`) VALUES
 	(48, 46, 'Matic', NULL, 2, 'JENIS', 2, 1);
@@ -48,7 +48,7 @@ INSERT INTO `attribute` (`id`, `parent`, `name`, `content`, `code`, `type`, `pos
 INSERT INTO `attribute` (`id`, `parent`, `name`, `content`, `code`, `type`, `position`, `status`) VALUES
 	(54, 51, 'Vario eSP', NULL, 2, 'TIPE', 2, 1);
 INSERT INTO `attribute` (`id`, `parent`, `name`, `content`, `code`, `type`, `position`, `status`) VALUES
-	(55, 0, 'Count Kode Service', '(NULL)', 0, 'Count Code Service', 19, 1);
+	(55, 0, 'Count Kode Service', '(NULL)', 0, 'Count Code Service', 41, 1);
 INSERT INTO `attribute` (`id`, `parent`, `name`, `content`, `code`, `type`, `position`, `status`) VALUES
 	(56, 0, 'Status Service', NULL, 0, 'STATUS_SERVICE', 0, 1);
 INSERT INTO `attribute` (`id`, `parent`, `name`, `content`, `code`, `type`, `position`, `status`) VALUES
@@ -58,7 +58,9 @@ INSERT INTO `attribute` (`id`, `parent`, `name`, `content`, `code`, `type`, `pos
 INSERT INTO `attribute` (`id`, `parent`, `name`, `content`, `code`, `type`, `position`, `status`) VALUES
 	(60, 49, 'Yamaha', NULL, 2, 'MEREK', 2, 1);
 INSERT INTO `attribute` (`id`, `parent`, `name`, `content`, `code`, `type`, `position`, `status`) VALUES
-	(61, 0, 'Count Code Customer', NULL, 0, 'Count Code Customer', 18, 1);
+	(61, 0, 'Count Code Customer', NULL, 0, 'Count Code Customer', 19, 1);
+INSERT INTO `attribute` (`id`, `parent`, `name`, `content`, `code`, `type`, `position`, `status`) VALUES
+	(62, 56, 'Checkout', NULL, 3, 'STATUS_SERVICE', 3, 1);
 /*!40000 ALTER TABLE `attribute` ENABLE KEYS */;
 
 -- membuang struktur untuk table topik.auth_assignment
@@ -99,7 +101,7 @@ CREATE TABLE IF NOT EXISTS `auth_item` (
   CONSTRAINT `auth_item_ibfk_1` FOREIGN KEY (`rule_name`) REFERENCES `auth_rule` (`name`) ON DELETE SET NULL ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
--- Membuang data untuk tabel topik.auth_item: ~128 rows (lebih kurang)
+-- Membuang data untuk tabel topik.auth_item: ~151 rows (lebih kurang)
 /*!40000 ALTER TABLE `auth_item` DISABLE KEYS */;
 INSERT INTO `auth_item` (`name`, `type`, `description`, `rule_name`, `data`, `created_at`, `updated_at`) VALUES
 	('/*', 2, NULL, NULL, NULL, 1482527586, 1482527586);
@@ -441,7 +443,7 @@ CREATE TABLE IF NOT EXISTS `auth_item_child` (
   CONSTRAINT `auth_item_child_ibfk_2` FOREIGN KEY (`child`) REFERENCES `auth_item` (`name`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
--- Membuang data untuk tabel topik.auth_item_child: ~132 rows (lebih kurang)
+-- Membuang data untuk tabel topik.auth_item_child: ~184 rows (lebih kurang)
 /*!40000 ALTER TABLE `auth_item_child` DISABLE KEYS */;
 INSERT INTO `auth_item_child` (`parent`, `child`) VALUES
 	('admin', '/customer/create');
@@ -833,12 +835,12 @@ CREATE TABLE IF NOT EXISTS `config` (
   `key` varchar(64) NOT NULL,
   `value` longtext NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;
 
--- Membuang data untuk tabel topik.config: ~0 rows (lebih kurang)
+-- Membuang data untuk tabel topik.config: ~1 rows (lebih kurang)
 /*!40000 ALTER TABLE `config` DISABLE KEYS */;
 INSERT INTO `config` (`id`, `code`, `key`, `value`) VALUES
-	(7, 'CONFIG', 'name', 'Topik App');
+	(7, 'CONFIG', 'transaksi', 'INVOICE');
 /*!40000 ALTER TABLE `config` ENABLE KEYS */;
 
 -- membuang struktur untuk table topik.customer
@@ -850,44 +852,12 @@ CREATE TABLE IF NOT EXISTS `customer` (
   `no_telp` varchar(50) NOT NULL,
   `email` varchar(50) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=36 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=37 DEFAULT CHARSET=utf8;
 
--- Membuang data untuk tabel topik.customer: ~4 rows (lebih kurang)
+-- Membuang data untuk tabel topik.customer: ~0 rows (lebih kurang)
 /*!40000 ALTER TABLE `customer` DISABLE KEYS */;
 INSERT INTO `customer` (`id`, `kode_customer`, `nama`, `alamat`, `no_telp`, `email`) VALUES
-	(19, 'CS-2', 'Fahrul', 'Bogor', '085710568571', '');
-INSERT INTO `customer` (`id`, `kode_customer`, `nama`, `alamat`, `no_telp`, `email`) VALUES
-	(20, 'CS-3', 'Topik', '2', '2', '');
-INSERT INTO `customer` (`id`, `kode_customer`, `nama`, `alamat`, `no_telp`, `email`) VALUES
-	(21, 'CS-4', 'test', 'e', '1', '');
-INSERT INTO `customer` (`id`, `kode_customer`, `nama`, `alamat`, `no_telp`, `email`) VALUES
-	(22, 'CS-5', '123qwe', 'dd', '21', '');
-INSERT INTO `customer` (`id`, `kode_customer`, `nama`, `alamat`, `no_telp`, `email`) VALUES
-	(23, 'CS-6', 'Indah', 'indah', '8888888', '');
-INSERT INTO `customer` (`id`, `kode_customer`, `nama`, `alamat`, `no_telp`, `email`) VALUES
-	(24, 'CS-7', 'Zihan', 'Zihan', '0823', '');
-INSERT INTO `customer` (`id`, `kode_customer`, `nama`, `alamat`, `no_telp`, `email`) VALUES
-	(25, 'CS-8', 'Zihan', 'Zihan', '082322', '');
-INSERT INTO `customer` (`id`, `kode_customer`, `nama`, `alamat`, `no_telp`, `email`) VALUES
-	(26, 'CS-9', 'Zihan', 'Zihan', '0823222', '');
-INSERT INTO `customer` (`id`, `kode_customer`, `nama`, `alamat`, `no_telp`, `email`) VALUES
-	(27, 'CS-10', 'Zihan', 'Zihan', '08232222', '');
-INSERT INTO `customer` (`id`, `kode_customer`, `nama`, `alamat`, `no_telp`, `email`) VALUES
-	(28, 'CS-11', 'Zihan', 'Zihan', '082322222', '');
-INSERT INTO `customer` (`id`, `kode_customer`, `nama`, `alamat`, `no_telp`, `email`) VALUES
-	(29, 'CS-12', 'Zihan', 'Zihan', '0823222221', '');
-INSERT INTO `customer` (`id`, `kode_customer`, `nama`, `alamat`, `no_telp`, `email`) VALUES
-	(30, 'CS-13', 'Zihan', 'Zihan', '08232222211', '');
-INSERT INTO `customer` (`id`, `kode_customer`, `nama`, `alamat`, `no_telp`, `email`) VALUES
-	(31, 'CS-14', 'Zihan', 'Zihan', '082322222111', '');
-INSERT INTO `customer` (`id`, `kode_customer`, `nama`, `alamat`, `no_telp`, `email`) VALUES
-	(32, 'CS-15', 'Zihan', 'Zihan', '0823222221113', '');
-INSERT INTO `customer` (`id`, `kode_customer`, `nama`, `alamat`, `no_telp`, `email`) VALUES
-	(33, 'CS-16', 'Zihan', 'Zihan', '08232222211133', '');
-INSERT INTO `customer` (`id`, `kode_customer`, `nama`, `alamat`, `no_telp`, `email`) VALUES
-	(34, 'CS-17', 'Zihan', 'Zihan', '08232211', '');
-INSERT INTO `customer` (`id`, `kode_customer`, `nama`, `alamat`, `no_telp`, `email`) VALUES
-	(35, 'CS-18', 'sasdhasdhasd', 'asd', '009808', '');
+	(36, 'CS-19', 'Fahrul', 'Bogor', '085710568571', '');
 /*!40000 ALTER TABLE `customer` ENABLE KEYS */;
 
 -- membuang struktur untuk table topik.jasa_service
@@ -916,46 +886,14 @@ CREATE TABLE IF NOT EXISTS `kendaraan` (
   PRIMARY KEY (`id`),
   KEY `FK_kendaraan_customer` (`customer_id`),
   CONSTRAINT `FK_kendaraan_customer` FOREIGN KEY (`customer_id`) REFERENCES `customer` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=35 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=37 DEFAULT CHARSET=utf8;
 
--- Membuang data untuk tabel topik.kendaraan: ~6 rows (lebih kurang)
+-- Membuang data untuk tabel topik.kendaraan: ~1 rows (lebih kurang)
 /*!40000 ALTER TABLE `kendaraan` DISABLE KEYS */;
 INSERT INTO `kendaraan` (`id`, `customer_id`, `merek`, `tipe`, `tahun`, `jenis`, `no_plat`) VALUES
-	(17, 19, '1', '1', '2016', '1', 'F 2540 GT');
+	(35, 36, '1', '2', '2013', '2', 'F 2540 GT');
 INSERT INTO `kendaraan` (`id`, `customer_id`, `merek`, `tipe`, `tahun`, `jenis`, `no_plat`) VALUES
-	(18, 20, '1', '1', '2016', '1', '22');
-INSERT INTO `kendaraan` (`id`, `customer_id`, `merek`, `tipe`, `tahun`, `jenis`, `no_plat`) VALUES
-	(19, 21, '1', '1', '2016', '1', 'ee');
-INSERT INTO `kendaraan` (`id`, `customer_id`, `merek`, `tipe`, `tahun`, `jenis`, `no_plat`) VALUES
-	(20, 22, '1', '1', '2016', '1', '21ed');
-INSERT INTO `kendaraan` (`id`, `customer_id`, `merek`, `tipe`, `tahun`, `jenis`, `no_plat`) VALUES
-	(21, 23, '1', '1', '2016', '1', 'indah');
-INSERT INTO `kendaraan` (`id`, `customer_id`, `merek`, `tipe`, `tahun`, `jenis`, `no_plat`) VALUES
-	(22, 19, '1', '1', '2016', '1', 'F 2540 GTS');
-INSERT INTO `kendaraan` (`id`, `customer_id`, `merek`, `tipe`, `tahun`, `jenis`, `no_plat`) VALUES
-	(23, 24, '1', '1', '2016', '1', 'Zihan');
-INSERT INTO `kendaraan` (`id`, `customer_id`, `merek`, `tipe`, `tahun`, `jenis`, `no_plat`) VALUES
-	(24, 25, '1', '1', '2016', '1', 'Zihanf');
-INSERT INTO `kendaraan` (`id`, `customer_id`, `merek`, `tipe`, `tahun`, `jenis`, `no_plat`) VALUES
-	(25, 26, '1', '1', '2016', '1', 'Zihanf2');
-INSERT INTO `kendaraan` (`id`, `customer_id`, `merek`, `tipe`, `tahun`, `jenis`, `no_plat`) VALUES
-	(26, 27, '1', '1', '2016', '1', 'Zihandd');
-INSERT INTO `kendaraan` (`id`, `customer_id`, `merek`, `tipe`, `tahun`, `jenis`, `no_plat`) VALUES
-	(27, 28, '1', '1', '2016', '1', 'Zihan2222');
-INSERT INTO `kendaraan` (`id`, `customer_id`, `merek`, `tipe`, `tahun`, `jenis`, `no_plat`) VALUES
-	(28, 29, '1', '1', '2016', '1', 'Zihan22221');
-INSERT INTO `kendaraan` (`id`, `customer_id`, `merek`, `tipe`, `tahun`, `jenis`, `no_plat`) VALUES
-	(29, 30, '1', '1', '2016', '1', 'Zihan222211');
-INSERT INTO `kendaraan` (`id`, `customer_id`, `merek`, `tipe`, `tahun`, `jenis`, `no_plat`) VALUES
-	(30, 31, '1', '1', '2016', '1', 'Zihan2222111');
-INSERT INTO `kendaraan` (`id`, `customer_id`, `merek`, `tipe`, `tahun`, `jenis`, `no_plat`) VALUES
-	(31, 32, '1', '1', '2016', '1', 'Zihan22221113');
-INSERT INTO `kendaraan` (`id`, `customer_id`, `merek`, `tipe`, `tahun`, `jenis`, `no_plat`) VALUES
-	(32, 33, '1', '1', '2016', '1', 'Zihan222211133');
-INSERT INTO `kendaraan` (`id`, `customer_id`, `merek`, `tipe`, `tahun`, `jenis`, `no_plat`) VALUES
-	(33, 34, '1', '1', '2016', '1', 'Zihan2222111331');
-INSERT INTO `kendaraan` (`id`, `customer_id`, `merek`, `tipe`, `tahun`, `jenis`, `no_plat`) VALUES
-	(34, 35, '1', '1', '2016', '1', 'asd8080d808s');
+	(36, 36, '2', '1', '2016', '1', 'B 777 AS');
 /*!40000 ALTER TABLE `kendaraan` ENABLE KEYS */;
 
 -- membuang struktur untuk table topik.migration
@@ -1318,7 +1256,6 @@ CREATE TABLE IF NOT EXISTS `service` (
   `kode_service` varchar(50) NOT NULL DEFAULT '0',
   `customer_id` int(11) NOT NULL,
   `kendaraan_id` int(11) NOT NULL,
-  `keluhan` longtext NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `status` tinyint(4) DEFAULT '1',
   `deleted` tinyint(4) NOT NULL DEFAULT '0',
@@ -1327,53 +1264,44 @@ CREATE TABLE IF NOT EXISTS `service` (
   KEY `customer_id` (`customer_id`),
   CONSTRAINT `FK_service_customer` FOREIGN KEY (`customer_id`) REFERENCES `customer` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `FK_service_kendaraan` FOREIGN KEY (`kendaraan_id`) REFERENCES `kendaraan` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=56 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=78 DEFAULT CHARSET=utf8;
 
--- Membuang data untuk tabel topik.service: ~10 rows (lebih kurang)
+-- Membuang data untuk tabel topik.service: ~4 rows (lebih kurang)
 /*!40000 ALTER TABLE `service` DISABLE KEYS */;
-INSERT INTO `service` (`id`, `kode_service`, `customer_id`, `kendaraan_id`, `keluhan`, `created_at`, `status`, `deleted`) VALUES
-	(35, '0', 19, 17, 'r', '2016-12-24 02:49:12', 2, 0);
-INSERT INTO `service` (`id`, `kode_service`, `customer_id`, `kendaraan_id`, `keluhan`, `created_at`, `status`, `deleted`) VALUES
-	(36, '0', 20, 18, '2', '2016-12-24 04:18:22', 2, 0);
-INSERT INTO `service` (`id`, `kode_service`, `customer_id`, `kendaraan_id`, `keluhan`, `created_at`, `status`, `deleted`) VALUES
-	(37, '0', 21, 19, 'e', '2016-12-24 02:49:52', 2, 0);
-INSERT INTO `service` (`id`, `kode_service`, `customer_id`, `kendaraan_id`, `keluhan`, `created_at`, `status`, `deleted`) VALUES
-	(38, 'SVC-2', 19, 17, 'o', '2016-12-24 02:34:08', 1, 0);
-INSERT INTO `service` (`id`, `kode_service`, `customer_id`, `kendaraan_id`, `keluhan`, `created_at`, `status`, `deleted`) VALUES
-	(39, 'SVC-3', 22, 20, 'e', '2016-12-24 02:35:56', 1, 0);
-INSERT INTO `service` (`id`, `kode_service`, `customer_id`, `kendaraan_id`, `keluhan`, `created_at`, `status`, `deleted`) VALUES
-	(40, 'SVC-4', 23, 21, 'indah', '2016-12-24 02:37:20', 1, 0);
-INSERT INTO `service` (`id`, `kode_service`, `customer_id`, `kendaraan_id`, `keluhan`, `created_at`, `status`, `deleted`) VALUES
-	(41, 'SVC-5', 19, 22, 'aa', '2016-12-24 03:14:25', 1, 0);
-INSERT INTO `service` (`id`, `kode_service`, `customer_id`, `kendaraan_id`, `keluhan`, `created_at`, `status`, `deleted`) VALUES
-	(42, 'SVC-6', 23, 21, 'd', '2016-12-24 03:15:07', 1, 0);
-INSERT INTO `service` (`id`, `kode_service`, `customer_id`, `kendaraan_id`, `keluhan`, `created_at`, `status`, `deleted`) VALUES
-	(43, 'SVC-7', 24, 23, 'w', '2016-12-24 03:40:20', 1, 0);
-INSERT INTO `service` (`id`, `kode_service`, `customer_id`, `kendaraan_id`, `keluhan`, `created_at`, `status`, `deleted`) VALUES
-	(44, 'SVC-8', 25, 24, 'w', '2016-12-24 03:43:37', 1, 0);
-INSERT INTO `service` (`id`, `kode_service`, `customer_id`, `kendaraan_id`, `keluhan`, `created_at`, `status`, `deleted`) VALUES
-	(45, 'SVC-9', 26, 25, 'w', '2016-12-24 03:45:35', 1, 0);
-INSERT INTO `service` (`id`, `kode_service`, `customer_id`, `kendaraan_id`, `keluhan`, `created_at`, `status`, `deleted`) VALUES
-	(46, 'SVC-10', 27, 26, 'w', '2016-12-24 03:47:51', 1, 0);
-INSERT INTO `service` (`id`, `kode_service`, `customer_id`, `kendaraan_id`, `keluhan`, `created_at`, `status`, `deleted`) VALUES
-	(47, 'SVC-11', 28, 27, 'w', '2016-12-24 03:49:54', 1, 0);
-INSERT INTO `service` (`id`, `kode_service`, `customer_id`, `kendaraan_id`, `keluhan`, `created_at`, `status`, `deleted`) VALUES
-	(48, 'SVC-12', 29, 28, 'w', '2016-12-24 03:49:59', 1, 0);
-INSERT INTO `service` (`id`, `kode_service`, `customer_id`, `kendaraan_id`, `keluhan`, `created_at`, `status`, `deleted`) VALUES
-	(49, 'SVC-13', 30, 29, 'w', '2016-12-24 03:57:00', 1, 0);
-INSERT INTO `service` (`id`, `kode_service`, `customer_id`, `kendaraan_id`, `keluhan`, `created_at`, `status`, `deleted`) VALUES
-	(50, 'SVC-14', 31, 30, 'w', '2016-12-24 03:57:28', 1, 0);
-INSERT INTO `service` (`id`, `kode_service`, `customer_id`, `kendaraan_id`, `keluhan`, `created_at`, `status`, `deleted`) VALUES
-	(51, 'SVC-15', 32, 31, 'w', '2016-12-24 03:57:45', 1, 0);
-INSERT INTO `service` (`id`, `kode_service`, `customer_id`, `kendaraan_id`, `keluhan`, `created_at`, `status`, `deleted`) VALUES
-	(52, 'SVC-16', 33, 32, 'w', '2016-12-24 03:58:48', 1, 0);
-INSERT INTO `service` (`id`, `kode_service`, `customer_id`, `kendaraan_id`, `keluhan`, `created_at`, `status`, `deleted`) VALUES
-	(53, 'SVC-17', 34, 33, 'w', '2016-12-24 03:59:35', 1, 0);
-INSERT INTO `service` (`id`, `kode_service`, `customer_id`, `kendaraan_id`, `keluhan`, `created_at`, `status`, `deleted`) VALUES
-	(54, 'SVC-18', 35, 34, 'ee', '2016-12-24 04:09:30', 1, 0);
-INSERT INTO `service` (`id`, `kode_service`, `customer_id`, `kendaraan_id`, `keluhan`, `created_at`, `status`, `deleted`) VALUES
-	(55, 'SVC-19', 35, 34, 'sasdhasdhasd', '2016-12-24 04:19:21', 2, 0);
+INSERT INTO `service` (`id`, `kode_service`, `customer_id`, `kendaraan_id`, `created_at`, `status`, `deleted`) VALUES
+	(74, 'SVC-38', 36, 35, '2016-12-28 00:11:27', 3, 0);
+INSERT INTO `service` (`id`, `kode_service`, `customer_id`, `kendaraan_id`, `created_at`, `status`, `deleted`) VALUES
+	(75, 'SVC-39', 36, 36, '2016-12-27 23:00:13', 2, 0);
+INSERT INTO `service` (`id`, `kode_service`, `customer_id`, `kendaraan_id`, `created_at`, `status`, `deleted`) VALUES
+	(76, 'SVC-40', 36, 35, '2016-12-27 03:04:30', 1, 0);
+INSERT INTO `service` (`id`, `kode_service`, `customer_id`, `kendaraan_id`, `created_at`, `status`, `deleted`) VALUES
+	(77, 'SVC-41', 36, 35, '2016-12-27 19:15:42', 1, 0);
 /*!40000 ALTER TABLE `service` ENABLE KEYS */;
+
+-- membuang struktur untuk table topik.service_detail
+CREATE TABLE IF NOT EXISTS `service_detail` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `service_id` int(11) NOT NULL,
+  `sparepart_id` int(11) NOT NULL,
+  `qty` smallint(6) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `service_id` (`service_id`),
+  KEY `sparepart_id` (`sparepart_id`),
+  CONSTRAINT `FK_service_detail_service` FOREIGN KEY (`service_id`) REFERENCES `service` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `FK_service_detail_sparepart` FOREIGN KEY (`sparepart_id`) REFERENCES `sparepart` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=28 DEFAULT CHARSET=utf8;
+
+-- Membuang data untuk tabel topik.service_detail: ~0 rows (lebih kurang)
+/*!40000 ALTER TABLE `service_detail` DISABLE KEYS */;
+INSERT INTO `service_detail` (`id`, `service_id`, `sparepart_id`, `qty`) VALUES
+	(22, 74, 2, 2);
+INSERT INTO `service_detail` (`id`, `service_id`, `sparepart_id`, `qty`) VALUES
+	(23, 74, 1, 1);
+INSERT INTO `service_detail` (`id`, `service_id`, `sparepart_id`, `qty`) VALUES
+	(26, 75, 4, 2);
+INSERT INTO `service_detail` (`id`, `service_id`, `sparepart_id`, `qty`) VALUES
+	(27, 75, 3, 2);
+/*!40000 ALTER TABLE `service_detail` ENABLE KEYS */;
 
 -- membuang struktur untuk table topik.session
 CREATE TABLE IF NOT EXISTS `session` (
@@ -1456,21 +1384,61 @@ INSERT INTO `sparepart` (`id`, `nama`, `harga`, `stok`) VALUES
 CREATE TABLE IF NOT EXISTS `transaksi` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `service_id` int(11) NOT NULL,
-  `sparepart_id` int(11) NOT NULL,
+  `customer_id` int(11) NOT NULL,
   `nota` varchar(50) NOT NULL,
-  `total_pembayaran` varchar(50) NOT NULL,
+  `total_pembayaran` bigint(20) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `id_service` (`service_id`),
-  KEY `id_sparepart` (`sparepart_id`),
-  CONSTRAINT `FK_transaksi_service` FOREIGN KEY (`service_id`) REFERENCES `service` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `FK_transaksi_sparepart` FOREIGN KEY (`sparepart_id`) REFERENCES `sparepart` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+  KEY `customer_id` (`customer_id`),
+  CONSTRAINT `FK_transaksi_customer` FOREIGN KEY (`customer_id`) REFERENCES `customer` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `FK_transaksi_service` FOREIGN KEY (`service_id`) REFERENCES `service` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8;
 
--- Membuang data untuk tabel topik.transaksi: ~1 rows (lebih kurang)
+-- Membuang data untuk tabel topik.transaksi: ~0 rows (lebih kurang)
 /*!40000 ALTER TABLE `transaksi` DISABLE KEYS */;
-INSERT INTO `transaksi` (`id`, `service_id`, `sparepart_id`, `nota`, `total_pembayaran`) VALUES
-	(3, 35, 2, '2', '2');
+INSERT INTO `transaksi` (`id`, `service_id`, `customer_id`, `nota`, `total_pembayaran`) VALUES
+	(19, 74, 36, 'INVOICE-SVC-38', 135000);
+INSERT INTO `transaksi` (`id`, `service_id`, `customer_id`, `nota`, `total_pembayaran`) VALUES
+	(20, 75, 36, 'INVOICE-SVC-39', 140000);
+INSERT INTO `transaksi` (`id`, `service_id`, `customer_id`, `nota`, `total_pembayaran`) VALUES
+	(21, 74, 36, 'INVOICE-SVC-38', 135000);
+INSERT INTO `transaksi` (`id`, `service_id`, `customer_id`, `nota`, `total_pembayaran`) VALUES
+	(22, 74, 36, 'INVOICE-SVC-38', 135000);
 /*!40000 ALTER TABLE `transaksi` ENABLE KEYS */;
+
+-- membuang struktur untuk table topik.transaksi_sparepart
+CREATE TABLE IF NOT EXISTS `transaksi_sparepart` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `transaksi_id` int(11) NOT NULL,
+  `sparepart_id` int(11) NOT NULL,
+  `qty` smallint(6) NOT NULL,
+  `harga` bigint(20) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `transaksi_id` (`transaksi_id`),
+  KEY `sparepart_id` (`sparepart_id`),
+  CONSTRAINT `FK_transaksi_sparepart_sparepart` FOREIGN KEY (`sparepart_id`) REFERENCES `sparepart` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `FK_transaksi_sparepart_transaksi` FOREIGN KEY (`transaksi_id`) REFERENCES `transaksi` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
+
+-- Membuang data untuk tabel topik.transaksi_sparepart: ~0 rows (lebih kurang)
+/*!40000 ALTER TABLE `transaksi_sparepart` DISABLE KEYS */;
+INSERT INTO `transaksi_sparepart` (`id`, `transaksi_id`, `sparepart_id`, `qty`, `harga`) VALUES
+	(1, 19, 2, 2, 45000);
+INSERT INTO `transaksi_sparepart` (`id`, `transaksi_id`, `sparepart_id`, `qty`, `harga`) VALUES
+	(2, 19, 1, 1, 45000);
+INSERT INTO `transaksi_sparepart` (`id`, `transaksi_id`, `sparepart_id`, `qty`, `harga`) VALUES
+	(3, 20, 4, 2, 35000);
+INSERT INTO `transaksi_sparepart` (`id`, `transaksi_id`, `sparepart_id`, `qty`, `harga`) VALUES
+	(4, 20, 3, 2, 35000);
+INSERT INTO `transaksi_sparepart` (`id`, `transaksi_id`, `sparepart_id`, `qty`, `harga`) VALUES
+	(5, 21, 2, 2, 45000);
+INSERT INTO `transaksi_sparepart` (`id`, `transaksi_id`, `sparepart_id`, `qty`, `harga`) VALUES
+	(6, 21, 1, 1, 45000);
+INSERT INTO `transaksi_sparepart` (`id`, `transaksi_id`, `sparepart_id`, `qty`, `harga`) VALUES
+	(7, 22, 2, 2, 45000);
+INSERT INTO `transaksi_sparepart` (`id`, `transaksi_id`, `sparepart_id`, `qty`, `harga`) VALUES
+	(8, 22, 1, 1, 45000);
+/*!40000 ALTER TABLE `transaksi_sparepart` ENABLE KEYS */;
 
 -- membuang struktur untuk table topik.user
 CREATE TABLE IF NOT EXISTS `user` (
