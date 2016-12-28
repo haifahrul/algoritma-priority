@@ -105,7 +105,7 @@ CREATE TABLE IF NOT EXISTS `auth_item` (
   CONSTRAINT `auth_item_ibfk_1` FOREIGN KEY (`rule_name`) REFERENCES `auth_rule` (`name`) ON DELETE SET NULL ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
--- Membuang data untuk tabel topik.auth_item: ~151 rows (lebih kurang)
+-- Membuang data untuk tabel topik.auth_item: ~150 rows (lebih kurang)
 /*!40000 ALTER TABLE `auth_item` DISABLE KEYS */;
 INSERT INTO `auth_item` (`name`, `type`, `description`, `rule_name`, `data`, `created_at`, `updated_at`) VALUES
 	('/*', 2, NULL, NULL, NULL, 1482527586, 1482527586);
@@ -179,8 +179,6 @@ INSERT INTO `auth_item` (`name`, `type`, `description`, `rule_name`, `data`, `cr
 	('/kendaraan/index', 2, NULL, NULL, NULL, 1481038180, 1481038180);
 INSERT INTO `auth_item` (`name`, `type`, `description`, `rule_name`, `data`, `created_at`, `updated_at`) VALUES
 	('/kendaraan/service', 2, NULL, NULL, NULL, 1482528494, 1482528494);
-INSERT INTO `auth_item` (`name`, `type`, `description`, `rule_name`, `data`, `created_at`, `updated_at`) VALUES
-	('/kendaraan/update', 2, NULL, NULL, NULL, 1481038180, 1481038180);
 INSERT INTO `auth_item` (`name`, `type`, `description`, `rule_name`, `data`, `created_at`, `updated_at`) VALUES
 	('/kendaraan/view', 2, NULL, NULL, NULL, 1481038180, 1481038180);
 INSERT INTO `auth_item` (`name`, `type`, `description`, `rule_name`, `data`, `created_at`, `updated_at`) VALUES
@@ -308,8 +306,6 @@ INSERT INTO `auth_item` (`name`, `type`, `description`, `rule_name`, `data`, `cr
 INSERT INTO `auth_item` (`name`, `type`, `description`, `rule_name`, `data`, `created_at`, `updated_at`) VALUES
 	('/sparepart/*', 2, NULL, NULL, NULL, 1482529737, 1482529737);
 INSERT INTO `auth_item` (`name`, `type`, `description`, `rule_name`, `data`, `created_at`, `updated_at`) VALUES
-	('/sparepart/create', 2, NULL, NULL, NULL, 1481038185, 1481038185);
-INSERT INTO `auth_item` (`name`, `type`, `description`, `rule_name`, `data`, `created_at`, `updated_at`) VALUES
 	('/sparepart/delete', 2, NULL, NULL, NULL, 1481038186, 1481038186);
 INSERT INTO `auth_item` (`name`, `type`, `description`, `rule_name`, `data`, `created_at`, `updated_at`) VALUES
 	('/sparepart/delete-items', 2, NULL, NULL, NULL, 1481038186, 1481038186);
@@ -322,6 +318,8 @@ INSERT INTO `auth_item` (`name`, `type`, `description`, `rule_name`, `data`, `cr
 INSERT INTO `auth_item` (`name`, `type`, `description`, `rule_name`, `data`, `created_at`, `updated_at`) VALUES
 	('/transaksi/*', 2, NULL, NULL, NULL, 1482529737, 1482529737);
 INSERT INTO `auth_item` (`name`, `type`, `description`, `rule_name`, `data`, `created_at`, `updated_at`) VALUES
+	('/transaksi/checkout', 2, NULL, NULL, NULL, 1482942511, 1482942511);
+INSERT INTO `auth_item` (`name`, `type`, `description`, `rule_name`, `data`, `created_at`, `updated_at`) VALUES
 	('/transaksi/create', 2, NULL, NULL, NULL, 1481038187, 1481038187);
 INSERT INTO `auth_item` (`name`, `type`, `description`, `rule_name`, `data`, `created_at`, `updated_at`) VALUES
 	('/transaksi/delete', 2, NULL, NULL, NULL, 1481038187, 1481038187);
@@ -330,7 +328,7 @@ INSERT INTO `auth_item` (`name`, `type`, `description`, `rule_name`, `data`, `cr
 INSERT INTO `auth_item` (`name`, `type`, `description`, `rule_name`, `data`, `created_at`, `updated_at`) VALUES
 	('/transaksi/index', 2, NULL, NULL, NULL, 1481038187, 1481038187);
 INSERT INTO `auth_item` (`name`, `type`, `description`, `rule_name`, `data`, `created_at`, `updated_at`) VALUES
-	('/transaksi/update', 2, NULL, NULL, NULL, 1481038187, 1481038187);
+	('/transaksi/print', 2, NULL, NULL, NULL, 1482942508, 1482942508);
 INSERT INTO `auth_item` (`name`, `type`, `description`, `rule_name`, `data`, `created_at`, `updated_at`) VALUES
 	('/transaksi/view', 2, NULL, NULL, NULL, 1481038187, 1481038187);
 INSERT INTO `auth_item` (`name`, `type`, `description`, `rule_name`, `data`, `created_at`, `updated_at`) VALUES
@@ -448,7 +446,7 @@ CREATE TABLE IF NOT EXISTS `auth_item_child` (
   CONSTRAINT `auth_item_child_ibfk_2` FOREIGN KEY (`child`) REFERENCES `auth_item` (`name`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
--- Membuang data untuk tabel topik.auth_item_child: ~184 rows (lebih kurang)
+-- Membuang data untuk tabel topik.auth_item_child: ~183 rows (lebih kurang)
 /*!40000 ALTER TABLE `auth_item_child` DISABLE KEYS */;
 INSERT INTO `auth_item_child` (`parent`, `child`) VALUES
 	('admin', '/customer/create');
@@ -483,19 +481,23 @@ INSERT INTO `auth_item_child` (`parent`, `child`) VALUES
 INSERT INTO `auth_item_child` (`parent`, `child`) VALUES
 	('admin', '/service/queue');
 INSERT INTO `auth_item_child` (`parent`, `child`) VALUES
+	('admin', '/service/update');
+INSERT INTO `auth_item_child` (`parent`, `child`) VALUES
 	('admin', '/service/view');
 INSERT INTO `auth_item_child` (`parent`, `child`) VALUES
 	('admin', '/site/*');
-INSERT INTO `auth_item_child` (`parent`, `child`) VALUES
-	('admin', '/sparepart/create');
 INSERT INTO `auth_item_child` (`parent`, `child`) VALUES
 	('admin', '/sparepart/index');
 INSERT INTO `auth_item_child` (`parent`, `child`) VALUES
 	('admin', '/sparepart/view');
 INSERT INTO `auth_item_child` (`parent`, `child`) VALUES
+	('admin', '/transaksi/checkout');
+INSERT INTO `auth_item_child` (`parent`, `child`) VALUES
 	('admin', '/transaksi/create');
 INSERT INTO `auth_item_child` (`parent`, `child`) VALUES
 	('admin', '/transaksi/index');
+INSERT INTO `auth_item_child` (`parent`, `child`) VALUES
+	('admin', '/transaksi/print');
 INSERT INTO `auth_item_child` (`parent`, `child`) VALUES
 	('admin', '/transaksi/view');
 INSERT INTO `auth_item_child` (`parent`, `child`) VALUES
@@ -570,8 +572,6 @@ INSERT INTO `auth_item_child` (`parent`, `child`) VALUES
 	('webmaster', '/kendaraan/index');
 INSERT INTO `auth_item_child` (`parent`, `child`) VALUES
 	('webmaster', '/kendaraan/service');
-INSERT INTO `auth_item_child` (`parent`, `child`) VALUES
-	('webmaster', '/kendaraan/update');
 INSERT INTO `auth_item_child` (`parent`, `child`) VALUES
 	('webmaster', '/kendaraan/view');
 INSERT INTO `auth_item_child` (`parent`, `child`) VALUES
@@ -699,8 +699,6 @@ INSERT INTO `auth_item_child` (`parent`, `child`) VALUES
 INSERT INTO `auth_item_child` (`parent`, `child`) VALUES
 	('webmaster', '/sparepart/*');
 INSERT INTO `auth_item_child` (`parent`, `child`) VALUES
-	('webmaster', '/sparepart/create');
-INSERT INTO `auth_item_child` (`parent`, `child`) VALUES
 	('webmaster', '/sparepart/delete');
 INSERT INTO `auth_item_child` (`parent`, `child`) VALUES
 	('webmaster', '/sparepart/delete-items');
@@ -720,8 +718,6 @@ INSERT INTO `auth_item_child` (`parent`, `child`) VALUES
 	('webmaster', '/transaksi/delete-items');
 INSERT INTO `auth_item_child` (`parent`, `child`) VALUES
 	('webmaster', '/transaksi/index');
-INSERT INTO `auth_item_child` (`parent`, `child`) VALUES
-	('webmaster', '/transaksi/update');
 INSERT INTO `auth_item_child` (`parent`, `child`) VALUES
 	('webmaster', '/transaksi/view');
 INSERT INTO `auth_item_child` (`parent`, `child`) VALUES
@@ -860,9 +856,9 @@ CREATE TABLE IF NOT EXISTS `customer` (
   `no_telp` varchar(50) NOT NULL,
   `email` varchar(50) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=40 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- Membuang data untuk tabel topik.customer: ~1 rows (lebih kurang)
+-- Membuang data untuk tabel topik.customer: ~0 rows (lebih kurang)
 /*!40000 ALTER TABLE `customer` DISABLE KEYS */;
 /*!40000 ALTER TABLE `customer` ENABLE KEYS */;
 
@@ -894,9 +890,9 @@ CREATE TABLE IF NOT EXISTS `kendaraan` (
   PRIMARY KEY (`id`),
   KEY `FK_kendaraan_customer` (`customer_id`),
   CONSTRAINT `FK_kendaraan_customer` FOREIGN KEY (`customer_id`) REFERENCES `customer` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=40 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- Membuang data untuk tabel topik.kendaraan: ~3 rows (lebih kurang)
+-- Membuang data untuk tabel topik.kendaraan: ~0 rows (lebih kurang)
 /*!40000 ALTER TABLE `kendaraan` DISABLE KEYS */;
 /*!40000 ALTER TABLE `kendaraan` ENABLE KEYS */;
 
@@ -932,7 +928,7 @@ CREATE TABLE IF NOT EXISTS `route` (
   PRIMARY KEY (`name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
--- Membuang data untuk tabel topik.route: ~151 rows (lebih kurang)
+-- Membuang data untuk tabel topik.route: ~154 rows (lebih kurang)
 /*!40000 ALTER TABLE `route` DISABLE KEYS */;
 INSERT INTO `route` (`name`, `alias`, `type`, `status`) VALUES
 	('/*', '*', '', 1);
@@ -1149,13 +1145,19 @@ INSERT INTO `route` (`name`, `alias`, `type`, `status`) VALUES
 INSERT INTO `route` (`name`, `alias`, `type`, `status`) VALUES
 	('/transaksi/*', '*', 'transaksi', 1);
 INSERT INTO `route` (`name`, `alias`, `type`, `status`) VALUES
+	('/transaksi/checkout', 'checkout', 'transaksi', 1);
+INSERT INTO `route` (`name`, `alias`, `type`, `status`) VALUES
 	('/transaksi/create', 'create', 'transaksi', 1);
 INSERT INTO `route` (`name`, `alias`, `type`, `status`) VALUES
 	('/transaksi/delete', 'delete', 'transaksi', 1);
 INSERT INTO `route` (`name`, `alias`, `type`, `status`) VALUES
 	('/transaksi/delete-items', 'delete-items', 'transaksi', 1);
 INSERT INTO `route` (`name`, `alias`, `type`, `status`) VALUES
+	('/transaksi/get-customer', 'get-customer', 'transaksi', 1);
+INSERT INTO `route` (`name`, `alias`, `type`, `status`) VALUES
 	('/transaksi/index', 'index', 'transaksi', 1);
+INSERT INTO `route` (`name`, `alias`, `type`, `status`) VALUES
+	('/transaksi/print', 'print', 'transaksi', 1);
 INSERT INTO `route` (`name`, `alias`, `type`, `status`) VALUES
 	('/transaksi/update', 'update', 'transaksi', 1);
 INSERT INTO `route` (`name`, `alias`, `type`, `status`) VALUES
@@ -1272,9 +1274,9 @@ CREATE TABLE IF NOT EXISTS `service` (
   KEY `customer_id` (`customer_id`),
   CONSTRAINT `FK_service_customer` FOREIGN KEY (`customer_id`) REFERENCES `customer` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `FK_service_kendaraan` FOREIGN KEY (`kendaraan_id`) REFERENCES `kendaraan` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=84 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- Membuang data untuk tabel topik.service: ~6 rows (lebih kurang)
+-- Membuang data untuk tabel topik.service: ~0 rows (lebih kurang)
 /*!40000 ALTER TABLE `service` DISABLE KEYS */;
 /*!40000 ALTER TABLE `service` ENABLE KEYS */;
 
@@ -1290,9 +1292,9 @@ CREATE TABLE IF NOT EXISTS `service_detail` (
   KEY `sparepart_id` (`sparepart_id`),
   CONSTRAINT `FK_service_detail_service` FOREIGN KEY (`service_id`) REFERENCES `service` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `FK_service_detail_sparepart` FOREIGN KEY (`sparepart_id`) REFERENCES `sparepart` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=40 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- Membuang data untuk tabel topik.service_detail: ~8 rows (lebih kurang)
+-- Membuang data untuk tabel topik.service_detail: ~0 rows (lebih kurang)
 /*!40000 ALTER TABLE `service_detail` DISABLE KEYS */;
 /*!40000 ALTER TABLE `service_detail` ENABLE KEYS */;
 
@@ -1393,7 +1395,7 @@ CREATE TABLE IF NOT EXISTS `transaksi` (
   CONSTRAINT `FK_transaksi_customer` FOREIGN KEY (`customer_id`) REFERENCES `customer` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `FK_transaksi_kendaraan` FOREIGN KEY (`kendaraan_id`) REFERENCES `kendaraan` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `FK_transaksi_service` FOREIGN KEY (`service_id`) REFERENCES `service` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=33 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- Membuang data untuk tabel topik.transaksi: ~0 rows (lebih kurang)
 /*!40000 ALTER TABLE `transaksi` DISABLE KEYS */;
@@ -1412,9 +1414,9 @@ CREATE TABLE IF NOT EXISTS `transaksi_sparepart` (
   KEY `sparepart_id` (`sparepart_id`),
   CONSTRAINT `FK_transaksi_sparepart_sparepart` FOREIGN KEY (`sparepart_id`) REFERENCES `sparepart` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `FK_transaksi_sparepart_transaksi` FOREIGN KEY (`transaksi_id`) REFERENCES `transaksi` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- Membuang data untuk tabel topik.transaksi_sparepart: ~0 rows (lebih kurang)
+-- Membuang data untuk tabel topik.transaksi_sparepart: ~1 rows (lebih kurang)
 /*!40000 ALTER TABLE `transaksi_sparepart` DISABLE KEYS */;
 /*!40000 ALTER TABLE `transaksi_sparepart` ENABLE KEYS */;
 
