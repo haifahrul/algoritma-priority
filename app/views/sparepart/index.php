@@ -22,8 +22,12 @@ $this->params['title'] = 'List' . $this->title;
                 'id' => 'select_page'
             ]); ?>
         </div>
-        <?= Html::a('<i class="glyphicon glyphicon-plus glyphicon-sm"></i> Create ', ['create'],
-            ['data-pjax' => 0, 'class' => 'btn btn-primary btn-sm btn-tambah1']) ?>
+
+        <?php
+        if ((Mimin::filterRoute($this->context->id . '/create', true))) {
+            echo Html::a('<i class="glyphicon glyphicon-plus glyphicon-sm"></i> Create ', ['create'], ['data-pjax' => 0, 'class' => 'btn btn-primary btn-sm btn-tambah1']);
+        }
+        ?>
         <?php
         if ((Mimin::filterRoute($this->context->id . '/delete', true))) {
             echo Html::button('<span class="glyphicon glyphicon-remove glyphicon-sm"></span> Delete', ['data-pjax' => 0, 'class' => 'btn btn-danger btn-sm', 'title' => 'hapus', 'id' => 'btn-deletes']);
