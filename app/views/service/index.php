@@ -103,26 +103,27 @@ $this->params['title'] = 'List' . $this->title;
                             'contentOptions' => ['class' => 'text-center'],
                         ],
                         [
+//                            'attribute' => 'status',
+                            'label' => 'Checkout',
+                            'format' => 'raw',
+                            'value' => function ($data) {
+                                if ($data['status'] == 2) {
+                                    return Html::a('<div class="btn btn-success btn-xs">Checkout</div>', ['/transaksi/checkout', 'id' => $data['id']], ['title' => 'Checkout']);
+                                } else {
+                                    return '-';
+                                }
+                            },
+                            'contentOptions' => ['class' => 'text-center'],
+                        ],
+                        [
                             'class' => 'yii\grid\ActionColumn',
                             //'header'=>'Pilihan',
                             'contentOptions' => ['style' => 'width:90px;', 'class' => 'text-center'],
                             'template' => Mimin::filterTemplateActionColumn([
-                                'checkout', 'view', 'update', 'delete'
+                                'view', 'update', 'delete'
                             ], $this->context->route),
                             'header' => 'Options',
                             'buttons' => [
-                                'checkout' => function ($url, $model) {
-                                    $icon = '<b>Checkout</b>';
-                                    $url = '/transaksi/checkout/' . $model['id'];
-
-                                    if ($model['status'] == 2) {
-                                        return Html::a($icon, $url, [
-                                            'data-pjax' => 0,
-                                            'class' => 'btn btn-success btn-xs btn-view',
-                                            'title' => Yii::t('app', 'Checkout')
-                                        ]);
-                                    }
-                                },
                                 'view' => function ($url, $model) {
                                     $icon = '<i class = "glyphicon glyphicon-zoom-in"></i>';
 
