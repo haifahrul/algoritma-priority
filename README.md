@@ -1,7 +1,4 @@
-Jadwal Kuliah P2K Jurusan Elektro
-============================
-
-Pembuatan jadwal kuliah untuk jurusan elektro FT UMJ
+#Implementasi SMS Gateway untuk antrian service pada bengkel menggunakan algoritma priority
 
 DIRECTORY STRUCTURE
 -------------------
@@ -37,7 +34,7 @@ INSTALLATION
 ------------
 
 Don't forget to setup, follow these instruction:
-1. Open your root *jadwal-kuliah-elektro* with CMD / CLI
+1. Open your root *FOLDER* with CMD / CLI
 2. run ``` php init ```
 
 Set cookie validation key in `config/web.php` file to some random secret string:
@@ -52,7 +49,7 @@ Set cookie validation key in `config/web.php` file to some random secret string:
 You can then access the application through the following URL:
 
 ~~~
-http://localhost/jadwal-kuliah-elektro
+http://localhost/URL
 ~~~
 
 
@@ -74,7 +71,7 @@ For example:
 ```php
 return [
     'class' => 'yii\db\Connection',
-    'dsn' => 'mysql:host=localhost;dbname=jadwal-kuliah-elektro',
+    'dsn' => 'mysql:host=localhost;dbname=NAMA_DB',
     'username' => 'root',
     'password' => '',
     'charset' => 'utf8',
