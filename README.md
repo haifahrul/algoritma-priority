@@ -1,4 +1,4 @@
-#Implementasi SMS Gateway untuk antrian service pada bengkel menggunakan algoritma priority
+# Implementasi SMS Gateway untuk antrian service pada bengkel menggunakan algoritma priority
 
 DIRECTORY STRUCTURE
 -------------------
